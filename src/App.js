@@ -11,6 +11,24 @@ function App() {
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
+    //Toggle Nav
+    nav.classList.toggle('nav-active');
+    
+    //Animate Links
+    navLinks.forEach(function(link, index){
+      link.classList.toggle('nav-active-li');
+      if(link.style.animation){
+        link.style.animation = '';
+      }
+      else{
+        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5}s`
+      }
+    });
+
+    //Animate Burger
+    burger.classList.toggle('toggle');
+  }
+
   function HandleClick(nav) {
     switch (nav) {
       case "overview":
@@ -52,7 +70,13 @@ function App() {
               <a href="#" onClick={() => HandleClick("maintenance")}>Vedligeholdelse</a>
             </li>
           </ul>
+          <div className="burger" onClick={slide}>
+            <div className="line1"></div>
+            <div className="line2"></div>
+            <div className="line3"></div>
+          </div>
         </nav>
+      </header>
       <main>
         {/* {stage === 1 ? <Overview /> : <></>} */}
         {/* <Overview /> */}
