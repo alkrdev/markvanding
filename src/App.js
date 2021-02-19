@@ -10,12 +10,15 @@ function App() {
   const windowWidth = window.innerWidth;
 
   const [stage, setStage] = useState("overview");
+  const [submitted, setSubmitted] = useState(false);
   const [startMachine, setStartmachine] = useState({})
+  const [selectedTime, setSelectedtime] = useState({})
 
   function slide(){
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
+
     //Toggle Nav
     nav.classList.toggle('nav-active');
     
@@ -33,6 +36,11 @@ function App() {
     //Animate Burger
     burger.classList.toggle('toggle');
   }
+
+  const [activeMachines, setActivemachines] = useState([]);
+  const [inactiveMachines, setInactiveMachines] = useState([])
+  const [inactivePumps, setInactivePumps] = useState([])
+  const [allPumps, setAllPumps] = useState([])
 
   useEffect(function() 
   {
