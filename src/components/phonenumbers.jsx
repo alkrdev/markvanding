@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 function Phonenumbers({allPumps}) {
 
   const [data, setData] = useState([]);
+
+  useEffect(function() 
+  {
+  }, [])
 
   return (
     <table id="phonenumbers">
