@@ -1,20 +1,8 @@
 import React, {useState} from 'react';
 
-function Phonenumbers() {
+function Phonenumbers({allPumps}) {
 
-  const [data, setData] = useState([
-    {machinenumber: 1, pumpname: "Bom", phonenumber: 61542121, startcode: "T"},
-    {machinenumber: 2, pumpname: "Dover", phonenumber: 61741817, startcode: "T"},
-    {machinenumber: 3, pumpname: "Egeris Nord", phonenumber: 42181163, startcode: "T"},
-    {machinenumber: 4, pumpname: "Egeris Syd", phonenumber: 42181162, startcode: "T"},
-    {machinenumber: 5, pumpname: "Grænsevej", phonenumber: 54557199, startcode: "T"},
-    {machinenumber: 6, pumpname: "Hjerrild", phonenumber: 60489986, startcode: "Tx"},
-    {machinenumber: 7, pumpname: "Kongeåvej", phonenumber: 51765105, startcode: "T"},
-    {machinenumber: 8, pumpname: "Langtofte", phonenumber: 54557795, startcode: "T"},
-    {machinenumber: 9, pumpname: "Nyvej", phonenumber: 42188548, startcode: "T"},
-    {machinenumber: 10, pumpname: "Sønderskov", phonenumber: 22984242, startcode: "Tt"},
-    {machinenumber: 11, pumpname: "Vesterlundgaard", phonenumber: 60487449, startcode: "T"},
-    {machinenumber: 12, pumpname: "Ågård", phonenumber: 42181161, startcode: "T"}]);
+  const [data, setData] = useState([]);
 
   return (
     <table id="phonenumbers">
@@ -26,13 +14,14 @@ function Phonenumbers() {
         </tr>
       </thead>
       <tbody>
-        {data.map(function(data)
+        {allPumps.map(function(data)
         {
           return (
-            <tr key={data["machinenumber"]}>
-              <td>{data["pumpname"]}</td>
-              <td>{data["phonenumber"]}</td>
+            <tr key={data["id"]}>
+              <td>{data["name"]}</td>
+              <td>{data["number"]}</td>
               <td>{data["startcode"]}</td>
+              <td>{data["stopcode"]}</td>
             </tr>
           )
         })}
