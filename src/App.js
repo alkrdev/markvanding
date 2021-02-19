@@ -6,6 +6,9 @@ import Maintenance from './components/maintenance';
 import Addmachines from './components/addmachines';
 
 function App() {
+
+  const windowWidth = window.innerWidth;
+
   const [stage, setStage] = useState("overview");
   const [startMachine, setStartmachine] = useState({})
 

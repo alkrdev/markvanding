@@ -2,13 +2,11 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-family: Tahoma, sans-serif;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -19,17 +17,15 @@ body {
 
 
 #overview {
-  font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 60%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
   margin-top: 50px;
 }
 
 #overview td, #overview th {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 8px 2px;
 }
 
 #overview tr:nth-child(even){background-color: #f2f2f2;}
@@ -38,7 +34,7 @@ body {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #141e7c;
+  background-color: #1a1a4e;
   color: rgb(255, 255, 255);
 }
 
@@ -47,7 +43,8 @@ nav{
   justify-content: space-around;
   align-items: center;
   min-height: 8vh;
-  background-color: #141e7c;
+  background-color: #1a1a4e;
+  text-transform: uppercase;
 }
 
 .logo{
@@ -59,7 +56,8 @@ nav{
 .nav-links{
   display: flex;
   justify-content: space-around;
-  width: 45%;
+  width: 60%;
+  z-index: 10000;
 }
 
 .nav-links li{
@@ -85,7 +83,7 @@ nav{
 }
 
 .nav-links a:hover{
-  background-color: #1d2cb1;
+  background-color: #1a1a4e;
 }
 
 .burger{
@@ -100,7 +98,182 @@ nav{
   transition: all 0.3s ease;
 }
 
-@media screen and (max-width:1280px){
+
+
+.toggle .line1{
+  transform: rotate(-45deg) translate(-5px,6px);
+}
+.toggle .line2{
+  opacity: 0;
+}
+.toggle .line3{
+  transform: rotate(45deg) translate(-5px,-6px);
+}
+
+#phonenumbers {
+  border-collapse: collapse;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+#phonenumbers td, #phonenumbers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#phonenumbers tr:nth-child(even){background-color: #f2f2f2;}
+
+#phonenumbers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #1a1a4e;
+  color: rgb(255, 255, 255);
+}
+
+
+.select {
+  width: 80%;
+  margin:auto;
+  text-align: left;
+}
+
+
+.select select {
+  background-color: #1a1a4e;
+  color: white;
+  padding: 10px;
+  width: 98%;
+  border: none;
+  font-size: 24px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+  text-transform: uppercase;
+  margin-left: 1%;
+  overflow: hidden;
+
+}
+
+label{
+  font-size: 30px;
+  margin-left: 1%;
+}
+
+/* Customize the label (the container) */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  display: none
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: relative;
+  height: 25px;
+  width: 25px;
+  background-color: rgb(200, 200, 200);
+  border: solid #1a1a4e;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #777;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #1a1a4e;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+#choosemachine{
+  border: solid #1a1a4e;
+}
+
+#choosepump{
+  border: solid #1a1a4e;
+}
+
+#checkboxtext{
+  text-align: center;
+  margin-bottom: 1%;
+  font-size: 18px;
+}
+
+#checks{
+  border: solid black;
+  margin: auto;
+  font-size: 24px;
+  width: 30%;
+  padding: 5px;
+}
+
+.container{
+  font-size: 24px;
+  width: fit-content;
+  margin: auto;
+}
+
+form.select div {
+  padding: 10px;
+}
+
+#buttonstartmachine {
+  display: block;
+  background-color: #1a1a4e;
+  padding: .5em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 32px;
+  text-decoration: none;
+  border: none;
+  margin: auto;
+  margin-top: 30px
+ }
+ 
+ #buttonstartmachine:hover {
+  border: none;
+  background: #777;
+ }
+
  #editpump {
   width: 30%;
   border: solid #1a1a4e;
@@ -130,12 +303,89 @@ nav{
   margin: auto;
   margin-top: 10px
  }
+
+ /* Style the tab */
+.tab {
+  overflow: hidden;
+  border: none;
+  background-color: #ddd;
+  margin: auto;
+  display: flex;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: #1a1a4e;
+  color: #ddd;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 20px;
+  transition: 0.3s;
+  font-size: 24px;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #1a1a4eb9;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ddd;
+  color: #1a1a4e;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  background-color: #ddd;
+  border-top: none;
+  height: 60vh;
+  width: 75vw;
+  margin: auto;
+}
+
+.choosetimesubmit{
+    background-color: #1a1a4e;
+    padding: .5em;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 32px;
+    text-decoration: none;
+    border: none;
+    margin: auto;
+    margin-top: 30px
+}
+
+
+
+ @media screen and (max-width:1624px){
   .nav-links{
-    width: 70%;
+    width: 75%;
+  }
+  p{
+    width: 30% !important;
+  }
+  #editpump{
+    width: 40% !important;
+  }
+  #createpump{
+    width: 40% !important;
+  }
+  #overview{
+    width: 80%;
   }
 }
 
-@media screen and (max-width:768px){
+@media screen and (max-width:1280px){
   body{
     overflow-x: hidden;
   }
@@ -143,7 +393,7 @@ nav{
     position: absolute;
     height: 0;
     top: 8vh;
-    background-color: #141e7c;
+    background-color: #1a1a4e;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -161,15 +411,40 @@ nav{
   .nav-links a{
     font-size: 20px;
   }
+  p{
+    width: 40% !important;
+  }
+  .nav-active-li{
+    display: flex !important;
+  }
+  
+  .nav-active{
+    height: 24rem;
+  }
+  #editpump{
+    width: 50% !important;
+  }
+  #createpump{
+    width: 50% !important;
+  }
 }
 
-.nav-active-li{
-  display: flex !important;
-  width: 100%;
+@media screen and (max-width:912px){
+  p{
+    width: 50% !important;
+  }
+  #editpump{
+    width: 65% !important;
+  }
+  #createpump{
+    width: 65% !important;
+  }
 }
 
-.nav-active{
-  height: 32vh;
+@media screen and (max-width:740px){
+  p{
+    width: 60% !important;
+  }
   #editpump{
     width: 75% !important;
   }
@@ -177,6 +452,91 @@ nav{
     width: 75% !important;
   }
 }
+
+@media screen and (max-width:608px){
+  p{
+    width: 70% !important;
+  }
+  #editpump{
+    width: 90% !important;
+    padding: 0px  25%;
+  }
+  #createpump{
+    width: 90% !important;
+    padding: 0px  25%;
+  }
+}
+
+@media screen and (max-width:528px){
+  p{
+    width: 90% !important;
+  }
+  #editpump{
+    width: 100% !important;
+    padding: 0px  17%;
+  }
+  #createpump{
+    width: 100% !important;
+    padding: 0px  17%;
+  }
+}
+
+@media screen and (max-width:420px){
+  p{
+    width: 100% !important;
+  }
+}
+
+/*
+	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
+	*/
+	@media
+	  only screen 
+    and (max-width: 760px) {
+
+		/* Force table to not be like tables anymore */
+		table, thead, tbody, th, td, tr {
+			display: block;
+		}
+
+		/* Hide table headers (but not display: none;, for accessibility) */
+		thead tr {
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+
+    tr {
+      margin: 0 0 1rem 0;
+    }
+    
+      
+    tr:nth-child(odd) {
+      background: #ccc;
+    }
+    
+		td {
+      position: relative;
+      padding-left: 50% !important;
+      text-align: left;
+		}
+
+		td:before {
+      position: absolute;
+      left: 5px;
+      padding-right: 10px;
+      white-space: nowrap;
+		}
+
+		/*
+		Label the data
+    You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
+		*/
+		td:nth-of-type(1):before { content: "Maskine id"; }
+		td:nth-of-type(2):before { content: "Pumpe navn"; }
+		td:nth-of-type(3):before { content: "Færdig"; }
+		td:nth-of-type(4):before { content: "Status"; }
+	}
 
 @keyframes navLinkFade{
   from{
@@ -186,54 +546,5 @@ nav{
   to{
     opacity: 1;
     transform: translatex(0px);
-  #editpump{
-    width: 90% !important;
-    padding: 0px  25%;
   }
-  #createpump{
-    width: 90% !important;
-    padding: 0px  25%;
-  }
-}
-
-.toggle .line1{
-  transform: rotate(-45deg) translate(-5px,6px);
-}
-.toggle .line2{
-  opacity: 0;
-}
-.toggle .line3{
-  transform: rotate(45deg) translate(-5px,-6px);
-  #editpump{
-    width: 100% !important;
-    padding: 0px  17%;
-  }
-  #createpump{
-    width: 100% !important;
-    padding: 0px  17%;
-  }
-}
-
-#phonenumbers {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 50px;
-}
-
-#phonenumbers td, #phonenumbers th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-#phonenumbers tr:nth-child(even){background-color: #f2f2f2;}
-
-#phonenumbers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #141e7c;
-  color: rgb(255, 255, 255);
 }
