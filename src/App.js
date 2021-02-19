@@ -104,6 +104,12 @@ function App() {
         break;
       default:
         break;
+    }
+
+    
+    if (windowWidth <= 1280) slide();
+  }
+
   function chooseTime(event, time) {
 
     var tabcontent = document.getElementsByClassName("tabcontent");
