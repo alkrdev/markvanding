@@ -25,6 +25,13 @@ function Overview({activeMachines}) {
       <tbody>
         {activeMachines.map(function(machine)
         {
+          var time = new Date(machine["time"]).toLocaleString("da-DK", {
+            dateStyle: "medium",
+            timeStyle: "short"
+          });
+
+          console.log(machine["time"])
+          
           return (
             <tr key={machine["id"]}>
               <td>{machine["id"]}</td>
