@@ -3,6 +3,7 @@ import Overview from './components/overview';
 import Phonenumbers from './components/phonenumbers';
 import Startmachine from './components/startmachine';
 import Maintenance from './components/maintenance';
+import Addmachines from './components/addmachines';
 
 function App() {
   const [stage, setStage] = useState("overview");

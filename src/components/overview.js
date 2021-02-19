@@ -8,16 +8,22 @@ function Overview({activeMachines}) {
 
   return (
     <table id="overview">
+      <colgroup>
+        <col style={{width: "10%"}}></col>
+        <col style={{width: "20%"}}></col>
+        <col style={{width: "40%"}}></col>
+        <col style={{width: "20%"}}></col>
+      </colgroup>
       <thead>
         <tr>
           <th>Maskine nr.</th>
           <th>Pumpe Navn</th>
-          <th>Mark Navn</th>
-          <th>Færdig tid (Resterende T:MIN)</th>
+          <th>Færdig</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        {data.map(function(data)
+        {activeMachines.map(function(machine)
         {
           return (
             <tr key={machine["id"]}>
