@@ -146,36 +146,6 @@ function App() {
 
   return (
     <div className="App">
-      
-      <header>
-        <nav>
-          <div className="logo">
-            <h1>Markvanding</h1>
-          </div>
-          <ul className="nav-links">
-            <li>
-              <a href="#" onClick={() => HandleClick("overview")}>Oversigt</a>
-            </li>
-            <li>
-              <a href="#" onClick={() => HandleClick("startmachine")}>Opret Timer</a>
-            </li>
-            <li>
-              <a href="#" onClick={() => HandleClick("phonenumber")}>Telefon numre</a>
-            </li>
-            <li>
-              <a href="#" onClick={() => HandleClick("maintenance")}>Vedligeholdelse</a>
-            </li>
-          </ul>
-          <div className="burger" onClick={slide}>
-            <div className="line1"></div>
-            <div className="line2"></div>
-            <div className="line3"></div>
-          </div>
-        </nav>
-      </header>
-      <main>
-        {/* {stage === 1 ? <Overview /> : <></>} */}
-        {/* <Overview /> */}
       {submitted ? (
         <form onSubmit={function(event) {
           var months = {
@@ -280,24 +250,53 @@ function App() {
             </div>
           </div>
         </form>
+      ) : <>
+        <header>
+          <nav>
+            <div className="logo">
+              <h1>Markvanding</h1>
+            </div>
+            <ul className="nav-links">
+              <li>
+                <a href="#" onClick={() => HandleClick("overview")}>OVERSIGT</a>
+              </li>
               <li>
                 <a href="#" onClick={() => HandleClick("startmachine")}>START VANDING</a>
               </li>
+              <li>
+                <a href="#" onClick={() => HandleClick("phonenumber")}>TELEFONNUMRE</a>
+              </li>
+              <li>
+                <a href="#" onClick={() => HandleClick("maintenance")}>VEDLIGEHOLDELSE</a>
+              </li>
+              <li>
+                <a href="#" onClick={() => HandleClick("addmachine")}>TILFØJ/REDIGER <br></br> MASKINER/PUMPER</a>
+              </li>
+            </ul>
+            <div className="burger" onClick={slide}>
+              <div className="line1"></div>
+              <div className="line2"></div>
+              <div className="line3"></div>
+            </div>
+          </nav>
+        </header>
+        
+        <main>
         {
           stage === "overview" ? (
-            <Overview /> 
+            <Overview activeMachines={activeMachines}/>
           ) : stage === "startmachine" ? (
             <Startmachine setSubmitted={setSubmitted} setStartmachine={setStartmachine} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines}/>
           ) : stage === "phonenumber" ? (
-            <Phonenumbers />
+            <Phonenumbers  allPumps={allPumps}/>
           ) : stage === "maintenance" ? (
             <Maintenance />
           ) : stage === "addmachine" ? (
             <Addmachines allPumps={allPumps}/>
           ) : <></>
-        };
-
+        }
       </main>
+      </>}
     </div>
   );
 }
