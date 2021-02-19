@@ -34,8 +34,6 @@ function App() {
     burger.classList.toggle('toggle');
   }
 
-  function HandleClick(nav) {
-    switch (nav) {
   useEffect(function() 
   {
     fetch("http://192.168.1.14:5000/activemachines")
@@ -79,6 +77,8 @@ function App() {
       });
   }, [])
 
+  function HandleClick(navbar) {
+    switch (navbar) {
       case "overview":
         setStage("overview")
         break;
