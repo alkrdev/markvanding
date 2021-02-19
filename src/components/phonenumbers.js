@@ -8,9 +8,10 @@ function Phonenumbers({allPumps}) {
     <table id="phonenumbers">
       <thead>
         <tr>
-          <th>Pumpenavn</th>
-          <th>Telefonnummer</th>
+          <th>Pumpe Navn</th>
+          <th>Pumpe Nummer</th>
           <th>Startkode</th>
+          <th>Stopkode</th>
         </tr>
       </thead>
       <tbody>
