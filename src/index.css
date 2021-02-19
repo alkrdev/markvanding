@@ -101,6 +101,35 @@ nav{
 }
 
 @media screen and (max-width:1280px){
+ #editpump {
+  width: 30%;
+  border: solid #1a1a4e;
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px
+ }
+
+ #createpump {
+   width: 30%;
+   border: solid #1a1a4e;
+   margin: auto;
+   padding: 20px;
+ }
+
+ .createandupdatebuttons {
+  display: block;
+  background-color: #1a1a4e;
+  padding: .5em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  border: none;
+  margin: auto;
+  margin-top: 10px
+ }
   .nav-links{
     width: 70%;
   }
@@ -141,6 +170,12 @@ nav{
 
 .nav-active{
   height: 32vh;
+  #editpump{
+    width: 75% !important;
+  }
+  #createpump{
+    width: 75% !important;
+  }
 }
 
 @keyframes navLinkFade{
@@ -151,6 +186,13 @@ nav{
   to{
     opacity: 1;
     transform: translatex(0px);
+  #editpump{
+    width: 90% !important;
+    padding: 0px  25%;
+  }
+  #createpump{
+    width: 90% !important;
+    padding: 0px  25%;
   }
 }
 
@@ -162,6 +204,14 @@ nav{
 }
 .toggle .line3{
   transform: rotate(45deg) translate(-5px,-6px);
+  #editpump{
+    width: 100% !important;
+    padding: 0px  17%;
+  }
+  #createpump{
+    width: 100% !important;
+    padding: 0px  17%;
+  }
 }
 
 #phonenumbers {

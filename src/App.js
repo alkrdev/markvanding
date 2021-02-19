@@ -43,6 +43,9 @@ function App() {
       case "maintenance":
         setStage("maintenance")
         break;
+      case "addmachine":
+        setStage("addmachine")
+        break;
       default:
         break;
 
@@ -90,6 +93,8 @@ function App() {
             <Phonenumbers />
           ) : stage === "maintenance" ? (
             <Maintenance />
+          ) : stage === "addmachine" ? (
+            <Addmachines allPumps={allPumps}/>
           ) : <></>
         };
 
