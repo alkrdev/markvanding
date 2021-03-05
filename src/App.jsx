@@ -330,6 +330,12 @@ function App() {
           UpdateMachine(startMachine);
           
           // Set current stage to "overview", and set "Submitted" hook to false
+
+          // UDFYLD RIGTIG DATA TIL SMS
+          var pumpnumber
+          var pumpstartcode
+          //SendSMS();
+
           setStage("overview");
           setSubmitted(false);
         }}>
