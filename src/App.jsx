@@ -202,6 +202,52 @@ function App() {
 
   }
 
+  useEffect(function() 
+  {
+    fetch("http://192.168.1.70:5000/activemachines")
+      .then(function(data) {
+        return data.json();
+      })
+      .then(function(json) {
+        setActivemachines(json)     
+      }).catch((error) => {
+        console.log(error);
+      });
+
+      fetch("http://192.168.1.70:5000/inactivemachines")
+      .then(function(data) {
+        return data.json();
+      })
+      .then(function(json) {
+        setInactiveMachines(json)     
+      }).catch((error) => {
+        console.log(error);
+      });
+
+      fetch("http://192.168.1.70:5000/inactivepumps")
+      .then(function(data) {
+        return data.json();
+      })
+      .then(function(json) {
+        setInactivePumps(json)     
+      }).catch((error) => {
+        console.log(error);
+      });
+
+      fetch("http://192.168.1.70:5000/pumps")
+      .then(function(data) {
+        return data.json();
+      })
+      .then(function(json) {
+        setAllPumps(json)     
+      }).catch((error) => {
+        console.log(error);
+      });
+
+  }, [])
+
+
+
   return (
     <div className="App">
       {submitted ? (
