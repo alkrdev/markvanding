@@ -14,6 +14,12 @@ function App() {
   const [startMachine, setStartmachine] = useState({})
   const [selectedTime, setSelectedtime] = useState({})
 
+  const [activeMachines, setActivemachines] = useState([]);
+  const [inactiveMachines, setInactiveMachines] = useState([])
+  const [inactivePumps, setInactivePumps] = useState([])
+  const [allPumps, setAllPumps] = useState([])
+
+
   function slide(){
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
@@ -36,54 +42,6 @@ function App() {
     //Animate Burger
     burger.classList.toggle('toggle');
   }
-
-  const [activeMachines, setActivemachines] = useState([]);
-  const [inactiveMachines, setInactiveMachines] = useState([])
-  const [inactivePumps, setInactivePumps] = useState([])
-  const [allPumps, setAllPumps] = useState([])
-
-  useEffect(function() 
-  {
-    fetch("http://192.168.1.14:5000/activemachines")
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        setActivemachines(json)     
-      }).catch((error) => {
-        console.log(error);
-      });
-
-      fetch("http://192.168.1.14:5000/inactivemachines")
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        setInactiveMachines(json)     
-      }).catch((error) => {
-        console.log(error);
-      });
-
-      fetch("http://192.168.1.14:5000/inactivepumps")
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        setInactivePumps(json)     
-      }).catch((error) => {
-        console.log(error);
-      });
-
-      fetch("http://192.168.1.14:5000/pumps")
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        setAllPumps(json)     
-      }).catch((error) => {
-        console.log(error);
-      });
-  }, [])
 
   function HandleClick(navbar) {
     switch (navbar) {
@@ -194,7 +152,7 @@ function App() {
      tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
      tempMachine.time = tempTime.join(" ");
 
-    fetch("http://192.168.1.14:5000/updatemachine", {
+    fetch("http://192.168.1.70:5000/updatemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -346,7 +304,7 @@ function App() {
           stage === "overview" ? (
             <Overview activeMachines={activeMachines}/>
           ) : stage === "startmachine" ? (
-            <Startmachine setSubmitted={setSubmitted} setStartmachine={setStartmachine} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines}/>
+            <Startmachine setSubmitted={setSubmitted} setStartmachine={setStartmachine} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump}/>
           ) : stage === "phonenumber" ? (
             <Phonenumbers  allPumps={allPumps}/>
           ) : stage === "maintenance" ? (
