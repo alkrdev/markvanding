@@ -161,6 +161,46 @@ function App() {
     })
   }
 
+  function UpdatePump(pump){
+
+    // Set date of machine to selected date
+     var tempPump = {...pump}
+     
+     tempPump.active = 1;
+     
+
+    fetch("http://192.168.1.70:5000/updatepump", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(tempPump)
+    })
+  }
+
+  function SendSMS(){
+    fetch("http://localhost:5000/gettoken", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    })
+    .then(res => res.json())
+    .then(json => {
+      
+      fetch("http://localhost:5000/sendsms", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+          token: json["jwt"] 
+        })
+      })
+    })
+
+
+  }
 
   return (
     <div className="App">
