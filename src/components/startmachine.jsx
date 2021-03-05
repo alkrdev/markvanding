@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePumps, inactiveMachines}){
+function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePumps, inactiveMachines, updatePump}){
   const [data, setData] = useState([]);
   const [checked, setChecked] = useState(false)
   const [machine, setMachine] = useState("")
@@ -15,18 +15,28 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
 
         // Prevents default behavior (Getting put at another site)
         event.preventDefault();
+
+        console.log("HAPPENED")
         // Check if Checkbox is true or false
         if(!checked) return;
+        console.log("HAPPENED")
+
+        console.log(machine)
+        console.log(pump)
 
         // Checks if a machine and pump is selected
         if(machine && pump){
           // MAKE MACHINE OBJECT
           var newMachine = {
             id: machine,
-            pumpname: pump,
+            pumpname: pump.name,
             time: "2000-01-01 00:00:00",
             active: 1
           }
+
+          updatePump(pump)
+
+          // SET PUMP TO ACTIVE ---- pump.id
           
           // Sets "Startmachine" hook to values of "newMachine"
           setStartmachine(newMachine);
@@ -60,11 +70,16 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
           <label htmlFor="">Vælg en pumpe</label>
           <br></br>
           <select name="chosenpump" id="chosenpump" onChange={function(event){
-            setPump(event.target.value);
+            var options = event.target.children;
+            var option = options[event.target.selectedIndex];
+
+            setPump(inactivePumps.find((pump) => {
+              return pump.id == option.dataset.id
+            }));
           }}>
             <option selected disabled hidden></option>
             {inactivePumps.map(function(element) {
-              return <option key={element.id} >{element.name}</option>
+              return <option key={element.id} data-id={element.id}>{element.name}</option>
             })}
           </select>
         </div>
