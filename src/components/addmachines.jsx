@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react';
 
-function Addmachines({allPumps}){
+function Addmachines({allPumps, allMachines}){
 
   const [currentPump, setCurrentPump] = useState({
     name: "",
     number: "",
     startcode: "",
     stopcode: ""
+  })
+
+  const [currentMachine, setCurrentMachine] = useState({
+    pumpname: "",
+    time: ""
   })
 
   const findEditPump = () => {
@@ -105,7 +110,7 @@ function Addmachines({allPumps}){
     var removePumpName = document.getElementById("removepumpname")
     
     var pump = allPumps.find((pump) => {
-      return pump["name"] === findPumpName.value;
+      return pump["name"] == findPumpName.value;
     })
 
     if (pump) {
@@ -132,25 +137,28 @@ function Addmachines({allPumps}){
   }
 
   const findRemoveMachine = () => {
-    var findPumpName = document.getElementById("findremovepumpname");
-    var removePumpName = document.getElementById("removepumpname")
-    
-    var pump = allPumps.find((pump) => {
-      return pump["name"] === findPumpName.value;
+    var findMachineId = document.getElementById("findremovemachineid");
+    var removeMachineId = document.getElementById("removemachineid")
+
+    var machine = allMachines.find((machine) => {
+      return machine["id"] == findMachineId.value;
     })
 
-    if (pump) {
-      setCurrentPump(pump)
-      removePumpName.value = pump.name
+
+    if (machine) {
+      console.log(machine)
+      setCurrentMachine(machine)
+      console.log(currentMachine)
+      removeMachineId.value = machine.id
     } else {
-      alert("Pumpen findes ikke, har du skrevet det rigtigt?")
+      alert("Maskinen findes ikke, har du skrevet det rigtigt?")
     }
     
   }
 
-  const removePump = () =>{
+  const removeMachine = () =>{
     var tempMachine = {
-      id: currentPump.id,
+      id: currentMachine.id,
     } 
 
     fetch("http://192.168.1.70:5000/removemachine", {
@@ -229,10 +237,10 @@ function Addmachines({allPumps}){
         removeMachine();
         window.location.href = "/"
       }}>
-        <h2>Find/Rediger pumpe</h2>
+        <h2>Find/Rediger maskine</h2>
         <input type="text" id="findremovemachineid" name="findremovemachineid"></input><br></br>
-        <button type="button" className="createandupdatebuttons" onClick={() => findRemovePump()}>Find pumpe</button><br></br>
-        <label>Pumpe navn </label>
+        <button type="button" className="createandupdatebuttons" onClick={() => findRemoveMachine()}>Find maskine</button><br></br>
+        <label>Maskine nr. </label>
         <input type="text" id="removepumpname" name="removepumpname" required></input><br></br>
         <button id="removepumpbutton" type="submit">Slet</button>
       </form>

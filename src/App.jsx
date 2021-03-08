@@ -18,6 +18,7 @@ function App() {
   const [inactiveMachines, setInactiveMachines] = useState([])
   const [inactivePumps, setInactivePumps] = useState([])
   const [allPumps, setAllPumps] = useState([])
+  const [allMachines, setAllMachines] = useState([])
 
 
   function slide(){
@@ -244,6 +245,16 @@ function App() {
         console.log(error);
       });
 
+      fetch("http://192.168.1.70:5000/machines")
+      .then(function(data) {
+        return data.json();
+      })
+      .then(function(json) {
+        setAllMachines(json)
+      }).catch((error) => {
+        console.log(error);
+      });
+
   }, [])
 
 
@@ -402,7 +413,7 @@ function App() {
           ) : stage === "maintenance" ? (
             <Maintenance />
           ) : stage === "addmachine" ? (
-            <Addmachines allPumps={allPumps}/>
+            <Addmachines allPumps={allPumps} allMachines={allMachines}/>
           ) : <></>
         }
       </main>
