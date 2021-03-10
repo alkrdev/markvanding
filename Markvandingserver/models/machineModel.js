@@ -1,3 +1,12 @@
+var sql = require("../db.js")
+class Machine{
+    constructor(machine){
+        this.id = machine.id
+        this.pumpname = machine.pumpname
+        this.time = machine.time
+        this.active = machine.active
+    }
+
     static getInactiveMachines(result){
         sql.query("SELECT", (err, res) => {
             if(err){
@@ -9,6 +18,7 @@
             }
         })
     }
+
     static updateMachineById(id, updatedMachine, result){
         console.log(id)
         console.log(updatedMachine)
@@ -23,3 +33,4 @@
             }
         })
     }
+}
