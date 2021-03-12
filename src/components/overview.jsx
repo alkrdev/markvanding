@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 function Overview({activeMachines}) {
+function Overview({activeMachines, allPumps}) {
 
   useEffect(function() 
   {
@@ -13,6 +14,7 @@ function Overview({activeMachines}) {
         <col style={{width: "20%"}}></col>
         <col style={{width: "40%"}}></col>
         <col style={{width: "20%"}}></col>
+        <col style={{width: "5%"}}></col>
       </colgroup>
       <thead>
         <tr>
@@ -20,6 +22,7 @@ function Overview({activeMachines}) {
           <th>Pumpe Navn</th>
           <th>Færdig</th>
           <th>Status</th>
+          <th>Stop</th>
         </tr>
       </thead>
       <tbody>
@@ -32,12 +35,23 @@ function Overview({activeMachines}) {
 
           console.log(machine["time"])
           
+          var pump = allPumps.find((pum) => {
+            return pum.name == machine.pumpname
+          })
+
           return (
             <tr key={machine["id"]}>
               <td>{machine["id"]}</td>
               <td>{machine["pumpname"]}</td>
               <td>{time}</td>
               <td>"status"</td>
+              <td>
+                <div data-machineid={machine.id} data-pumpid={pump.id} onClick={(event) => {
+                  const { machineid, pumpid } = event.target.dataset
+
+                  // IT NEVER HAPPENED
+                }}></div>
+              </td>
             </tr>
           )
         })}
