@@ -42,4 +42,11 @@ exports.removeMachineById = (req, res) => {
         res.send(id)
     })
 }
+exports.createMachine = (req, res) => {
+    Machine.createMachine(new Machine(req.body), (err, machines) => {
+        if(err){
+            res.send(err)
+        }
+        res.send(machines)
+    })
 }

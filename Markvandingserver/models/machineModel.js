@@ -60,3 +60,17 @@ class Machine{
             }
         })
     }
+    static createMachine(createdMachine, result){
+        console.log(createdMachine)
+        console.log(result)
+        sql.query("INSERT INTO markvanding.machines SET ?", createdMachine, (err, res) => {
+            if(err){
+                console.log("Error: ", err)
+                result(err, null)
+            }
+            else{
+                result(null, res)
+            }
+        })
+    }
+}
