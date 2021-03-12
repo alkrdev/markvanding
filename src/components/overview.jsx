@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-function Overview({activeMachines}) {
 function Overview({activeMachines, allPumps}) {
 
   useEffect(function() 
@@ -13,7 +12,7 @@ function Overview({activeMachines, allPumps}) {
         <col style={{width: "10%"}}></col>
         <col style={{width: "20%"}}></col>
         <col style={{width: "40%"}}></col>
-        <col style={{width: "20%"}}></col>
+        <col style={{width: "15%"}}></col>
         <col style={{width: "5%"}}></col>
       </colgroup>
       <thead>
@@ -32,8 +31,6 @@ function Overview({activeMachines, allPumps}) {
             dateStyle: "medium",
             timeStyle: "short"
           });
-
-          console.log(machine["time"])
           
           var pump = allPumps.find((pum) => {
             return pum.name == machine.pumpname

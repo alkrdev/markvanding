@@ -1,3 +1,7 @@
+"use strict"
+
+var Pump = require("../models/pumpModel.js")
+
 exports.getInactivePumps = (req, res) => {
     Pump.getInactivePumps((err, Pumps) => {
         if(err){
@@ -6,6 +10,7 @@ exports.getInactivePumps = (req, res) => {
         res.send(Pumps)
     })
 }
+
 exports.getActivePumps = (req, res) => {
     Pump.getActivePumps((err, Pumps) => {
         if(err){
@@ -14,6 +19,7 @@ exports.getActivePumps = (req, res) => {
         res.send(Pumps)
     })
 }
+
 exports.getAllPumps = (req, res) => {
     Pump.getAllPumps((err, Pumps) => {
         if(err){
@@ -22,6 +28,7 @@ exports.getAllPumps = (req, res) => {
         res.send(Pumps)
     })
 }
+
 exports.updatePumpById = (req, res) => {
     Pump.updatePumpById(req.body.id, new Pump(req.body), (err, Pumps) => {
         if(err){
@@ -30,6 +37,7 @@ exports.updatePumpById = (req, res) => {
         res.send(Pumps)
     })
 }
+
 exports.removePumpById = (req, res) => {
     Pump.removePumpById(req.body.id, (err, id) => {
         if(err){
@@ -38,6 +46,7 @@ exports.removePumpById = (req, res) => {
         res.send(id)
     })
 }
+
 exports.createPump = (req, res) => {
     Pump.createPump(new Pump(req.body), (err, Pumps) => {
         if(err){

@@ -42,13 +42,10 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
         // Prevents default behavior (Getting put at another site)
         event.preventDefault();
 
-        console.log("HAPPENED")
+
         // Check if Checkbox is true or false
         if(!checked) return;
-        console.log("HAPPENED")
 
-        console.log(machine)
-        console.log(pump)
 
         // Checks if a machine and pump is selected
         if(machine && pump){
@@ -62,15 +59,18 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
 
           updatePump(pump)
 
+          if (!(pump.number.length > 11 || pump.numer.length < 11)) return;
+
           // SET PUMP TO ACTIVE ---- pump.id
           
           // Sets "Startmachine" hook to values of "newMachine"
           setStartmachine(newMachine);
           
           
-          // SEND QUERY AND AWAIT SUCCESS
-          
-
+          // UDFYLD RIGTIG DATA TIL SMS
+          var pumpnumber = pump.number
+          var pumpstartcode = pump.startcode
+          //SendSMS(pumpnumber, pumpstartcode);
           
           // Sets "Submitted" hook to true
           setSubmitted(true)

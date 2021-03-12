@@ -19,6 +19,7 @@ exports.getActiveMachines = (req, res) => {
         res.send(machines)
     })
 }
+
 exports.getAllMachines = (req, res) => {
     Machine.getAllMachines((err, machines) => {
         if(err){
@@ -27,6 +28,7 @@ exports.getAllMachines = (req, res) => {
         res.send(machines)
     })
 }
+
 exports.updateMachineById = (req, res) => {
     Machine.updateMachineById(req.body.id, new Machine(req.body), (err, machines) => {
         if(err){
@@ -34,6 +36,8 @@ exports.updateMachineById = (req, res) => {
         }
         res.send(machines)
     })
+}
+
 exports.removeMachineById = (req, res) => {
     Machine.removeMachineById(req.body.id, (err, id) => {
         if(err){
@@ -42,6 +46,7 @@ exports.removeMachineById = (req, res) => {
         res.send(id)
     })
 }
+
 exports.createMachine = (req, res) => {
     Machine.createMachine(new Machine(req.body), (err, machines) => {
         if(err){

@@ -1,3 +1,14 @@
+var sql = require("../db.js")
+class Pump{
+    constructor(pump){
+        this.id = pump.id
+        this.name = pump.name
+        this.number = pump.number
+        this.active = pump.active
+        this.startcode = pump.startcode
+        this.stopcode = pump.stopcode
+    }
+
     static getInactivePumps(result){
         sql.query("SELECT * FROM markvanding.pumps WHERE active = 0", (err, res) => {
             if(err){
@@ -9,6 +20,7 @@
             }
         })
     }
+
     static getActivePumps(result){
         sql.query("SELECT * FROM markvanding.pumps WHERE active = 1", (err, res) => {
             if(err){
@@ -20,6 +32,7 @@
             }
         })
     }
+
     static getAllPumps(result){
         sql.query("SELECT * FROM markvanding.pumps", (err, res) => {
             if(err){
@@ -31,6 +44,7 @@
             }
         })
     }
+
     static updatePumpById(id, updatedPump, result){
         console.log(id)
         console.log(updatedPump)
@@ -45,6 +59,7 @@
             }
         })
     }
+
     static removePumpById(id, result){
         console.log(id)
         console.log(result)
@@ -58,6 +73,7 @@
             }
         })
     }
+
     static createPump(createdPump, result){
         console.log(createdPump)
         console.log(result)
@@ -72,3 +88,5 @@
         })
     }
 }
+
+module.exports = Pump

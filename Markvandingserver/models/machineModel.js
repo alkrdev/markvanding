@@ -57,6 +57,7 @@ class Machine{
             }
         })
     }
+
     static removeMachineById(id, result){
         console.log(id)
         console.log(result)
@@ -70,6 +71,7 @@ class Machine{
             }
         })
     }
+
     static createMachine(createdMachine, result){
         console.log(createdMachine)
         console.log(result)
@@ -84,3 +86,5 @@ class Machine{
         })
     }
 }
+
+module.exports = Machine

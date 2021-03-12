@@ -33,7 +33,7 @@ body {
 #overview th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #1a1a4e;
   color: rgb(255, 255, 255);
 }
@@ -128,7 +128,7 @@ nav{
 #phonenumbers th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #1a1a4e;
   color: rgb(255, 255, 255);
 }

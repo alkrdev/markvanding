@@ -71,7 +71,7 @@ function Addmachines({allPumps, allMachines}){
 
     var tempPump = {
       name: name.value,
-      number: number.value,
+      number: "+45" + number.value,
       active: 0,
       startcode: startcode.value,
       stopcode: stopcode.value
@@ -174,6 +174,8 @@ function Addmachines({allPumps, allMachines}){
     <div>
       <form id="createpump" onSubmit={function(event){
         event.preventDefault();
+        // Submit kun hvis nummeret ikke indeholder et "+"
+        // Forklar bruger visuelt at nummeret ikke må indeholde landekoder
         createPump();
         window.location.href = "/"
       }}>

@@ -212,7 +212,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://192.168.1.70:5000/pumps")
+      fetch("http://192.168.1.70:5000/allpumps")
       .then(function(data) {
         return data.json();
       })
@@ -319,10 +319,6 @@ function App() {
           
           // Set current stage to "overview", and set "Submitted" hook to false
 
-          // UDFYLD RIGTIG DATA TIL SMS
-          var pumpnumber
-          var pumpstartcode
-          //SendSMS();
 
           setStage("overview");
           setSubmitted(false);
@@ -382,7 +378,7 @@ function App() {
         <main>
         {
           stage === "overview" ? (
-            <Overview activeMachines={activeMachines}/>
+            <Overview activeMachines={activeMachines} allPumps={allPumps}/>
           ) : stage === "startmachine" ? (
             <Startmachine setSubmitted={setSubmitted} setStartmachine={setStartmachine} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump}/>
           ) : stage === "phonenumber" ? (
