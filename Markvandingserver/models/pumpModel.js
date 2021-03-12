@@ -45,3 +45,16 @@
             }
         })
     }
+    static removePumpById(id, result){
+        console.log(id)
+        console.log(result)
+        sql.query("REMOVE FROM markvanding.pumps WHERE id = ?", id, (err, res) => {
+            if(err){
+                console.log("Error: ", err)
+                result(err, null)
+            }
+            else{
+                result(null, res)
+            }
+        })
+    }

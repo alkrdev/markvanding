@@ -30,3 +30,11 @@ exports.updatePumpById = (req, res) => {
         res.send(Pumps)
     })
 }
+exports.removePumpById = (req, res) => {
+    Pump.removePumpById(req.body.id, (err, id) => {
+        if(err){
+            res.send(err)
+        }
+        res.send(id)
+    })
+}
