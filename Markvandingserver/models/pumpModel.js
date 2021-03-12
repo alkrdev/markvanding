@@ -31,3 +31,17 @@
             }
         })
     }
+    static updatePumpById(id, updatedPump, result){
+        console.log(id)
+        console.log(updatedPump)
+        console.log(result)
+        sql.query("UPDATE markvanding.pumps SET ? WHERE id = ?", [updatedPump, id], (err, res) => {
+            if(err){
+                console.log("Error: ", err)
+                result(err, null)
+            }
+            else{
+                result(null, res)
+            }
+        })
+    }

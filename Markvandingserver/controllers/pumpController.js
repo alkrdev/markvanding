@@ -22,3 +22,11 @@ exports.getAllPumps = (req, res) => {
         res.send(Pumps)
     })
 }
+exports.updatePumpById = (req, res) => {
+    Pump.updatePumpById(req.body.id, new Pump(req.body), (err, Pumps) => {
+        if(err){
+            res.send(err)
+        }
+        res.send(Pumps)
+    })
+}
