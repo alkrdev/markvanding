@@ -14,3 +14,11 @@ exports.getActivePumps = (req, res) => {
         res.send(Pumps)
     })
 }
+exports.getAllPumps = (req, res) => {
+    Pump.getAllPumps((err, Pumps) => {
+        if(err){
+            res.send(err)
+        }
+        res.send(Pumps)
+    })
+}
