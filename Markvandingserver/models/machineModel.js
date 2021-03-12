@@ -20,6 +20,9 @@ class Machine{
             }
         })
     }
+
+    static getAllMachines(result){
+        sql.query("SELECT * FROM markvanding.machines", (err, res) => {
             if(err){
                 console.log("Error: ", err)
                 result(err, null)
@@ -44,4 +47,3 @@ class Machine{
             }
         })
     }
-}
