@@ -179,29 +179,6 @@ function App() {
     })
   }
 
-  function SendSMS(){
-    fetch("http://localhost:5000/gettoken", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      },
-    })
-    .then(res => res.json())
-    .then(json => {
-      
-      fetch("http://localhost:5000/sendsms", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ 
-          token: json["jwt"] 
-        })
-      })
-    })
-
-
-  }
 
   useEffect(function() 
   {
