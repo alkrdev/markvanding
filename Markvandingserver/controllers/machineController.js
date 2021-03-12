@@ -34,4 +34,12 @@ exports.updateMachineById = (req, res) => {
         }
         res.send(machines)
     })
+exports.removeMachineById = (req, res) => {
+    Machine.removeMachineById(req.body.id, (err, id) => {
+        if(err){
+            res.send(err)
+        }
+        res.send(id)
+    })
+}
 }
