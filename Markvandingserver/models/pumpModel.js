@@ -58,3 +58,17 @@
             }
         })
     }
+    static createPump(createdPump, result){
+        console.log(createdPump)
+        console.log(result)
+        sql.query("INSERT INTO markvanding.pumps SET ?", createdPump, (err, res) => {
+            if(err){
+                console.log("Error: ", err)
+                result(err, null)
+            }
+            else{
+                result(null, res)
+            }
+        })
+    }
+}
