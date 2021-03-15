@@ -59,8 +59,6 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
 
           updatePump(pump)
 
-          if (!(pump.number.length > 11 || pump.numer.length < 11)) return;
-
           // SET PUMP TO ACTIVE ---- pump.id
           
           // Sets "Startmachine" hook to values of "newMachine"
