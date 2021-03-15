@@ -69,6 +69,18 @@ function Addmachines({allPumps, allMachines}){
     var startcode = document.getElementById("createpumpstartcode")
     var stopcode = document.getElementById("createpumpstopcode")
 
+    var re = new RegExp("[0-9]{8}$")
+
+    if (number.value.length !== 8) {
+      alert("Nummeret må kun være 8 cifre langt")
+      return;
+    }
+    if (re.test(number.value.toString()) == false) {
+      alert("Nummeret må kun være tal")
+      return;
+    }
+    if (re.test(number.value.toString()) == true) alert("Eyyy det virker");
+
     var tempPump = {
       name: name.value,
       number: "+45" + number.value,
