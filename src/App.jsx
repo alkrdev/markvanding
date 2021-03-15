@@ -9,12 +9,13 @@ function App() {
 
   const windowWidth = window.innerWidth;
 
-  const [stage, setStage] = useState("overview");
-  const [submitted, setSubmitted] = useState(false);
+  const [stage, setStage] = useState("overview")
+  const [submitted, setSubmitted] = useState(false)
   const [startMachine, setStartmachine] = useState({})
   const [selectedTime, setSelectedtime] = useState({})
 
-  const [activeMachines, setActivemachines] = useState([]);
+  const [activeMachines, setActiveMachines] = useState([])
+  const [activePumps, setActivePumps] = useState([])
   const [inactiveMachines, setInactiveMachines] = useState([])
   const [inactivePumps, setInactivePumps] = useState([])
   const [allPumps, setAllPumps] = useState([])
@@ -153,7 +154,7 @@ function App() {
      tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
      tempMachine.time = tempTime.join(" ");
 
-    fetch("http://192.168.1.70:5000/updatemachine", {
+    fetch("http://localhost:5000/updatemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -170,7 +171,7 @@ function App() {
      tempPump.active = 1;
      
 
-    fetch("http://192.168.1.70:5000/updatepump", {
+    fetch("http://localhost:5000/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -182,12 +183,12 @@ function App() {
 
   useEffect(function() 
   {
-    fetch("http://192.168.1.70:5000/activemachines")
+    fetch("http://localhost:5000/activemachines")
       .then(function(data) {
         return data.json();
       })
       .then(function(json) {
-        setActivemachines(json)     
+        setActiveMachines(json)     
       }).catch((error) => {
         console.log(error);
       });
@@ -202,7 +203,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://192.168.1.70:5000/inactivepumps")
+      fetch("http://localhost:5000/inactivepumps")
       .then(function(data) {
         return data.json();
       })
@@ -212,7 +213,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://192.168.1.70:5000/allpumps")
+      fetch("http://localhost:5000/allpumps")
       .then(function(data) {
         return data.json();
       })
@@ -222,7 +223,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://192.168.1.70:5000/machines")
+      fetch("http://localhost:5000/machines")
       .then(function(data) {
         return data.json();
       })
