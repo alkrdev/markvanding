@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Overview({activeMachines, allPumps}) {
+function Overview({activeMachines, activePumps}) {
 
   useEffect(function() 
   {
@@ -32,7 +32,7 @@ function Overview({activeMachines, allPumps}) {
             timeStyle: "short"
           });
           
-          var pump = allPumps.find((pum) => {
+          var pump = activePumps.find((pum) => {
             return pum.name == machine.pumpname
           })
 

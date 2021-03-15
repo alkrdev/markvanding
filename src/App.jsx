@@ -193,7 +193,17 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://192.168.1.70:5000/inactivemachines")
+      fetch("http://localhost:5000/activepumps")
+      .then(function(data) {
+        return data.json();
+      })
+      .then(function(json) {
+        setActivePumps(json)     
+      }).catch((error) => {
+        console.log(error);
+      });
+
+      fetch("http://localhost:5000/inactivemachines")
       .then(function(data) {
         return data.json();
       })
@@ -308,7 +318,7 @@ function App() {
 
           
           // Make new array with the old data from tempdatamachines, and add "tempMachine" to it
-          setActivemachines(activeMachines => [...activeMachines, startMachine])
+          setActiveMachines(activeMachines => [...activeMachines, startMachine])
 
           // Removes active machine from dropdown menu
           setInactiveMachines(inactiveMachines.filter(machine => startMachine.id != machine.id))
@@ -379,7 +389,7 @@ function App() {
         <main>
         {
           stage === "overview" ? (
-            <Overview activeMachines={activeMachines} allPumps={allPumps}/>
+            <Overview activeMachines={activeMachines} activePumps={activePumps}/>
           ) : stage === "startmachine" ? (
             <Startmachine setSubmitted={setSubmitted} setStartmachine={setStartmachine} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump}/>
           ) : stage === "phonenumber" ? (
