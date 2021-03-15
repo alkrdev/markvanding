@@ -43,7 +43,7 @@ function Overview({activeMachines, activePumps}) {
               <td>{time}</td>
               <td>"status"</td>
               <td>
-                <div data-machineid={machine.id} data-pumpid={pump.id} onClick={(event) => {
+                <div data-machineid={machine.id} data-pumpid={pump?.id} onClick={(event) => {
                   const { machineid, pumpid } = event.target.dataset
 
                   // IT NEVER HAPPENED

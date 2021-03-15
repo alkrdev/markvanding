@@ -53,7 +53,7 @@ function Addmachines({allPumps, allMachines}){
       stopcode: stopcode.value
     }
 
-    fetch("http://192.168.1.70:5000/updatepump", {
+    fetch("http://localhost:5000/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -77,14 +77,14 @@ function Addmachines({allPumps, allMachines}){
       stopcode: stopcode.value
     } 
   
-    fetch("http://192.168.1.70:5000/createpump", {
+    fetch("http://localhost:5000/createpump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(tempPump)
     })
-  
+    window.location.href = "/"
   }
 
   const createMachine = () =>{
@@ -95,14 +95,14 @@ function Addmachines({allPumps, allMachines}){
       active: 0
     } 
   
-    fetch("http://192.168.1.70:5000/createmachine", {
+    fetch("http://localhost:5000/createmachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(tempMachine)
     })
-  
+    
   }
 
   const findRemovePump = () => {
@@ -127,7 +127,7 @@ function Addmachines({allPumps, allMachines}){
       id: currentPump.id,
     } 
 
-    fetch("http://192.168.1.70:5000/removepump", {
+    fetch("http://localhost:5000/removepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -161,7 +161,7 @@ function Addmachines({allPumps, allMachines}){
       id: currentMachine.id,
     } 
 
-    fetch("http://192.168.1.70:5000/removemachine", {
+    fetch("http://localhost:5000/removemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -177,7 +177,6 @@ function Addmachines({allPumps, allMachines}){
         // Submit kun hvis nummeret ikke indeholder et "+"
         // Forklar bruger visuelt at nummeret ikke må indeholde landekoder
         createPump();
-        window.location.href = "/"
       }}>
         <h2>Opret pumpe</h2>
         <label>Pumpe navn </label>
@@ -194,7 +193,6 @@ function Addmachines({allPumps, allMachines}){
       <form id="createmachine" onSubmit={function(event){
         event.preventDefault();
         createMachine();
-        window.location.href = "/"
       }}>
         <h2>Opret maskine</h2>
         <label>Maskine nr. </label>
