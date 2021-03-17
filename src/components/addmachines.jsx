@@ -8,11 +8,44 @@ function Addmachines({allPumps, allMachines}){
     startcode: "",
     stopcode: ""
   })
-
   const [currentMachine, setCurrentMachine] = useState({
-    pumpname: "",
-    time: ""
   })
+
+  const validatePump = (name, number) => {
+    var re = new RegExp("[0-9]{8}$")
+
+    if (number.value.length !== 8) {
+      alert("Nummeret skal være 8 cifre langt!")
+      return;
+    }
+    if (re.test(number.value.toString()) == false) {
+      alert("Nummeret må kun være tal")
+      return;
+    }
+
+    // Variables for name (na), and number (nu)
+    // Checks if name and number already exists
+    var na = allPumps.some(a => a.name === name.value)
+    var nu = allPumps.some(a => a.number === number.value)
+
+    // If name or number exists, make an alert with the problem, and return out / stop the function
+    if (name.value !== currentPump.name){
+      if (na == true){
+        alert("Pumpens navn findes allerede")
+        return;
+      }
+    }
+    
+    if (number.value !== currentPump.number){
+      if (nu == true){
+        alert("Pumpens tlf nummer findes allerede")
+        return;
+      }
+    }
+    
+    if (re.test(number.value.toString()) == true) alert("Eyyy det virker");
+    return true;
+  }
 
   const findEditPump = () => {
     var findPumpName = document.getElementById("findeditpumpname");
@@ -44,6 +77,9 @@ function Addmachines({allPumps, allMachines}){
     var startcode = document.getElementById("editpumpstartcode")
     var stopcode = document.getElementById("editpumpstopcode")
 
+    var result = validatePump(name, number)
+    if (result !== true) return;
+
     var tempPump = {
       id: currentPump.id,
       name: name.value,
@@ -53,14 +89,14 @@ function Addmachines({allPumps, allMachines}){
       stopcode: stopcode.value
     }
 
-    fetch("http://localhost:5000/updatepump", {
+    fetch("http://10.10.60.161:5000/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(tempPump)
     })
-    
+    window.location.href = "/"
   }
 
   const createPump = () =>{
@@ -69,27 +105,20 @@ function Addmachines({allPumps, allMachines}){
     var startcode = document.getElementById("createpumpstartcode")
     var stopcode = document.getElementById("createpumpstopcode")
 
-    var re = new RegExp("[0-9]{8}$")
+    var result = validatePump(name, number)
+    if (result !== true) return;
 
-    if (number.value.length !== 8) {
-      alert("Nummeret må kun være 8 cifre langt")
-      return;
-    }
-    if (re.test(number.value.toString()) == false) {
-      alert("Nummeret må kun være tal")
-      return;
-    }
-    if (re.test(number.value.toString()) == true) alert("Eyyy det virker");
-
+    // Temporary pump object that gets sent to the server to insert into the database
     var tempPump = {
       name: name.value,
-      number: "+45" + number.value,
+      number: number.value,
       active: 0,
       startcode: startcode.value,
       stopcode: stopcode.value
     } 
   
-    fetch("http://localhost:5000/createpump", {
+    // Sends tempPump to server
+    fetch("http://10.10.60.161:5000/createpump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -102,19 +131,35 @@ function Addmachines({allPumps, allMachines}){
   const createMachine = () =>{
     var id = document.getElementById("createmachineid")
 
+    var re = new RegExp(/^[0-9]+$/)
+
+    if (re.test(id.value.toString()) == false) {
+      alert("Nummeret må kun være tal")
+      return;
+    }
+
+    var nu = allMachines.some(a => a.id == id.value)
+    
+    if (nu == true) {
+      alert("Maskine nummeret findes allerede")
+      return;
+    }
+
+    if (re.test(id.value.toString()) == true) alert("Eyyy det virker");
+
     var tempMachine = {
       id: id.value,
       active: 0
     } 
   
-    fetch("http://localhost:5000/createmachine", {
+    fetch("http://10.10.60.161:5000/createmachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(tempMachine)
     })
-    
+    window.location.href="/"
   }
 
   const findRemovePump = () => {
@@ -139,7 +184,7 @@ function Addmachines({allPumps, allMachines}){
       id: currentPump.id,
     } 
 
-    fetch("http://localhost:5000/removepump", {
+    fetch("http://10.10.60.161:5000/removepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -158,9 +203,7 @@ function Addmachines({allPumps, allMachines}){
 
 
     if (machine) {
-      console.log(machine)
       setCurrentMachine(machine)
-      console.log(currentMachine)
       removeMachineId.value = machine.id
     } else {
       alert("Maskinen findes ikke, har du skrevet det rigtigt?")
@@ -173,7 +216,7 @@ function Addmachines({allPumps, allMachines}){
       id: currentMachine.id,
     } 
 
-    fetch("http://localhost:5000/removemachine", {
+    fetch("http://10.10.60.161:5000/removemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -186,8 +229,6 @@ function Addmachines({allPumps, allMachines}){
     <div>
       <form id="createpump" onSubmit={function(event){
         event.preventDefault();
-        // Submit kun hvis nummeret ikke indeholder et "+"
-        // Forklar bruger visuelt at nummeret ikke må indeholde landekoder
         createPump();
       }}>
         <h2>Opret pumpe</h2>
@@ -199,7 +240,7 @@ function Addmachines({allPumps, allMachines}){
         <input type="text" id="createpumpstartcode" name="createpumpstartcode"></input><br></br>
         <label>Stopkode </label>
         <input type="text" id="createpumpstopcode" name="createpumpstopcode"></input><br></br>
-        <button id="createPumpButton" type="submit">Opret</button>
+        <button className="createandupdatebuttons" type="submit">Opret</button>
       </form>
 
       <form id="createmachine" onSubmit={function(event){
@@ -209,13 +250,12 @@ function Addmachines({allPumps, allMachines}){
         <h2>Opret maskine</h2>
         <label>Maskine nr. </label>
         <input type="text" id="createmachineid" name="createmachineid"></input><br></br>
-        <button id="createmachinebutton" type="submit">Opret</button>
+        <button className="createandupdatebuttons" type="submit">Opret</button>
       </form>
 
       <form id="editpump" onSubmit={function(event){
         event.preventDefault();
         updatePump();
-        window.location.href = "/"
       }}>
         <h2>Find/Rediger pumpe</h2>
         <input type="text" id="findeditpumpname" name="findeditpumpname"></input><br></br>
@@ -228,7 +268,7 @@ function Addmachines({allPumps, allMachines}){
         <input type="text" id="editpumpstartcode" name="editpumpstartcode" required></input><br></br>
         <label>Pumpe stopcode </label>
         <input type="text" id="editpumpstopcode" name="editpumpstopcode" required></input><br></br>
-        <button id="updatePumpButton" type="submit">Opdater</button>
+        <button className="createandupdatebuttons" type="submit">Opdater</button>
       </form>
 
       <form id="removepump" onSubmit={function(event){
@@ -236,12 +276,12 @@ function Addmachines({allPumps, allMachines}){
         removePump();
         window.location.href = "/"
       }}>
-        <h2>Find/Rediger pumpe</h2>
+        <h2>Find/Slet pumpe</h2>
         <input type="text" id="findremovepumpname" name="findremovepumpname"></input><br></br>
         <button type="button" className="createandupdatebuttons" onClick={() => findRemovePump()}>Find pumpe</button><br></br>
         <label>Pumpe navn </label>
-        <input type="text" id="removepumpname" name="removepumpname" required></input><br></br>
-        <button id="removepumpbutton" type="submit">Slet</button>
+        <input type="text" id="removepumpname" name="removepumpname" disabled="disabled" required></input><br></br>
+        <button className="createandupdatebuttons" type="submit">Slet</button>
       </form>
 
       <form id="removemachine" onSubmit={function(event){
@@ -249,12 +289,12 @@ function Addmachines({allPumps, allMachines}){
         removeMachine();
         window.location.href = "/"
       }}>
-        <h2>Find/Rediger maskine</h2>
+        <h2>Find/Slet maskine</h2>
         <input type="text" id="findremovemachineid" name="findremovemachineid"></input><br></br>
         <button type="button" className="createandupdatebuttons" onClick={() => findRemoveMachine()}>Find maskine</button><br></br>
         <label>Maskine nr. </label>
-        <input type="text" id="removepumpname" name="removepumpname" required></input><br></br>
-        <button id="removepumpbutton" type="submit">Slet</button>
+        <input type="text" id="removemachineid" name="removemachineid" disabled="disabled" required></input><br></br>
+        <button className="createandupdatebuttons" type="submit">Slet</button>
       </form>
 
       <form>
