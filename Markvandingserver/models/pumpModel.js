@@ -46,9 +46,6 @@ class Pump{
     }
 
     static updatePumpById(id, updatedPump, result){
-        console.log(id)
-        console.log(updatedPump)
-        console.log(result)
         sql.query("UPDATE markvanding.pumps SET ? WHERE id = ?", [updatedPump, id], (err, res) => {
             if(err){
                 console.log("Error: ", err)
@@ -63,7 +60,7 @@ class Pump{
     static removePumpById(id, result){
         console.log(id)
         console.log(result)
-        sql.query("REMOVE FROM markvanding.pumps WHERE id = ?", id, (err, res) => {
+        sql.query("DELETE FROM markvanding.pumps WHERE id = ?", id, (err, res) => {
             if(err){
                 console.log("Error: ", err)
                 result(err, null)

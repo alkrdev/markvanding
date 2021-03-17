@@ -7,6 +7,8 @@ class SMS{
 
     static sendSingleMessage(message, number)
     {
+        console.log(message)
+        console.log(number)
         var https = require('follow-redirects').https;
 
         var options = {
@@ -37,11 +39,13 @@ class SMS{
             });
         });
 
-        var postData =  "{\n    \"message\": \"" + message + "\",\n    \"to\": \"" + number + "\"}";
+        console.log(message)
+        console.log(number)
+        //var postData =  "{\n    \"message\": \"" + message + "\",\n    \"to\": \"" + number + "\"}";
 
-        req.write(postData);
+        //req.write(postData);
 
-        req.end();
+        //req.end();
     }
 
 }

@@ -154,7 +154,7 @@ function App() {
      tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
      tempMachine.time = tempTime.join(" ");
 
-    fetch("http://localhost:5000/updatemachine", {
+    fetch("http://10.10.60.161:5000/updatemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -171,7 +171,7 @@ function App() {
      tempPump.active = 1;
      
 
-    fetch("http://localhost:5000/updatepump", {
+    fetch("http://10.10.60.161:5000/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
