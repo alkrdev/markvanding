@@ -15,6 +15,30 @@ body {
   text-align: center;
 }
 
+#maintenance{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.maintenanceboxes{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  margin: 50px;
+  border: 1px solid black;
+}
+
+#stopwateringbuttontext {
+  visibility: hidden;
+}
+
+#stopwateringbutton {
+  background-color: red;
+}
 
 #overview {
   border-collapse: collapse;
@@ -297,6 +321,22 @@ form.select div {
    padding: 20px;
  }
 
+ #removepump {
+  width: 30%;
+  border: solid #1a1a4e;
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+ }
+
+ #removemachine {
+  width: 30%;
+  border: solid #1a1a4e;
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+ }
+
  .createandupdatebuttons {
   display: block;
   background-color: #1a1a4e;
@@ -391,6 +431,12 @@ form.select div {
   #createmachine{
     width: 40% !important;
   }
+  #removepump{
+    width: 40% !important;
+  }
+  #removemachine{
+    width: 40% !important;
+  }
   #overview{
     width: 80%;
   }
@@ -441,6 +487,12 @@ form.select div {
   #createmachine{
     width: 50% !important;
   }
+  #removepump{
+    width: 50% !important;
+  }
+  #removemachine{
+    width: 50% !important;
+  }
 }
 
 @media screen and (max-width:912px){
@@ -456,6 +508,12 @@ form.select div {
   #createmachine{
     width: 65% !important;
   }
+  #removepump{
+    width: 65% !important;
+  }
+  #removemachine{
+    width: 65% !important;
+  }
 }
 
 @media screen and (max-width:740px){
@@ -469,6 +527,12 @@ form.select div {
     width: 75% !important;
   }
   #createmachine{
+    width: 75% !important;
+  }
+  #removepump{
+    width: 75% !important;
+  }
+  #removemachine{
     width: 75% !important;
   }
 }
@@ -489,6 +553,14 @@ form.select div {
     width: 90% !important;
     padding: 0px 25%;
   }
+  #removepump{
+    width: 90% !important;
+    padding: 0px 25%;
+  }
+  #removemachine{
+    width: 90% !important;
+    padding: 0px 25%;
+  }
 }
 
 @media screen and (max-width:528px){
@@ -504,6 +576,14 @@ form.select div {
     padding: 0px  17%;
   }
   #createmachine{
+    width: 100% !important;
+    padding: 0px 17%;
+  }
+  #removepump{
+    width: 100% !important;
+    padding: 0px 17%;
+  }
+  #removemachine{
     width: 100% !important;
     padding: 0px 17%;
   }
@@ -560,10 +640,10 @@ form.select div {
 		Label the data
     You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
 		*/
-		td:nth-of-type(1):before { content: "Maskine id"; }
-		td:nth-of-type(2):before { content: "Pumpe navn"; }
+		td:nth-of-type(1):before { content: "Maskine nr."; }
+		td:nth-of-type(2):before { content: "Pumpe Navn"; }
 		td:nth-of-type(3):before { content: "Færdig"; }
-		td:nth-of-type(4):before { content: "Status"; }
+    td:nth-of-type(4):before { content: "Stop Vanding";}
 	}
 
 @keyframes navLinkFade{
