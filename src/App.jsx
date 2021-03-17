@@ -180,10 +180,46 @@ function App() {
     })
   }
 
+  function StopPump(pump){
+
+    // Set date of machine to selected date
+     var tempPump = {...pump}
+     
+     tempPump.active = 0;
+     
+
+    fetch("http://10.10.60.161:5000/updatepump", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(tempPump)
+    })
+  }
+
+  function StopMachine(machine){
+
+    // Set date of machine to selected date
+     var tempMachine = {...machine}
+    
+     tempMachine.pumpname = null
+     tempMachine.time = null
+     tempMachine.active = 0
+     
+
+    fetch("http://10.10.60.161:5000/updatemachine", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(tempMachine)
+    })
+  }
+
 
   useEffect(function() 
   {
-    fetch("http://localhost:5000/activemachines")
+    fetch("http://10.10.60.161:5000/activemachines")
       .then(function(data) {
         return data.json();
       })
@@ -193,7 +229,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://localhost:5000/activepumps")
+      fetch("http://10.10.60.161:5000/activepumps")
       .then(function(data) {
         return data.json();
       })
@@ -203,7 +239,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://localhost:5000/inactivemachines")
+      fetch("http://10.10.60.161:5000/inactivemachines")
       .then(function(data) {
         return data.json();
       })
@@ -213,7 +249,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://localhost:5000/inactivepumps")
+      fetch("http://10.10.60.161:5000/inactivepumps")
       .then(function(data) {
         return data.json();
       })
@@ -223,7 +259,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://localhost:5000/allpumps")
+      fetch("http://10.10.60.161:5000/allpumps")
       .then(function(data) {
         return data.json();
       })
@@ -233,7 +269,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://localhost:5000/machines")
+      fetch("http://10.10.60.161:5000/allmachines")
       .then(function(data) {
         return data.json();
       })
@@ -330,9 +366,8 @@ function App() {
           
           // Set current stage to "overview", and set "Submitted" hook to false
 
-
-          setStage("overview");
           setSubmitted(false);
+          window.location.href = "/"
         }}>
           <div id="choosetime">
             <div className="tab">
@@ -389,13 +424,13 @@ function App() {
         <main>
         {
           stage === "overview" ? (
-            <Overview activeMachines={activeMachines} activePumps={activePumps}/>
+            <Overview activeMachines={activeMachines} activePumps={activePumps} stopMachine={StopMachine} stopPump={StopPump}/>
           ) : stage === "startmachine" ? (
             <Startmachine setSubmitted={setSubmitted} setStartmachine={setStartmachine} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump}/>
           ) : stage === "phonenumber" ? (
             <Phonenumbers  allPumps={allPumps}/>
           ) : stage === "maintenance" ? (
-            <Maintenance />
+            <Maintenance allMachines={allMachines}/>
           ) : stage === "addmachine" ? (
             <Addmachines allPumps={allPumps} allMachines={allMachines}/>
           ) : <></>
