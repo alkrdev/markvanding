@@ -1,7 +1,17 @@
-function Maintenance(){
+function Maintenance({allMachines}){
+
+  const handleClick = () => {}
 
   return(
-    <h1>Intet at se her endnu</h1>
+    <div id="maintenance">
+      {allMachines.map((machine) => {
+      return(
+        <div className="maintenanceboxes" onClick={handleClick}>
+            {machine.id}
+        </div>
+      )
+    })}
+    </div>
   )
 
 
