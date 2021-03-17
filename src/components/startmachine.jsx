@@ -6,30 +6,17 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
   const [machine, setMachine] = useState("")
   const [pump, setPump] = useState("")
 
-  function SendSMS(pumpnumber, pumpstartcode){
-    // fetch("http://localhost:5000/gettoken", {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    // })
-    // .then(res => res.json())
-    // .then(json => {
-      
-      fetch("http://localhost:5000/sendsms", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ 
-          //token: json["jwt"],
-          number: pumpnumber,
-          message: pumpstartcode
-        })
+  function sendStartSMS(pumpnumber, pumpstartcode){
+    fetch("http://10.10.60.161:5000/sendsms", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ 
+        number: pumpnumber,
+        message: pumpstartcode
       })
-    // })
-
-
+    })
   }
 
   useEffect(function() 
@@ -66,9 +53,9 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
           
           
           // UDFYLD RIGTIG DATA TIL SMS
-          var pumpnumber = pump.number
+          var pumpnumber = "+45" + pump.number
           var pumpstartcode = pump.startcode
-          //SendSMS(pumpnumber, pumpstartcode);
+          //sendStartSMS(pumpnumber, pumpstartcode)
           
           // Sets "Submitted" hook to true
           setSubmitted(true)
