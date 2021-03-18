@@ -12,7 +12,6 @@ function App() {
 
   const [stage, setStage] = useState("overview")
   const [submitted, setSubmitted] = useState(false)
-  const [startMachine, setStartmachine] = useState({})
   const [selectedTime, setSelectedtime] = useState({})
 
   const [activeMachines, setActiveMachines] = useState([])
@@ -22,6 +21,9 @@ function App() {
   const [allPumps, setAllPumps] = useState([])
   const [allMachines, setAllMachines] = useState([])
   const [shownMachine, setShownMachine] = useState([])
+  
+  const machine = localStorage.getItem("machine")
+  const pump = localStorage.getItem("pump")
 
 
   function slide(){
@@ -221,6 +223,11 @@ function App() {
 
   useEffect(function() 
   {
+    var hasstarted = localStorage.getItem("hasstarted")
+    if (hasstarted == "true") {
+      console.log("Hej")
+      setSubmitted(true)
+    }
     fetch("http://10.10.60.161:5000/activemachines")
       .then(function(data) {
         return data.json();
@@ -280,7 +287,6 @@ function App() {
       }).catch((error) => {
         console.log(error);
       });
-
   }, [])
 
 
@@ -289,6 +295,21 @@ function App() {
     <div className="App">
       {submitted ? (
         <form onSubmit={function(event) {
+          
+          if(machine && pump){
+            console.log(machine)
+            console.log(pump)
+          }
+
+
+          var startMachine = {
+            id: machine,
+            pumpname: pump,
+            time: "2000-01-01 00:00:00",
+            active: 1
+          }
+          
+          
           var months = {
             "Jan": "January",
             "Feb": "February",
@@ -354,6 +375,7 @@ function App() {
           
           // var returned = formatTime(newDate, "hh:mm:ss")
 
+          console.log(startMachine)
           
           // Make new array with the old data from tempdatamachines, and add "tempMachine" to it
           setActiveMachines(activeMachines => [...activeMachines, startMachine])
@@ -368,6 +390,9 @@ function App() {
           
           // Set current stage to "overview", and set "Submitted" hook to false
 
+          localStorage.setItem("pump", "")
+          localStorage.setItem("machine", "")
+          localStorage.setItem("hasstarted", "false")
           setSubmitted(false);
           window.location.href = "/"
         }}>

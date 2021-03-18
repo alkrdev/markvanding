@@ -37,19 +37,11 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
         // Checks if a machine and pump is selected
         if(machine && pump){
           // MAKE MACHINE OBJECT
-          var newMachine = {
-            id: machine,
-            pumpname: pump.name,
-            time: "2000-01-01 00:00:00",
-            active: 1
-          }
-
           updatePump(pump)
 
           // SET PUMP TO ACTIVE ---- pump.id
           
-          // Sets "Startmachine" hook to values of "newMachine"
-          setStartmachine(newMachine);
+         
           
           
           // UDFYLD RIGTIG DATA TIL SMS
@@ -58,6 +50,9 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
           //sendStartSMS(pumpnumber, pumpstartcode)
           
           // Sets "Submitted" hook to true
+          localStorage.setItem("machine", machine)
+          localStorage.setItem("pump", pump.name)
+          localStorage.setItem("hasstarted", "true")
           setSubmitted(true)
         };
       }}>
