@@ -180,6 +180,11 @@ function Addmachines({allPumps, allMachines}){
   }
 
   const removePump = () =>{
+    if (currentPump.active == 1) {
+      alert("Du kan ikke slette en aktiv pumpe")
+      return;
+    }
+
     var tempPump = {
       id: currentPump.id,
     } 
@@ -191,6 +196,7 @@ function Addmachines({allPumps, allMachines}){
       },
       body: JSON.stringify(tempPump)
     })
+    window.location.href = "/"
   }
 
   const findRemoveMachine = () => {
@@ -212,6 +218,11 @@ function Addmachines({allPumps, allMachines}){
   }
 
   const removeMachine = () =>{
+    if (currentMachine.active == 1) {
+      alert("Du kan ikke slette en aktiv maskine")
+      return;
+    }
+
     var tempMachine = {
       id: currentMachine.id,
     } 
@@ -223,6 +234,7 @@ function Addmachines({allPumps, allMachines}){
       },
       body: JSON.stringify(tempMachine)
     })
+    window.location.href = "/"
   }
 
   return(
@@ -274,7 +286,6 @@ function Addmachines({allPumps, allMachines}){
       <form id="removepump" onSubmit={function(event){
         event.preventDefault();
         removePump();
-        window.location.href = "/"
       }}>
         <h2>Find/Slet pumpe</h2>
         <input type="text" id="findremovepumpname" name="findremovepumpname"></input><br></br>
@@ -287,7 +298,6 @@ function Addmachines({allPumps, allMachines}){
       <form id="removemachine" onSubmit={function(event){
         event.preventDefault();
         removeMachine();
-        window.location.href = "/"
       }}>
         <h2>Find/Slet maskine</h2>
         <input type="text" id="findremovemachineid" name="findremovemachineid"></input><br></br>
