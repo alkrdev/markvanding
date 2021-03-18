@@ -451,15 +451,15 @@ function App() {
         <main>
         {
           stage === "overview" ? (
-            <Overview activeMachines={activeMachines} activePumps={activePumps} stopMachine={StopMachine} stopPump={StopPump}/>
+            <Overview activeMachines={activeMachines} activePumps={activePumps} stopMachine={StopMachine} stopPump={StopPump} setSubmitted={setSubmitted}/>
           ) : stage === "startmachine" ? (
-            <Startmachine setSubmitted={setSubmitted} setStartmachine={setStartmachine} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump}/>
+            <Startmachine setSubmitted={setSubmitted} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump} setSubmitted={setSubmitted}/>
           ) : stage === "phonenumber" ? (
-            <Phonenumbers  allPumps={allPumps}/>
+            <Phonenumbers  allPumps={allPumps} setSubmitted={setSubmitted}/>
           ) : stage === "maintenance" ? (
             <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setStage={setStage} setShownMachine={setShownMachine}/>
           ) : stage === "addmachine" ? (
-            <Addmachines allPumps={allPumps} allMachines={allMachines}/>
+            <Addmachines allPumps={allPumps} allMachines={allMachines} setSubmitted={setSubmitted}/>
           ) : stage === "showmachine" ? (
             <Showmachine shownMachine={shownMachine} setStage={setStage}/>
           ) : <></>

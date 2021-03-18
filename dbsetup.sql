@@ -32,3 +32,10 @@ INSERT INTO pumps (name, number, active, startcode, stopcode) VALUES
 ("Sønderskov", "22984242", 0, "Tt", "S"),
 ("Vesterlund", "60487449", 0, "T", "S"),
 ("Ågård", "42181161", 0, "T", "S");
+
+create table maintenance (
+id int primary key not null auto_increment,
+machineid int not null,
+time datetime not null,
+note text not null
+)

@@ -15,21 +15,83 @@ body {
   text-align: center;
 }
 
-#maintenance{
+button {
+  cursor: pointer;
+}
+
+#backbutton {
+  display: block;
+  width: 100px;
+  background-color: #1a1a4e;
+  padding: .5em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  border: none;
+  margin-left: 25px;
+  margin: left;
+  margin-top: 25px
+}
+
+#maintenance {
   display: flex;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.maintenanceboxes{
+.maintenanceboxes {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   margin: 50px;
+  color: white;
+  font-size: 60px;
+  background-color: #1a1a4e;
+  border: 0;
+  border-radius: 24px;
+}
+
+.maintenanceboxes:hover {
+  background-color: #777;
+  border-radius: 48px;
+  overflow: hidden;
+} 
+
+#shownmachine {
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+}
+
+#allmachineattributes {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.machineattributes {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 250px;
+  justify-content: center;
   border: 1px solid black;
+  margin: 10px;
+}
+
+.machineattributes p{
+  font-size: 22px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid black;
 }
 
 #stopwateringbuttontext {

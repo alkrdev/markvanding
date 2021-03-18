@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Overview({activeMachines, activePumps, stopMachine, stopPump}) {
+function Overview({activeMachines, activePumps, stopMachine, stopPump, setSubmitted}) {
 
   function sendStopSMS(pumpnumber, pumpstopcode){
     fetch("http://10.10.60.161:5000/sendsms", {
