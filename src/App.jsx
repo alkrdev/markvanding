@@ -4,6 +4,7 @@ import Phonenumbers from './components/phonenumbers';
 import Startmachine from './components/startmachine';
 import Maintenance from './components/maintenance';
 import Addmachines from './components/addmachines';
+import Showmachine from './components/showmachine';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
   const [inactivePumps, setInactivePumps] = useState([])
   const [allPumps, setAllPumps] = useState([])
   const [allMachines, setAllMachines] = useState([])
+  const [shownMachine, setShownMachine] = useState([])
 
 
   function slide(){
@@ -430,9 +432,11 @@ function App() {
           ) : stage === "phonenumber" ? (
             <Phonenumbers  allPumps={allPumps}/>
           ) : stage === "maintenance" ? (
-            <Maintenance allMachines={allMachines}/>
+            <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setStage={setStage} setShownMachine={setShownMachine}/>
           ) : stage === "addmachine" ? (
             <Addmachines allPumps={allPumps} allMachines={allMachines}/>
+          ) : stage === "showmachine" ? (
+            <Showmachine shownMachine={shownMachine} setStage={setStage}/>
           ) : <></>
         }
       </main>

@@ -1,14 +1,19 @@
-function Maintenance({allMachines}){
+function Maintenance({allMachines, setStage, setShownMachine}){
 
-  const handleClick = () => {}
+  const HandleClick = (machine) => {
+
+    setShownMachine(machine)
+    setStage("showmachine")
+
+  }
 
   return(
     <div id="maintenance">
       {allMachines.map((machine) => {
       return(
-        <div className="maintenanceboxes" onClick={handleClick}>
+        <button className="maintenanceboxes" onClick={() => {HandleClick(machine)}}>
             {machine.id}
-        </div>
+        </button>
       )
     })}
     </div>
