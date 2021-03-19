@@ -2,6 +2,7 @@ module.exports = (app) => {
     var machines = require("../controllers/machineController.js")
     var pumps = require("../controllers/pumpController.js")
     var sms = require("../controllers/smsController.js")
+    var notes = require("../controllers/noteController.js")
 
     app.route("/inactivemachines")
         .get(machines.getInactiveMachines)
@@ -41,4 +42,10 @@ module.exports = (app) => {
 
     app.route("/sendsms")
         .post(sms.sendSingleMessage)
+
+    app.route("/createnote")
+        .post(notes.createMaintenanceNote)
+
+    app.route("/getnotes")
+        .get(notes.getNotes)
 }

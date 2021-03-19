@@ -15,6 +15,42 @@ body {
   text-align: center;
 }
 
+#maintenancetext {
+  margin-top: -10px;
+  position: absolute; 
+}
+
+#createnoteinput {
+  margin-left: 8px;
+  font-size: 18px;
+}
+
+#createnotetext {
+  border-bottom: 1px solid black;
+  width: fit-content;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 50px;
+}
+
+#createnotebutton {
+  background-color: #1a1a4e;
+  padding: .5em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  border: none;
+  margin: auto;
+  margin-left: 10px;
+}
+
+select {
+  cursor: pointer;
+}
+
 button {
   cursor: pointer;
 }
@@ -37,6 +73,7 @@ button {
 }
 
 #maintenance {
+  margin-top: 30px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -100,6 +137,7 @@ button {
 
 #stopwateringbutton {
   background-color: red;
+  cursor: pointer;
 }
 
 #overview {
