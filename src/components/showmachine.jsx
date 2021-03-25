@@ -34,6 +34,7 @@ function Showmachine({shownMachine, setStage, notes}) {
         },
         body: JSON.stringify(tempNote)
         })
+        window.location.href = "/"
     }
     
 
@@ -43,15 +44,15 @@ function Showmachine({shownMachine, setStage, notes}) {
             <button id="backbutton" onClick={HandleClick}>Tilbage</button>
             <div id="allmachineattributes">
                 <div className="machineattributes">
-                    <h1>Maskine nr.</h1>
+                    <h1 className="showmachineh1">Maskine nr.</h1>
                     <p>{shownMachine.id}</p>
                 </div>
                 <div className="machineattributes">
-                    <h1>Pumpe navn</h1>
+                    <h1 className="showmachineh1">Pumpe navn</h1>
                     <p>{shownMachine.pumpname == null ? "Ingen pumpe" : shownMachine.pumpname}</p>
                 </div>
                 <div className="machineattributes">
-                    <h1>Tid tilbage</h1>
+                    <h1 className="showmachineh1">Tid tilbage</h1>
                     <p>
                         {shownMachine.time == null ? "Ingen tid" : new Date(shownMachine["time"]).toLocaleString("da-DK", {
                             dateStyle: "medium",
@@ -60,7 +61,7 @@ function Showmachine({shownMachine, setStage, notes}) {
                     </p>
                 </div>
                 <div className="machineattributes">
-                    <h1>Aktivitet</h1>
+                    <h1 className="showmachineh1">Aktivitet</h1>
                     <p>{shownMachine.active == 0 ? "Inaktiv" : "Aktiv"}</p>
                 </div>
             </div>
@@ -75,7 +76,37 @@ function Showmachine({shownMachine, setStage, notes}) {
                     <button id="createnotebutton" type="submit">Opret note</button>
                 </form>
                 <div id="shownotes">
-                    
+                    <table className="tables" id="tablenotes">
+                        <colgroup>
+                            <col style={{width: "10%"}}></col>
+                            <col style={{width: "35%"}}></col>
+                            <col style={{width: "55%"}}></col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                            <th>Maskine nr.</th>
+                            <th>Oprettet dato</th>
+                            <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {notes.filter(x => x.machineid == shownMachine.id).map(function(note)
+                            {
+                            var time = new Date(note["time"]).toLocaleString("da-DK", {
+                                dateStyle: "medium",
+                                timeStyle: "short"
+                            });
+
+                            return (
+                                <tr key={note["id"]}>
+                                    <td>{note["machineid"]}</td>
+                                    <td>{time}</td>
+                                    <td>{note["note"]}</td>
+                                </tr>
+                            )
+                            })}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-function Maintenance({allMachines, setStage, setShownMachine}){
+function Maintenance({allMachines, setStage, setShownMachine, setNotes}){
 
   const HandleClick = (machine) => {
 
@@ -8,8 +8,6 @@ function Maintenance({allMachines, setStage, setShownMachine}){
     setStage("showmachine")
 
   }
-
-  const [notes, setNotes] = useState({})
 
   useEffect(function() 
   {

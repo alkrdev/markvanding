@@ -21,7 +21,7 @@ class Note{
     }
 
     static getNotes(result){
-        sql.query("SELECT * FROM markvanding.maintenance", (err, res) => {
+        sql.query("SELECT * FROM markvanding.maintenance ORDER BY time DESC", (err, res) => {
             if(err){
                 console.log("Error: ", err)
                 result(err, null)

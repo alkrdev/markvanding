@@ -140,21 +140,21 @@ button {
   cursor: pointer;
 }
 
-#overview {
+.tables {
   border-collapse: collapse;
   width: 60%;
   margin: auto;
   margin-top: 50px;
 }
 
-#overview td, #overview th {
+.tables td, .tables th {
   border: 1px solid #ddd;
   padding: 8px 2px;
 }
 
-#overview tr:nth-child(even){background-color: #f2f2f2;}
+.tables tr:nth-child(even){background-color: #f2f2f2;}
 
-#overview th {
+.tables th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
@@ -277,14 +277,28 @@ nav{
   appearance: button;
   outline: none;
   text-transform: uppercase;
-  margin-left: 1%;
   overflow: hidden;
 
 }
 
+
+.removeselector select {
+  background-color: #1a1a4e;
+  color: white;
+  width: 60%;
+  border: none;
+  font-size: 24px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+  text-transform: uppercase;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
 label{
   font-size: 30px;
-  margin-left: 1%;
 }
 
 /* Customize the label (the container) */
@@ -537,7 +551,7 @@ form.select div {
   #removemachine{
     width: 40% !important;
   }
-  #overview{
+  .tables{
     width: 80%;
   }
 }
@@ -740,10 +754,14 @@ form.select div {
 		Label the data
     You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
 		*/
-		td:nth-of-type(1):before { content: "Maskine nr."; }
-		td:nth-of-type(2):before { content: "Pumpe Navn"; }
-		td:nth-of-type(3):before { content: "Færdig"; }
-    td:nth-of-type(4):before { content: "Stop Vanding";}
+		#tableoverview td:nth-of-type(1):before { content: "Maskine nr."; }
+		#tableoverview td:nth-of-type(2):before { content: "Pumpe Navn"; }
+		#tableoverview td:nth-of-type(3):before { content: "Færdig"; }
+    #tableoverview td:nth-of-type(4):before { content: "Stop Vanding";}
+
+    #tablenotes td:nth-of-type(1):before { content: "Maskine nr."; }
+		#tablenotes td:nth-of-type(2):before { content: "Oprettet dato"; }
+		#tablenotes td:nth-of-type(3):before { content: "Note"; }
 	}
 
 @keyframes navLinkFade{

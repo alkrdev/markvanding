@@ -21,6 +21,7 @@ function App() {
   const [allPumps, setAllPumps] = useState([])
   const [allMachines, setAllMachines] = useState([])
   const [shownMachine, setShownMachine] = useState([])
+  const [notes, setNotes] = useState({})
   
   const machine = localStorage.getItem("machine")
   const pump = localStorage.getItem("pump")
@@ -457,11 +458,11 @@ function App() {
           ) : stage === "phonenumber" ? (
             <Phonenumbers  allPumps={allPumps} setSubmitted={setSubmitted}/>
           ) : stage === "maintenance" ? (
-            <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setStage={setStage} setShownMachine={setShownMachine}/>
+            <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setStage={setStage} setShownMachine={setShownMachine} setNotes={setNotes}/>
           ) : stage === "addmachine" ? (
             <Addmachines allPumps={allPumps} allMachines={allMachines} setSubmitted={setSubmitted}/>
           ) : stage === "showmachine" ? (
-            <Showmachine shownMachine={shownMachine} setStage={setStage}/>
+            <Showmachine shownMachine={shownMachine} setStage={setStage} notes={notes}/>
           ) : <></>
         }
       </main>
