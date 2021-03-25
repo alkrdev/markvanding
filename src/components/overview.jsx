@@ -20,7 +20,7 @@ function Overview({activeMachines, activePumps, stopMachine, stopPump, setSubmit
   }, [])
 
   return (
-    <table id="overview" className="sortable">
+    <table className="tables" id="tableoverview">
       <colgroup>
         <col style={{width: "10%"}}></col>
         <col style={{width: "24%"}}></col>

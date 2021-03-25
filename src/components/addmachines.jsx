@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 
 function Addmachines({allPumps, allMachines}){
+  const [machine, setMachine] = useState("")
+  const [pump, setPump] = useState("")
 
   const [currentPump, setCurrentPump] = useState({
     name: "",
@@ -10,6 +12,47 @@ function Addmachines({allPumps, allMachines}){
   })
   const [currentMachine, setCurrentMachine] = useState({
   })
+
+  const RemoveMachine = () => {
+    if (machine) {
+      if(machine.active == 1) {
+        alert("Du kan ikke slette en aktiv maskine")
+        return
+      }
+
+      fetch("http://10.10.60.161:5000/removemachine", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }, body: JSON.stringify(machine)
+      })
+      window.location.href = "/"
+    }
+    else {
+      alert("Ingen maskine valgt")
+    }
+  }
+
+  const RemovePump = () => {
+    if(pump) {
+      if(pump.active == 1) {
+        alert("Du kan ikke slette en aktiv pumpe")
+        return
+      }
+
+      fetch("http://10.10.60.161:5000/removepump", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(pump)
+      })
+      window.location.href = "/"
+    }
+    else {
+      alert("Ingen pumpe valgt")
+    }
+  }
 
   const validatePump = (name, number) => {
     var re = new RegExp("[0-9]{8}$")
@@ -162,81 +205,6 @@ function Addmachines({allPumps, allMachines}){
     window.location.href="/"
   }
 
-  const findRemovePump = () => {
-    var findPumpName = document.getElementById("findremovepumpname");
-    var removePumpName = document.getElementById("removepumpname")
-    
-    var pump = allPumps.find((pump) => {
-      return pump["name"] == findPumpName.value;
-    })
-
-    if (pump) {
-      setCurrentPump(pump)
-      removePumpName.value = pump.name
-    } else {
-      alert("Pumpen findes ikke, har du skrevet det rigtigt?")
-    }
-    
-  }
-
-  const removePump = () =>{
-    if (currentPump.active == 1) {
-      alert("Du kan ikke slette en aktiv pumpe")
-      return;
-    }
-
-    var tempPump = {
-      id: currentPump.id,
-    } 
-
-    fetch("http://10.10.60.161:5000/removepump", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempPump)
-    })
-    window.location.href = "/"
-  }
-
-  const findRemoveMachine = () => {
-    var findMachineId = document.getElementById("findremovemachineid");
-    var removeMachineId = document.getElementById("removemachineid")
-
-    var machine = allMachines.find((machine) => {
-      return machine["id"] == findMachineId.value;
-    })
-
-
-    if (machine) {
-      setCurrentMachine(machine)
-      removeMachineId.value = machine.id
-    } else {
-      alert("Maskinen findes ikke, har du skrevet det rigtigt?")
-    }
-    
-  }
-
-  const removeMachine = () =>{
-    if (currentMachine.active == 1) {
-      alert("Du kan ikke slette en aktiv maskine")
-      return;
-    }
-
-    var tempMachine = {
-      id: currentMachine.id,
-    } 
-
-    fetch("http://10.10.60.161:5000/removemachine", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempMachine)
-    })
-    window.location.href = "/"
-  }
-
   return(
     <div>
       <form id="createpump" onSubmit={function(event){
@@ -252,7 +220,7 @@ function Addmachines({allPumps, allMachines}){
         <input type="text" id="createpumpstartcode" name="createpumpstartcode"></input><br></br>
         <label>Stopkode </label>
         <input type="text" id="createpumpstopcode" name="createpumpstopcode"></input><br></br>
-        <button className="createandupdatebuttons" type="submit">Opret</button>
+        <button className="createandupdatebuttons" type="submit">OPRET</button>
       </form>
 
       <form id="createmachine" onSubmit={function(event){
@@ -262,7 +230,7 @@ function Addmachines({allPumps, allMachines}){
         <h2>Opret maskine</h2>
         <label>Maskine nr. </label>
         <input type="text" id="createmachineid" name="createmachineid"></input><br></br>
-        <button className="createandupdatebuttons" type="submit">Opret</button>
+        <button className="createandupdatebuttons" type="submit">OPRET</button>
       </form>
 
       <form id="editpump" onSubmit={function(event){
@@ -271,7 +239,7 @@ function Addmachines({allPumps, allMachines}){
       }}>
         <h2>Find/Rediger pumpe</h2>
         <input type="text" id="findeditpumpname" name="findeditpumpname"></input><br></br>
-        <button type="button" className="createandupdatebuttons" onClick={() => findEditPump()}>Find pumpe</button><br></br>
+        <button type="button" className="createandupdatebuttons" onClick={() => findEditPump()}>FIND PUMPE</button><br></br>
         <label>Pumpe navn </label>
         <input type="text" id="editpumpname" name="editpumpname" required></input><br></br>
         <label>Pumpe nummer </label>
@@ -280,33 +248,59 @@ function Addmachines({allPumps, allMachines}){
         <input type="text" id="editpumpstartcode" name="editpumpstartcode" required></input><br></br>
         <label>Pumpe stopcode </label>
         <input type="text" id="editpumpstopcode" name="editpumpstopcode" required></input><br></br>
-        <button className="createandupdatebuttons" type="submit">Opdater</button>
+        <button className="createandupdatebuttons" type="submit">OPDATER</button>
       </form>
 
-      <form id="removepump" onSubmit={function(event){
-        event.preventDefault();
-        removePump();
-      }}>
-        <h2>Find/Slet pumpe</h2>
-        <input type="text" id="findremovepumpname" name="findremovepumpname"></input><br></br>
-        <button type="button" className="createandupdatebuttons" onClick={() => findRemovePump()}>Find pumpe</button><br></br>
-        <label>Pumpe navn </label>
-        <input type="text" id="removepumpname" name="removepumpname" disabled="disabled" required></input><br></br>
-        <button className="createandupdatebuttons" type="submit">Slet</button>
-      </form>
+      <div className="removeselector" id="removepump">
+          <label htmlFor="">Slet pumpe</label>
+          <br></br>
+          <select name="chosenpump" id="chosenpump" onChange={function(event){
+            var options = event.target.children;
+            var option = options[event.target.selectedIndex];
 
-      <form id="removemachine" onSubmit={function(event){
-        event.preventDefault();
-        removeMachine();
-      }}>
-        <h2>Find/Slet maskine</h2>
-        <input type="text" id="findremovemachineid" name="findremovemachineid"></input><br></br>
-        <button type="button" className="createandupdatebuttons" onClick={() => findRemoveMachine()}>Find maskine</button><br></br>
-        <label>Maskine nr. </label>
-        <input type="text" id="removemachineid" name="removemachineid" disabled="disabled" required></input><br></br>
-        <button className="createandupdatebuttons" type="submit">Slet</button>
-      </form>
+            setPump(allPumps.find((pump) => {
+              return pump.id == option.dataset.id
+            }));
+          }}>
+            <option selected disabled hidden></option>
+            {allPumps.map(function(element) {
+              return <option key={element.id} data-id={element.id}>{element.name}</option>
+            })}
+          </select>
+          <form onSubmit={
+            function(event){
+              event.preventDefault()
+              RemovePump()
+            }
+          }>
+          <button className="createandupdatebuttons" type="submit">FJERN PUMPE</button>
+        </form>
+      </div>
 
+      <div className="removeselector" id="removemachine">
+          <label htmlFor="">Slet maskine</label>
+          <br></br>
+          <select name="chosenmachine" id="chosenmachine" onChange={function(event){
+            var options = event.target.children;
+            var option = options[event.target.selectedIndex];
+
+            setMachine(allMachines.find((machine) => {
+              return machine.id == option.dataset.id
+            }));
+          }}>
+            <option selected disabled hidden></option>
+            {allMachines.map(function(element) {
+              return <option key={element.id} data-id={element.id}>{element.id}</option>
+            })}
+          </select>
+          <form onSubmit={
+            function(event){
+              event.preventDefault()
+              RemoveMachine()}
+          }>
+            <button className="createandupdatebuttons" type="submit">FJERN MASKINE</button>
+          </form>
+        </div>
       <form>
 
       </form>

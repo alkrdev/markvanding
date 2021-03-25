@@ -15,9 +15,17 @@ body {
   text-align: center;
 }
 
+#machineid {
+  font-size: 64px;
+}
+
+#active {
+  font-size: 24px;
+}
+
 #maintenancetext {
-  margin-top: -10px;
-  position: absolute; 
+  margin-top: -25px;
+  position: absolute;
 }
 
 #createnoteinput {
@@ -73,7 +81,7 @@ button {
 }
 
 #maintenance {
-  margin-top: 30px;
+  margin-top: 50px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -114,6 +122,10 @@ button {
   justify-content: center;
 }
 
+.showmachineh1{
+  border-bottom: 1px solid black;
+}
+
 .machineattributes {
   display: flex;
   flex-wrap: wrap;
@@ -128,7 +140,6 @@ button {
   font-size: 22px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-top: 1px solid black;
 }
 
 #stopwateringbuttontext {

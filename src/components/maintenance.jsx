@@ -26,9 +26,23 @@ function Maintenance({allMachines, setStage, setShownMachine, setNotes}){
     <div id="maintenance">
       <h1 id="maintenancetext">Tryk på en boks for at tilgå maskinen</h1>
       {allMachines.map((machine) => {
+        var active
+        if(machine.active == 1) {
+          active = "Aktiv"
+        }
+        else{
+          active = "Inaktiv"
+        }
       return(
-        <button className="maintenanceboxes" onClick={() => {HandleClick(machine)}} notes={notes}>
-            {machine.id}
+        <button className="maintenanceboxes" onClick={() => {HandleClick(machine)}}>
+            <div>
+              <h1 id="machineid">
+                {machine.id}
+              </h1>
+              <p id="active">
+                {active}
+              </p>
+            </div>
         </button>
       )
     })}
