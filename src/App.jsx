@@ -14,6 +14,8 @@ function App() {
   const [submitted, setSubmitted] = useState(false)
   const [selectedTime, setSelectedtime] = useState({})
 
+  const [stillgoingMachines, setStillgoingMachines] = useState([])
+  const [expiredMachines, setExpiredMachines] = useState([])
   const [activeMachines, setActiveMachines] = useState([])
   const [activePumps, setActivePumps] = useState([])
   const [inactiveMachines, setInactiveMachines] = useState([])
@@ -21,7 +23,7 @@ function App() {
   const [allPumps, setAllPumps] = useState([])
   const [allMachines, setAllMachines] = useState([])
   const [shownMachine, setShownMachine] = useState([])
-  const [notes, setNotes] = useState({})
+  const [notes, setNotes] = useState([])
   
   const machine = localStorage.getItem("machine")
   const pump = localStorage.getItem("pump")
@@ -50,30 +52,52 @@ function App() {
     burger.classList.toggle('toggle');
   }
 
-  function HandleClick(navbar) {
-    switch (navbar) {
-      case "overview":
-        setStage("overview")
-        break;
-      case "startmachine":
-        setStage("startmachine")
-        break;
-      case "phonenumber":
-        setStage("phonenumber")
-        break;
-      case "maintenance":
-        setStage("maintenance")
-        break;
-      case "addmachine":
-        setStage("addmachine")
-        break;
-      default:
-        break;
+  const HandleNavClick = function(event, stage, text) {
+    setStage(stage)
+    var array = event.target.parentNode.parentNode.children
+
+
+    for (const line of array) {
+      var anchor = line.children[0];
+      anchor.style.color = "rgb(233, 233, 233)"
     }
 
-    
+    for (const line of array) {
+      var anchor = line.children[0];
+
+      if (anchor.innerHTML.toLowerCase() == text.toLowerCase()) {
+        anchor.style.color = "rgb(235, 101, 45)"
+        break
+      }
+    }
+
     if (windowWidth <= 1280) slide();
-  }
+ }
+
+  // function HandleClick(navbar) {
+  //   switch (navbar) {
+  //     case "overview":
+  //       setStage("overview")
+  //       break;
+  //     case "startmachine":
+  //       setStage("startmachine")
+  //       break;
+  //     case "phonenumber":
+  //       setStage("phonenumber")
+  //       break;
+  //     case "maintenance":
+  //       setStage("maintenance")
+  //       break;
+  //     case "addmachine":
+  //       setStage("addmachine")
+  //       break;
+  //     default:
+  //       break;
+  //   }
+
+    
+  //   if (windowWidth <= 1280) slide();
+  // }
 
   function chooseTime(event, time) {
 
@@ -224,6 +248,7 @@ function App() {
 
   useEffect(function() 
   {
+    document.querySelectorAll(".nav-links")[0].children[0].children[0].style.color = "rgb(235, 101, 45)"
     var hasstarted = localStorage.getItem("hasstarted")
     if (hasstarted == "true") {
       console.log("Hej")
@@ -234,7 +259,9 @@ function App() {
         return data.json();
       })
       .then(function(json) {
-        setActiveMachines(json)     
+        setActiveMachines(json)
+        setStillgoingMachines(json.filter(x => new Date() < new Date(x.time)))
+        setExpiredMachines(json.filter(x => new Date() > new Date(x.time)))
       }).catch((error) => {
         console.log(error);
       });
@@ -288,9 +315,9 @@ function App() {
       }).catch((error) => {
         console.log(error);
       });
-  }, [])
-
-
+      
+  
+    }, [])
 
   return (
     <div className="App">
@@ -426,19 +453,19 @@ function App() {
             </div>
             <ul className="nav-links">
               <li>
-                <a href="#" onClick={() => HandleClick("overview")}>OVERSIGT</a>
+                <a href="#" onClick={(e) => HandleNavClick(e, "overview", "OVERSIGT")}>OVERSIGT</a>
               </li>
               <li>
-                <a href="#" onClick={() => HandleClick("startmachine")}>START VANDING</a>
+                <a href="#" onClick={(e) => HandleNavClick(e, "startmachine", "START VANDING")}>START VANDING</a>
               </li>
               <li>
-                <a href="#" onClick={() => HandleClick("phonenumber")}>TELEFONNUMRE</a>
+                <a href="#" onClick={(e) => HandleNavClick(e, "phonenumber", "TELEFONNUMRE")}>TELEFONNUMRE</a>
               </li>
               <li>
-                <a href="#" onClick={() => HandleClick("maintenance")}>VEDLIGEHOLDELSE</a>
+                <a href="#" onClick={(e) => HandleNavClick(e, "maintenance", "VEDLIGEHOLDELSE")}>VEDLIGEHOLDELSE</a>
               </li>
               <li>
-                <a href="#" onClick={() => HandleClick("addmachine")}>TILFØJ/REDIGER <br></br> MASKINER/PUMPER</a>
+                <a href="#" onClick={(e) => HandleNavClick(e, "addmachine", "TILFØJ/REDIGER MASKINER/PUMPER")}>TILFØJ/REDIGER MASKINER/PUMPER</a>
               </li>
             </ul>
             <div className="burger" onClick={slide}>
@@ -452,7 +479,7 @@ function App() {
         <main>
         {
           stage === "overview" ? (
-            <Overview activeMachines={activeMachines} activePumps={activePumps} stopMachine={StopMachine} stopPump={StopPump} setSubmitted={setSubmitted}/>
+            <Overview activePumps={activePumps} stopMachine={StopMachine} stopPump={StopPump} setSubmitted={setSubmitted} expiredMachines = {expiredMachines} stillgoingMachines = {stillgoingMachines}/>
           ) : stage === "startmachine" ? (
             <Startmachine setSubmitted={setSubmitted} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump} setSubmitted={setSubmitted}/>
           ) : stage === "phonenumber" ? (
