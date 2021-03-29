@@ -26,29 +26,29 @@ class Machine{
                 result(err, null)
             }
             else{
-                var stillgoing = res.filter(x => new Date() < new Date(x.time))
-                var expired = res.filter(x => new Date() > new Date(x.time))
+                // var stillgoing = res.filter(x => new Date() < new Date(x.time))
+                // var expired = res.filter(x => new Date() > new Date(x.time))
 
-                if (expired.length > 0) {
-                    expired.forEach(element => {
-                        sql.query("UPDATE markvanding.pumps SET active = 0 WHERE name = ?", element.pumpname, (err, res) => {
-                            if(err){
-                                console.log("Error: ", err)
-                                result(err, null)
-                            }
-                        })
-                        element.active = 0
-                        element.time = null
-                        element.pumpname = null
-                        sql.query("UPDATE markvanding.machines SET ? WHERE id = ?", [element, element.id], (err, res) => {
-                            if(err){
-                                console.log("Error: ", err)
-                                result(err, null)
-                            }
-                        })
-                    });
-                }
-                result(null, stillgoing)
+                // if (expired.length > 0) {
+                //     expired.forEach(element => {
+                //         sql.query("UPDATE markvanding.pumps SET active = 0 WHERE name = ?", element.pumpname, (err, res) => {
+                //             if(err){
+                //                 console.log("Error: ", err)
+                //                 result(err, null)
+                //             }
+                //         })
+                //         element.active = 0
+                //         element.time = null
+                //         element.pumpname = null
+                //         sql.query("UPDATE markvanding.machines SET ? WHERE id = ?", [element, element.id], (err, res) => {
+                //             if(err){
+                //                 console.log("Error: ", err)
+                //                 result(err, null)
+                //             }
+                //         })
+                //     });
+                // }
+                result(null, res)
             }
         })
     }
