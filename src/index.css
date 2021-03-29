@@ -15,6 +15,11 @@ body {
   text-align: center;
 }
 
+.tablelabel {
+  margin-bottom: -40px;
+  margin-top: 30px;
+}
+
 #machineid {
   font-size: 64px;
 }
@@ -423,46 +428,14 @@ form.select div {
   background: #777;
  }
 
- #editpump {
+.forms {
   width: 30%;
   border: solid #1a1a4e;
   margin: auto;
-  margin-top: 20px;
-  padding: 20px
- }
-
- #createmachine {
-  width: 30%;
-  border: solid #1a1a4e;
-  margin: auto;
-  margin-top: 20px;
   padding: 20px;
- }
+}
 
- #createpump {
-   width: 30%;
-   border: solid #1a1a4e;
-   margin: auto;
-   padding: 20px;
- }
-
- #removepump {
-  width: 30%;
-  border: solid #1a1a4e;
-  margin: auto;
-  margin-top: 20px;
-  padding: 20px;
- }
-
- #removemachine {
-  width: 30%;
-  border: solid #1a1a4e;
-  margin: auto;
-  margin-top: 20px;
-  padding: 20px;
- }
-
- .createandupdatebuttons {
+.createandupdatebuttons {
   display: block;
   background-color: #1a1a4e;
   padding: .5em;
@@ -475,7 +448,7 @@ form.select div {
   border: none;
   margin: auto;
   margin-top: 10px
- }
+}
 
  /* Style the tab */
 .tab {
@@ -547,19 +520,7 @@ form.select div {
   p{
     width: 30% !important;
   }
-  #editpump{
-    width: 40% !important;
-  }
-  #createpump{
-    width: 40% !important;
-  }
-  #createmachine{
-    width: 40% !important;
-  }
-  #removepump{
-    width: 40% !important;
-  }
-  #removemachine{
+  .forms {
     width: 40% !important;
   }
   .tables{
@@ -603,19 +564,7 @@ form.select div {
   .nav-active{
     height: 24rem;
   }
-  #editpump{
-    width: 50% !important;
-  }
-  #createpump{
-    width: 50% !important;
-  }
-  #createmachine{
-    width: 50% !important;
-  }
-  #removepump{
-    width: 50% !important;
-  }
-  #removemachine{
+  .forms {
     width: 50% !important;
   }
 }
@@ -624,19 +573,7 @@ form.select div {
   p{
     width: 50% !important;
   }
-  #editpump{
-    width: 65% !important;
-  }
-  #createpump{
-    width: 65% !important;
-  }
-  #createmachine{
-    width: 65% !important;
-  }
-  #removepump{
-    width: 65% !important;
-  }
-  #removemachine{
+  .forms {
     width: 65% !important;
   }
 }
@@ -645,19 +582,7 @@ form.select div {
   p{
     width: 60% !important;
   }
-  #editpump{
-    width: 75% !important;
-  }
-  #createpump{
-    width: 75% !important;
-  }
-  #createmachine{
-    width: 75% !important;
-  }
-  #removepump{
-    width: 75% !important;
-  }
-  #removemachine{
+  .forms {
     width: 75% !important;
   }
 }
@@ -666,23 +591,7 @@ form.select div {
   p{
     width: 70% !important;
   }
-  #editpump{
-    width: 90% !important;
-    padding: 0px  25%;
-  }
-  #createpump{
-    width: 90% !important;
-    padding: 0px  25%;
-  }
-  #createmachine{
-    width: 90% !important;
-    padding: 0px 25%;
-  }
-  #removepump{
-    width: 90% !important;
-    padding: 0px 25%;
-  }
-  #removemachine{
+  .forms {
     width: 90% !important;
     padding: 0px 25%;
   }
@@ -692,23 +601,7 @@ form.select div {
   p{
     width: 90% !important;
   }
-  #editpump{
-    width: 100% !important;
-    padding: 0px  17%;
-  }
-  #createpump{
-    width: 100% !important;
-    padding: 0px  17%;
-  }
-  #createmachine{
-    width: 100% !important;
-    padding: 0px 17%;
-  }
-  #removepump{
-    width: 100% !important;
-    padding: 0px 17%;
-  }
-  #removemachine{
+  .forms {
     width: 100% !important;
     padding: 0px 17%;
   }
