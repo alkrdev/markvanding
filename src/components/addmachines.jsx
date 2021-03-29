@@ -206,8 +206,8 @@ function Addmachines({allPumps, allMachines}){
   }
 
   return(
-    <div>
-      <form id="createpump" onSubmit={function(event){
+    <div id="allforms">
+      <form className ="forms" id="createpump" onSubmit={function(event){
         event.preventDefault();
         createPump();
       }}>
@@ -223,7 +223,7 @@ function Addmachines({allPumps, allMachines}){
         <button className="createandupdatebuttons" type="submit">OPRET</button>
       </form>
 
-      <form id="createmachine" onSubmit={function(event){
+      <form className ="forms" id="createmachine" onSubmit={function(event){
         event.preventDefault();
         createMachine();
       }}>
@@ -233,7 +233,7 @@ function Addmachines({allPumps, allMachines}){
         <button className="createandupdatebuttons" type="submit">OPRET</button>
       </form>
 
-      <form id="editpump" onSubmit={function(event){
+      <form className ="forms" id="editpump" onSubmit={function(event){
         event.preventDefault();
         updatePump();
       }}>
@@ -251,7 +251,14 @@ function Addmachines({allPumps, allMachines}){
         <button className="createandupdatebuttons" type="submit">OPDATER</button>
       </form>
 
-      <div className="removeselector" id="removepump">
+
+      <form className="forms" onSubmit={
+        function(event){
+          event.preventDefault()
+          RemovePump()
+        }
+      }>
+        <div className="removeselector" id="removepump">
           <label htmlFor="">Slet pumpe</label>
           <br></br>
           <select name="chosenpump" id="chosenpump" onChange={function(event){
@@ -267,17 +274,17 @@ function Addmachines({allPumps, allMachines}){
               return <option key={element.id} data-id={element.id}>{element.name}</option>
             })}
           </select>
-          <form onSubmit={
-            function(event){
-              event.preventDefault()
-              RemovePump()
-            }
-          }>
+          
           <button className="createandupdatebuttons" type="submit">FJERN PUMPE</button>
-        </form>
-      </div>
+        </div>
+      </form>
 
-      <div className="removeselector" id="removemachine">
+      <form className="forms" onSubmit={
+        function(event){
+          event.preventDefault()
+          RemoveMachine()}
+      }>
+        <div className="removeselector" id="removemachine">
           <label htmlFor="">Slet maskine</label>
           <br></br>
           <select name="chosenmachine" id="chosenmachine" onChange={function(event){
@@ -293,16 +300,10 @@ function Addmachines({allPumps, allMachines}){
               return <option key={element.id} data-id={element.id}>{element.id}</option>
             })}
           </select>
-          <form onSubmit={
-            function(event){
-              event.preventDefault()
-              RemoveMachine()}
-          }>
+          
             <button className="createandupdatebuttons" type="submit">FJERN MASKINE</button>
-          </form>
+          
         </div>
-      <form>
-
       </form>
     </div>
   )
