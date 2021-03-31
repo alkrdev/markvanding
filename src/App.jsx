@@ -465,7 +465,7 @@ function App() {
                 <a href="#" onClick={(e) => HandleNavClick(e, "maintenance", "VEDLIGEHOLDELSE")}>VEDLIGEHOLDELSE</a>
               </li>
               <li>
-                <a href="#" onClick={(e) => HandleNavClick(e, "addmachine", "TILFØJ/REDIGER MASKINER/PUMPER")}>TILFØJ/REDIGER MASKINER/PUMPER</a>
+                <a href="#" onClick={(e) => HandleNavClick(e, "machinepark", "MASKINPARK")}>MASKINPARK</a>
               </li>
             </ul>
             <div className="burger" onClick={slide}>
@@ -486,7 +486,7 @@ function App() {
             <Phonenumbers  allPumps={allPumps} setSubmitted={setSubmitted}/>
           ) : stage === "maintenance" ? (
             <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setStage={setStage} setShownMachine={setShownMachine} setNotes={setNotes}/>
-          ) : stage === "addmachine" ? (
+          ) : stage === "machinepark" ? (
             <Addmachines allPumps={allPumps} allMachines={allMachines} setSubmitted={setSubmitted}/>
           ) : stage === "showmachine" ? (
             <Showmachine shownMachine={shownMachine} setStage={setStage} notes={notes}/>

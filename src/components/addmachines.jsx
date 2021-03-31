@@ -205,107 +205,231 @@ function Addmachines({allPumps, allMachines}){
     window.location.href="/"
   }
 
+  const closeModal = () => {
+    var modal = document.getElementById("modal")
+    modal.style.display = "none"
+    var modal = document.getElementById("modal2")
+    modal.style.display = "none"
+  }
+
   return(
-    <div id="allforms">
-      <form className ="forms" id="createpump" onSubmit={function(event){
-        event.preventDefault();
-        createPump();
-      }}>
-        <h2>Opret pumpe</h2>
-        <label>Pumpe navn </label>
-        <input type="text" id="createpumpname" name="createpumpname"></input><br></br>
-        <label>Pumpe nummer </label>
-        <input type="text" id="createpumpnumber" name="createpumpnumber"></input><br></br>
-        <label>Startkode </label>
-        <input type="text" id="createpumpstartcode" name="createpumpstartcode"></input><br></br>
-        <label>Stopkode </label>
-        <input type="text" id="createpumpstopcode" name="createpumpstopcode"></input><br></br>
-        <button className="createandupdatebuttons" type="submit">OPRET</button>
-      </form>
-
-      <form className ="forms" id="createmachine" onSubmit={function(event){
-        event.preventDefault();
-        createMachine();
-      }}>
-        <h2>Opret maskine</h2>
-        <label>Maskine nr. </label>
-        <input type="text" id="createmachineid" name="createmachineid"></input><br></br>
-        <button className="createandupdatebuttons" type="submit">OPRET</button>
-      </form>
-
-      <form className ="forms" id="editpump" onSubmit={function(event){
-        event.preventDefault();
-        updatePump();
-      }}>
-        <h2>Find/Rediger pumpe</h2>
-        <input type="text" id="findeditpumpname" name="findeditpumpname"></input><br></br>
-        <button type="button" className="createandupdatebuttons" onClick={() => findEditPump()}>FIND PUMPE</button><br></br>
-        <label>Pumpe navn </label>
-        <input type="text" id="editpumpname" name="editpumpname" required></input><br></br>
-        <label>Pumpe nummer </label>
-        <input type="text" id="editpumpnumber" name="editpumpnumber" required></input><br></br>
-        <label>Pumpe startcode </label>
-        <input type="text" id="editpumpstartcode" name="editpumpstartcode" required></input><br></br>
-        <label>Pumpe stopcode </label>
-        <input type="text" id="editpumpstopcode" name="editpumpstopcode" required></input><br></br>
-        <button className="createandupdatebuttons" type="submit">OPDATER</button>
-      </form>
-
-
-      <form className="forms" onSubmit={
-        function(event){
-          event.preventDefault()
-          RemovePump()
-        }
-      }>
-        <div className="removeselector" id="removepump">
-          <label htmlFor="">Slet pumpe</label>
-          <br></br>
-          <select name="chosenpump" id="chosenpump" onChange={function(event){
-            var options = event.target.children;
-            var option = options[event.target.selectedIndex];
-
-            setPump(allPumps.find((pump) => {
-              return pump.id == option.dataset.id
-            }));
+    
+    <div>
+      <div className="machineparktableheaders">
+      <h1 className="machineparktableheaderstext">Pumper</h1>
+      <h1 className="machineparktableheadersplus" onClick={() => {alert("Hej")}}>+</h1>
+      </div>
+      <table className="machineparktables">
+        <colgroup>
+        <col style={{width: "25%"}}></col>
+        <col style={{width: "25%"}}></col>
+        <col style={{width: "20%"}}></col>
+        <col style={{width: "20%"}}></col>
+        <col style={{width: "10%"}}></col>
+        </colgroup>
+        <thead>
+           <tr>
+             <th>Navn</th>
+             <th>Nummer</th>
+             <th>Startkode</th>
+             <th>Stopkode</th>
+             <th></th>
+           </tr>
+        </thead>
+        <tbody>
+          {allPumps.map(function(data) {
+            return (
+              <tr key={data["id"]}>
+                <td>{data["name"]}</td>
+                <td>{data["number"]}</td>
+                <td>{data["startcode"]}</td>
+                <td>{data["stopcode"]}</td>
+                <td onClick={() => {
+                  var modal = document.getElementById("modal")
+                  var name = document.getElementById("editpumpname")
+                  var number = document.getElementById("editpumpnumber")
+                  var startcode = document.getElementById("editpumpstartcode")
+                  var stopcode = document.getElementById("editpumpstopcode")
+                  name.value = data.name
+                  number.value = data.number
+                  startcode.value = data.startcode
+                  stopcode.value = data.stopcode
+                  modal.style.display = "block"
+                    }}>
+                  <img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" style={{width: 24}}></img>
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+      
+      <div className="machineparktableheaders">
+      <h1 className="machineparktableheaderstext">Maskiner</h1>
+      <h1 className="machineparktableheadersplus" onClick={() => {alert("Hej")}}>+</h1>
+      </div>
+      <table className="machineparktables">
+        <colgroup>
+        <col style={{width: "25%"}}></col>
+        <col style={{width: "65%"}}></col>
+        <col style={{width: "10%"}}></col>
+        </colgroup>
+        <thead>
+           <tr>
+             <th>Nummer</th>
+             <th></th>
+             <th></th>
+           </tr>
+        </thead>
+        <tbody>
+          {allMachines.map(function(data) {
+            return (
+              <tr key={data["id"]}>
+                <td>{data["id"]}</td>
+                <td></td>
+                <td onClick={(event) => {
+                  var modal = document.getElementById("modal2")
+                  var number = document.getElementById("removemachine")
+                  number.value = data.id
+                  modal.style.display = "block"
+                    }}>
+                  <img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" style={{width: 24}}></img>
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+      <div className ="modal" id="modal">
+        <form className ="forms" id="editpump" onSubmit={function(event){
+            event.preventDefault();
+            updatePump();
           }}>
-            <option selected disabled hidden></option>
-            {allPumps.map(function(element) {
-              return <option key={element.id} data-id={element.id}>{element.name}</option>
-            })}
-          </select>
-          
-          <button className="createandupdatebuttons" type="submit">FJERN PUMPE</button>
-        </div>
-      </form>
-
-      <form className="forms" onSubmit={
-        function(event){
-          event.preventDefault()
-          RemoveMachine()}
-      }>
-        <div className="removeselector" id="removemachine">
-          <label htmlFor="">Slet maskine</label>
-          <br></br>
-          <select name="chosenmachine" id="chosenmachine" onChange={function(event){
-            var options = event.target.children;
-            var option = options[event.target.selectedIndex];
-
-            setMachine(allMachines.find((machine) => {
-              return machine.id == option.dataset.id
-            }));
+            <label>Pumpe navn </label>
+            <input type="text" id="editpumpname" name="editpumpname" required></input><br></br>
+            <label>Pumpe nummer </label>
+            <input type="text" id="editpumpnumber" name="editpumpnumber" required></input><br></br>
+            <label>Pumpe startcode </label>
+            <input type="text" id="editpumpstartcode" name="editpumpstartcode" required></input><br></br>
+            <label>Pumpe stopcode </label>
+            <input type="text" id="editpumpstopcode" name="editpumpstopcode" required></input><br></br>
+            <button className="createandupdatebuttons" type="submit">OPDATER</button>
+            <button className="createandupdatebuttons" type="button" onClick={() => {closeModal()}}>LUK</button>
+        </form>
+      </div>
+      <div className="modal" id="modal2">
+        <form className ="forms" id="editpump" onSubmit={function(event){
+            event.preventDefault();
+            updatePump();
           }}>
-            <option selected disabled hidden></option>
-            {allMachines.map(function(element) {
-              return <option key={element.id} data-id={element.id}>{element.id}</option>
-            })}
-          </select>
-          
-            <button className="createandupdatebuttons" type="submit">FJERN MASKINE</button>
-          
-        </div>
-      </form>
+            <label>Maskine nummer</label>
+            <input id ="removemachine" name="removemachine" required></input>
+            <button className="createandupdatebuttons" type="submit">SLET</button>
+            <button className="createandupdatebuttons" type="button" onClick={() => {closeModal()}}>LUK</button>
+        </form>
+      </div>
     </div>
+
+    // <div id="allforms">
+    //   <form className ="forms" id="createpump" onSubmit={function(event){
+    //     event.preventDefault();
+    //     createPump();
+    //   }}>
+    //     <h2>Opret pumpe</h2>
+    //     <label>Pumpe navn </label>
+    //     <input type="text" id="createpumpname" name="createpumpname"></input><br></br>
+    //     <label>Pumpe nummer </label>
+    //     <input type="text" id="createpumpnumber" name="createpumpnumber"></input><br></br>
+    //     <label>Startkode </label>
+    //     <input type="text" id="createpumpstartcode" name="createpumpstartcode"></input><br></br>
+    //     <label>Stopkode </label>
+    //     <input type="text" id="createpumpstopcode" name="createpumpstopcode"></input><br></br>
+    //     <button className="createandupdatebuttons" type="submit">OPRET</button>
+    //   </form>
+
+    //   <form className ="forms" id="createmachine" onSubmit={function(event){
+    //     event.preventDefault();
+    //     createMachine();
+    //   }}>
+    //     <h2>Opret maskine</h2>
+    //     <label>Maskine nr. </label>
+    //     <input type="text" id="createmachineid" name="createmachineid"></input><br></br>
+    //     <button className="createandupdatebuttons" type="submit">OPRET</button>
+    //   </form>
+
+    //   <form className ="forms" id="editpump" onSubmit={function(event){
+    //     event.preventDefault();
+    //     updatePump();
+    //   }}>
+    //     <h2>Find/Rediger pumpe</h2>
+    //     <input type="text" id="findeditpumpname" name="findeditpumpname"></input><br></br>
+    //     <button type="button" className="createandupdatebuttons" onClick={() => findEditPump()}>FIND PUMPE</button><br></br>
+    //     <label>Pumpe navn </label>
+    //     <input type="text" id="editpumpname" name="editpumpname" required></input><br></br>
+    //     <label>Pumpe nummer </label>
+    //     <input type="text" id="editpumpnumber" name="editpumpnumber" required></input><br></br>
+    //     <label>Pumpe startcode </label>
+    //     <input type="text" id="editpumpstartcode" name="editpumpstartcode" required></input><br></br>
+    //     <label>Pumpe stopcode </label>
+    //     <input type="text" id="editpumpstopcode" name="editpumpstopcode" required></input><br></br>
+    //     <button className="createandupdatebuttons" type="submit">OPDATER</button>
+    //   </form>
+
+
+    //   <form className="forms" onSubmit={
+    //     function(event){
+    //       event.preventDefault()
+    //       RemovePump()
+    //     }
+    //   }>
+    //     <div className="removeselector" id="removepump">
+    //       <label htmlFor="">Slet pumpe</label>
+    //       <br></br>
+    //       <select name="chosenpump" id="chosenpump" onChange={function(event){
+    //         var options = event.target.children;
+    //         var option = options[event.target.selectedIndex];
+
+    //         setPump(allPumps.find((pump) => {
+    //           return pump.id == option.dataset.id
+    //         }));
+    //       }}>
+    //         <option selected disabled hidden></option>
+    //         {allPumps.map(function(element) {
+    //           return <option key={element.id} data-id={element.id}>{element.name}</option>
+    //         })}
+    //       </select>
+          
+    //       <button className="createandupdatebuttons" type="submit">FJERN PUMPE</button>
+    //     </div>
+    //   </form>
+
+    //   <form className="forms" onSubmit={
+    //     function(event){
+    //       event.preventDefault()
+    //       RemoveMachine()}
+    //   }>
+    //     <div className="removeselector" id="removemachine">
+    //       <label htmlFor="">Slet maskine</label>
+    //       <br></br>
+    //       <select name="chosenmachine" id="chosenmachine" onChange={function(event){
+    //         var options = event.target.children;
+    //         var option = options[event.target.selectedIndex];
+
+    //         setMachine(allMachines.find((machine) => {
+    //           return machine.id == option.dataset.id
+    //         }));
+    //       }}>
+    //         <option selected disabled hidden></option>
+    //         {allMachines.map(function(element) {
+    //           return <option key={element.id} data-id={element.id}>{element.id}</option>
+    //         })}
+    //       </select>
+          
+    //         <button className="createandupdatebuttons" type="submit">FJERN MASKINE</button>
+          
+    //     </div>
+    //   </form>
+    // </div>
   )
 
 
