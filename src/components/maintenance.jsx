@@ -31,6 +31,7 @@ function Maintenance({allMachines, setStage, setShownMachine, setNotes}){
         var pumpname
         var time
         if(machine.active == 1) {
+          color = "#42CB6B"
           active = "Aktiv"
           pumpname = machine.pumpname
           time = new Date(machine["time"]).toLocaleString("da-DK", {
@@ -39,6 +40,7 @@ function Maintenance({allMachines, setStage, setShownMachine, setNotes}){
         });
         }
         else{
+          color = "#DF4848"
           active = "Inaktiv"
           pumpname = "Ingen pumpe"
           time = "Ingen tid"
@@ -49,7 +51,7 @@ function Maintenance({allMachines, setStage, setShownMachine, setNotes}){
               <h1 id="machineid">
                 {machine.id}
               </h1>
-              <div id="hid-box">
+              <div id="hid-box" style={{background: color}}>
                 <p id="active">
                   {active}
                 </p>
