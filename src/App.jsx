@@ -3,7 +3,7 @@ import Overview from './components/overview';
 import Phonenumbers from './components/phonenumbers';
 import Startmachine from './components/startmachine';
 import Maintenance from './components/maintenance';
-import Addmachines from './components/addmachines';
+import Machinepark from './components/machinepark';
 import Showmachine from './components/showmachine';
 
 function App() {
@@ -487,7 +487,7 @@ function App() {
           ) : stage === "maintenance" ? (
             <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setStage={setStage} setShownMachine={setShownMachine} setNotes={setNotes}/>
           ) : stage === "machinepark" ? (
-            <Addmachines allPumps={allPumps} allMachines={allMachines} setSubmitted={setSubmitted}/>
+            <Machinepark allPumps={allPumps} allMachines={allMachines} setSubmitted={setSubmitted}/>
           ) : stage === "showmachine" ? (
             <Showmachine shownMachine={shownMachine} setStage={setStage} notes={notes}/>
           ) : <></>
