@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
 function Addmachines({allPumps, allMachines}){
-  const [machine, setMachine] = useState("")
-  const [pump, setPump] = useState("")
 
   const [currentPump, setCurrentPump] = useState({
     name: "",
@@ -14,8 +12,11 @@ function Addmachines({allPumps, allMachines}){
   })
 
   const RemoveMachine = () => {
-    if (machine) {
-      if(machine.active == 1) {
+    var answer = window.confirm("Hvis du vil slette maskinen tryk OK")
+    
+    if (!answer === true) return;
+    if (currentMachine) {
+      if(currentMachine.active == 1) {
         alert("Du kan ikke slette en aktiv maskine")
         return
       }
@@ -24,7 +25,7 @@ function Addmachines({allPumps, allMachines}){
       method: "POST",
       headers: {
         "Content-Type": "application/json"
-      }, body: JSON.stringify(machine)
+      }, body: JSON.stringify(currentMachine)
       })
       window.location.href = "/"
     }
@@ -34,8 +35,12 @@ function Addmachines({allPumps, allMachines}){
   }
 
   const RemovePump = () => {
-    if(pump) {
-      if(pump.active == 1) {
+    var answer = window.confirm("Hvis du vil slette pumpen tryk OK")
+    
+    if (!answer === true) return;
+
+    if(currentPump) {
+      if(currentPump.active == 1) {
         alert("Du kan ikke slette en aktiv pumpe")
         return
       }
@@ -45,7 +50,7 @@ function Addmachines({allPumps, allMachines}){
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(pump)
+        body: JSON.stringify(currentPump)
       })
       window.location.href = "/"
     }
@@ -245,6 +250,7 @@ function Addmachines({allPumps, allMachines}){
                 <td>{data["startcode"]}</td>
                 <td>{data["stopcode"]}</td>
                 <td onClick={() => {
+                  setCurrentPump(data)
                   var modal = document.getElementById("modal")
                   var name = document.getElementById("editpumpname")
                   var number = document.getElementById("editpumpnumber")
@@ -288,6 +294,7 @@ function Addmachines({allPumps, allMachines}){
                 <td>{data["id"]}</td>
                 <td></td>
                 <td onClick={(event) => {
+                  setCurrentMachine(data)
                   var modal = document.getElementById("modal2")
                   var number = document.getElementById("removemachine")
                   number.value = data.id
@@ -301,26 +308,38 @@ function Addmachines({allPumps, allMachines}){
         </tbody>
       </table>
       <div className ="modal" id="modal">
-        <form className ="forms" id="editpump" onSubmit={function(event){
+        <form className ="modalforms" id="editpump" onSubmit={function(event){
             event.preventDefault();
             updatePump();
           }}>
-            <label>Pumpe navn </label>
-            <input type="text" id="editpumpname" name="editpumpname" required></input><br></br>
-            <label>Pumpe nummer </label>
-            <input type="text" id="editpumpnumber" name="editpumpnumber" required></input><br></br>
-            <label>Pumpe startcode </label>
-            <input type="text" id="editpumpstartcode" name="editpumpstartcode" required></input><br></br>
-            <label>Pumpe stopcode </label>
-            <input type="text" id="editpumpstopcode" name="editpumpstopcode" required></input><br></br>
-            <button className="createandupdatebuttons" type="submit">OPDATER</button>
-            <button className="createandupdatebuttons" type="button" onClick={() => {closeModal()}}>LUK</button>
+            <div className="modallabelbox">
+              <label for="editpumpname">
+              <span>Navn</span><input type="text" className="bigmodalinputs" id="editpumpname" name="editpumpname" required></input><br></br>
+              </label>
+              <label for="editpumpnumber">
+              <span>Nummer</span><input type="text" className="modalinputs" id="editpumpnumber" name="editpumpnumber" required></input><br></br>
+              </label>
+              <label for="editpumpstartcode">
+              <span>Startcode</span><input type="text" className="modalinputs" id="editpumpstartcode" name="editpumpstartcode" required></input><br></br>
+              </label>
+              <label for="editpumpstopcode">
+              <span>Stopcode</span><input type="text" className="modalinputs" id="editpumpstopcode" name="editpumpstopcode" required></input><br></br>
+              </label>
+            </div>
+            <span id="removepumpbuttonspan"></span><button id="removepumpbutton" type="button" onClick={function(event){
+              event.preventDefault();
+              RemovePump()
+            }}>Slet Pumpe</button>
+            <div id="modalbuttonbox">
+              <button className="modalbuttons" id="cancelmodalbutton" type="button" onClick={() => {closeModal()}}>Anuller</button>
+              <button className="modalbuttons" id="updatemodalbutton" type="submit">Gem</button>
+            </div>
         </form>
       </div>
       <div className="modal" id="modal2">
         <form className ="forms" id="editpump" onSubmit={function(event){
             event.preventDefault();
-            updatePump();
+            RemoveMachine();
           }}>
             <label>Maskine nummer</label>
             <input id ="removemachine" name="removemachine" required></input>
