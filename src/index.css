@@ -90,6 +90,90 @@ body {
   margin: auto;
 }
 
+.modalforms {
+  position: relative;
+  border-radius: 24px;
+  background: rgb(245, 245, 245);
+  width: 30%;
+  top: 21%;
+  height: 360px;
+  margin: auto;
+  text-align: left;
+}
+
+.modallabelbox {
+  padding-top: 4%;
+  padding-left: 2%;
+}
+
+.modalforms label {
+	display:block;
+  margin-left: 4%;
+	margin-bottom: 10px;
+}
+.modalforms label > span{
+	display: inline-block;
+	width: 30%;
+  font-size: 24px;
+  color: #777777;
+}
+
+#removepumpbuttonspan {
+  display: inline-block;
+  margin-left: 4%;
+  width: 30%;
+}
+
+#removepumpbutton {
+  margin-top: 8px;
+  color: red;
+  width: 180px;
+  border: solid red 1px;
+  height: 36px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.modalbuttons {
+  margin-top: 8px;
+  width: 140px;
+  height: 36px;
+  border-radius: 10px;
+}
+
+#cancelmodalbutton {
+  border: solid blue 1px;
+  margin-right: 5px;
+}
+
+#updatemodalbutton {
+ background-color: #42CB6B;
+ border: none;
+ color: white;
+ margin-left: 5px;
+}
+
+#modalbuttonbox {
+  width: fit-content;
+  margin: auto;
+}
+
+.modalinputs {
+  font-size: 18px;
+  width: 180px;
+  height: 36px;
+  border-radius: 10px;
+  border: solid rgb(230, 230, 230) 1px;
+}
+
+.bigmodalinputs {
+  font-size: 30px;
+  width: 250px;
+  height: 54px;
+  border-radius: 10px;
+  border: solid rgb(230, 230, 230) 1px;
+}
+
 .tablelabel {
   margin-bottom: -40px;
   margin-top: 30px;
@@ -670,6 +754,9 @@ form.select div {
   .forms {
     width: 50% !important;
   }
+  .modalforms {
+    width: 43%;
+  }
 }
 
 @media screen and (max-width:912px){
@@ -679,6 +766,9 @@ form.select div {
   .forms {
     width: 65% !important;
   }
+  .modalforms {
+    width: 55%;
+  }
 }
 
 @media screen and (max-width:740px){
@@ -687,6 +777,9 @@ form.select div {
   }
   .forms {
     width: 75% !important;
+  }
+  .modalforms {
+    width: 65%;
   }
 }
 
@@ -698,6 +791,9 @@ form.select div {
     width: 90% !important;
     padding: 0px 25%;
   }
+  .modalforms {
+    width: 75%;
+  }
 }
 
 @media screen and (max-width:528px){
@@ -707,6 +803,50 @@ form.select div {
   .forms {
     width: 100% !important;
     padding: 0px 17%;
+  }
+  .modalforms {
+    width: 80%;
+    height: 430px;
+    top: 10%;
+  }
+  .modalforms label {
+    margin-left: 6%;
+  }
+  .modalforms label > span{
+    display: block;
+    font-size: 20px;
+  }
+  #removepumpbuttonspan {
+    display: inline-block;
+    margin-left: 4%;
+    width: 30%;
+  }
+  #removepumpbutton {
+    margin-top: -6px;
+    margin-left: 15%;
+    width: 70%;
+  }
+  .modalbuttons {
+    margin-top: 8px;
+    width: 120px;
+    height: 36px;
+    border-radius: 10px;
+  }
+  #cancelmodalbutton {
+    margin-right: 2px;
+  }
+  #updatemodalbutton {
+   margin-left: 2px;
+  }
+  .modalinputs {
+    font-size: 22px;
+    width: 90%;
+  }
+  
+  .bigmodalinputs {
+    height: 36px;
+    font-size: 22px;
+    width: 90%;
   }
 }
 
