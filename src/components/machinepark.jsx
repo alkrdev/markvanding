@@ -31,6 +31,33 @@ function Addmachines({allPumps, allMachines}){
     }
   }
 
+  const UpdateMachine = () =>{
+    var id = document.getElementById("editmachineid");
+    var model = document.getElementById("editmachinemodel")
+    var nozzle = document.getElementById("editmachinenozzle")
+
+    if (currentMachine.active == 1) {
+      alert("Du kan ikke rette en aktiv maskine")
+      return;
+    }
+
+    var tempMachine = {
+      id: id.value,
+      model: model.value,
+      nozzle: nozzle.value,
+      active: 0
+    }
+
+    fetch("http://10.10.60.161:5000/updatemachine", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(tempMachine)
+    })
+   window.location.href = "/"
+  }
+
   const RemovePump = () => {
     if(currentPump) {
       if(currentPump.active == 1) {
@@ -211,6 +238,8 @@ function Addmachines({allPumps, allMachines}){
     modal.style.display = "none"
     var modal = document.getElementById("modal5")
     modal.style.display = "none"
+    var modal = document.getElementById("modal6")
+    modal.style.display = "none"
   }
 
   return(
@@ -223,7 +252,7 @@ function Addmachines({allPumps, allMachines}){
         modal.style.display ="block"
       }}>+</h1>
       </div>
-      <table className="machineparktables">
+      <table className="machineparktables" id="tablemachineparkpumps">
         <colgroup>
         <col style={{width: "25%"}}></col>
         <col style={{width: "25%"}}></col>
@@ -276,15 +305,19 @@ function Addmachines({allPumps, allMachines}){
         modal.style.display = "block"
       }}>+</h1>
       </div>
-      <table className="machineparktables">
+      <table className="machineparktables" id="tablemachineparkmachines">
         <colgroup>
         <col style={{width: "25%"}}></col>
-        <col style={{width: "65%"}}></col>
+        <col style={{width: "25%"}}></col>
+        <col style={{width: "25%"}}></col>
+        <col style={{width: "15%"}}></col>
         <col style={{width: "10%"}}></col>
         </colgroup>
         <thead>
            <tr>
-             <th>Nummer</th>
+             <th>Maskine nr.</th>
+             <th>Model</th>
+             <th>Dyse størrelse</th>
              <th></th>
              <th></th>
            </tr>
@@ -294,14 +327,22 @@ function Addmachines({allPumps, allMachines}){
             return (
               <tr key={data["id"]}>
                 <td>{data["id"]}</td>
+                <td>{data["model"]}</td>
+                <td>{data["nozzle"]}</td>
                 <td></td>
                 <td onClick={(event) => {
                   setCurrentMachine(data)
+                  var id = document.getElementById("editmachineid")
+                  var model = document.getElementById("editmachinemodel")
+                  var nozzle = document.getElementById("editmachinenozzle")
+                  id.value = data.id
+                  model.value = data.model
+                  nozzle.value = data.nozzle
                   var modal = document.getElementById("modal2")
                   setCurrentMachine(data)
                   modal.style.display = "block"
                     }}>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Red_X.svg/1200px-Red_X.svg.png" style={{width: 24}}></img>
+                  <img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" style={{width: 24}}></img>
                 </td>
               </tr>
             )
@@ -340,8 +381,37 @@ function Addmachines({allPumps, allMachines}){
             </div>
         </form>
       </div>
-      <div className="modal" id="modal2">
+      <div className ="modal" id="modal2">
         <form className ="modalforms" id="machinemodal" onSubmit={function(event){
+            event.preventDefault();
+            UpdateMachine();
+          }}>
+            <div className="modallabelbox">
+              <label for ="editmachineid">
+                <span>Maskine nr.</span><input type="test" readOnly="true" className="bigmodalinputs" id="editmachineid" name="editmachineid" required></input><br></br>
+              </label>
+              <label for="editpumpname">
+              <span>Model</span><input type="text" className="modalinputs" id="editmachinemodel" name="editmachinemodel"></input><br></br>
+              </label>
+              <label for="editpumpnumber">
+              <span>Dyse</span><input type="text" className="modalinputs" id="editmachinenozzle" name="editmachinenozzle"></input><br></br>
+              </label>
+            </div>
+            <span className="removemodalbuttonspan"></span><button className="removemodalbutton" id="removemachinebutton" type="button" onClick={function(event){
+              event.preventDefault();
+              var modal = document.getElementById("modal2")
+              modal.style.display = "none"
+              var modal6 = document.getElementById("modal6")
+              modal6.style.display = "block"
+            }}>Slet Maskine</button>
+            <div className="modalbuttonbox">
+              <button className="cancelmodalbutton" type="button" onClick={() => {closeModal()}}>Anuller</button>
+              <button className="modalbuttons" id="updatemodalbutton" type="submit">Gem</button>
+            </div>
+        </form>
+      </div>
+      <div className="modal" id="modal6">
+        <form className ="modalforms" id="removemachinemodal" onSubmit={function(event){
             event.preventDefault();
             RemoveMachine();
           }}>

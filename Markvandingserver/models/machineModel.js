@@ -2,6 +2,8 @@ var sql = require("../db.js")
 class Machine{
     constructor(machine){
         this.id = machine.id
+        this.model = machine.model
+        this.nozzle = machine.nozzle
         this.pumpname = machine.pumpname
         this.time = machine.time
         this.active = machine.active
