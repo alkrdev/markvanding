@@ -27,13 +27,13 @@ function Overview({activeMachines, activePumps, stopMachine, stopPump, setSubmit
     return (
       <div>
         <Overviewexpired expiredMachines = {expiredMachines} activePumps = {activePumps} stopMachine = {stopMachine} stopPump = {stopPump}/>
-        <Overviewstillgoing stillgoingMachines = {stillgoingMachines} activePumps = {activePumps} stopMachine = {stopMachine} stopPump = {stopPump}/>
+        <Overviewstillgoing stillgoingMachines = {stillgoingMachines} activePumps = {activePumps} stopMachine = {stopMachine} stopPump = {stopPump} sendStopSMS={sendStopSMS}/>
       </div>
     )
   }
 
   return (
-    <Overviewstillgoing stillgoingMachines = {stillgoingMachines} activePumps = {activePumps} stopMachine = {stopMachine} stopPump = {stopPump}/>
+    <Overviewstillgoing stillgoingMachines = {stillgoingMachines} activePumps = {activePumps} stopMachine = {stopMachine} stopPump = {stopPump} sendStopSMS={sendStopSMS}/>
   )
 }
 

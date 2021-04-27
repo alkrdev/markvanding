@@ -1,11 +1,11 @@
-function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, stopPump}) {
+function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, stopPump, sendStopSMS}) {
     return (
     <div>
         <h1 className="tablelabel">Aktive vandinger</h1>
         <table className="tables" id="tableoverview">
         <colgroup>
             <col style={{width: "10%"}}></col>
-            <col style={{width: "24%"}}></col>
+            <col style={{width: "25%"}}></col>
             <col style={{width: "45%"}}></col>
             <col style={{width: "10%"}}></col>
         </colgroup>
@@ -31,24 +31,25 @@ function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, stopP
 
             return (
                 <tr key={machine["id"]}>
-                <td>{machine["id"]}</td>
-                <td>{machine["pumpname"]}</td>
-                <td>{time}</td>
-                <td id="stopwateringbutton" onClick={(event) => {
+                    <td style={{background: "#42CB6B"}}>{machine["id"]}</td>
+                    <td>{machine["pumpname"]}</td>
+                    <td>{time}</td>
+                    <td id="stopwateringbutton" onClick={(event) => {
 
-                    var answer = window.confirm("Hvis du vil stoppe vanding tryk OK")
-                    
-                    if (!answer === true) return;
+                        var answer = window.confirm("Hvis du vil stoppe vanding tryk OK")
+                        
+                        if (!answer === true) return;
 
-                    //var pumpnumber = "+45" + pump.number
-                    //var pumpstopcode = pump.stopcode
-                    //sendStopSMS(pumpnumber, pumpstopcode)
-                    
-                    stopMachine(machine)
-                    stopPump(pump)
-                    window.location.href="/"
-                    }}>
-                <p id="stopwateringbuttontext">S</p></td>
+                        var pumpnumber = "+45" + pump.number
+                        var pumpstopcode = pump.stopcode
+                        //sendStopSMS(pumpnumber, pumpstopcode)
+                        
+                        stopMachine(machine)
+                        stopPump(pump)
+                        window.location.href="/"
+                        }}>
+                    <h4>STOP</h4>
+                    </td>
                 </tr>
             )
             })}

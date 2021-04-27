@@ -15,7 +15,7 @@ function Overviewexpired ({expiredMachines, activePumps, stopMachine, stopPump})
                 <th>Maskine nr.</th>
                 <th>Pumpe Navn</th>
                 <th>Færdig</th>
-                <th>Stop Vanding</th>
+                <th>Fjern Vanding</th>
             </tr>
             </thead>
             <tbody>
@@ -32,7 +32,7 @@ function Overviewexpired ({expiredMachines, activePumps, stopMachine, stopPump})
 
                 return (
                 <tr key={machine["id"]}>
-                    <td>{machine["id"]}</td>
+                    <td style={{background: "#DF4848"}}>{machine["id"]}</td>
                     <td>{machine["pumpname"]}</td>
                     <td>{time}</td>
                     <td id="stopwateringbutton" onClick={(event) => {
@@ -49,7 +49,7 @@ function Overviewexpired ({expiredMachines, activePumps, stopMachine, stopPump})
                         stopPump(pump)
                         window.location.href="/"
                     }}>
-                    <p id="stopwateringbuttontext">S</p></td>
+                    <h4>FJERN</h4></td>
                 </tr>
                 )
             })}
