@@ -19,3 +19,13 @@ exports.getNotes = (req, res) => {
         res.send(notes)
     })
 }
+
+exports.removeNoteById = (req, res) => {
+    console.log(body.id)
+    Note.removeNoteById(req.body.id, (err, id) => {
+        if(err){
+            res.send(err)
+        }
+        res.send(id)
+    })
+}

@@ -119,6 +119,12 @@ body {
   height: 180px;
 }
 
+#removenotebutton {
+  background-color: #DF4848;
+  color: white;
+  cursor: pointer;
+}
+
 .modalforms {
   position: relative;
   border-radius: 24px;

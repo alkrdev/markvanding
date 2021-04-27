@@ -31,6 +31,19 @@ class Note{
             }
         })
     }
+
+    static removeNoteById(id, result){
+        console.log(id)
+        sql.query("DELETE FROM markvanding.notes WHERE id = ?", id, (err, res) => {
+            if(err){
+                console.log("Error: ", err)
+                result(err, null)
+            }
+            else{
+                result(null, res)
+            }
+        })
+    }
 }
     
 module.exports = Note

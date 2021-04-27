@@ -81,12 +81,14 @@ function Showmachine({shownMachine, setStage, notes}) {
                             <col style={{width: "10%"}}></col>
                             <col style={{width: "35%"}}></col>
                             <col style={{width: "55%"}}></col>
+                            <col style={{width: "10%"}}></col>
                         </colgroup>
                         <thead>
                             <tr>
                             <th>Maskine nr.</th>
                             <th>Oprettet dato</th>
                             <th>Note</th>
+                            <th>Slet note</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,6 +104,11 @@ function Showmachine({shownMachine, setStage, notes}) {
                                     <td>{note["machineid"]}</td>
                                     <td>{time}</td>
                                     <td>{note["note"]}</td>
+                                    <td id="removenotebutton" onClick={function() {
+                                        console.log(note["id"])
+                                        alert("Fjern note her")
+                                    }
+                                    }>SLET</td>
                                 </tr>
                             )
                             })}
