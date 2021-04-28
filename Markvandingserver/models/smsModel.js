@@ -9,43 +9,39 @@ class SMS{
     {
         console.log(message)
         console.log(number)
-        var https = require('follow-redirects').https;
+        const fetch = require("node-fetch"); // npm install node-fetch
+        const util = require("util");
 
-        var options = {
-            'method': 'POST',
-            'hostname': 'api.sms.to',
-            'path': '/sms/send',
-            'headers': {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer k0KO9LoretzsgsWv44Fzx9rya92tqm3a'
-            },
-            'maxRedirects': 20
+        async function sendSMS() {
+        const payload = {
+            sender: "23727415",
+            message: message,
+            recipients: [
+            { msisdn: number },
+            ],
         };
 
-        var req = https.request(options, function (res) {
-            var chunks = [];
+        const apiToken = "hzWHQavUTHe6c0D6QaLyElvkCYp6c4Wbr5nYw6RVHV1pQCsNSMZnv204wYsNFqF_";
+        const encodedAuth = Buffer.from(`${apiToken}:`).toString("base64");
 
-            res.on("data", function (chunk) {
-                chunks.push(chunk);
-            });
-
-            res.on("end", function (chunk) {
-                var body = Buffer.concat(chunks);
-                console.log(body.toString());
-            });
-
-            res.on("error", function (error) {
-                console.error(error);
-            });
+        const resp = await fetch("https://gatewayapi.com/rest/mtsms", {
+            method: "post",
+            body: JSON.stringify(payload),
+            headers: {
+            Authorization: `Basic ${encodedAuth}`,
+            "Content-Type": "application/json",
+            },
         });
+        const json = await resp.json()
+        console.log(util.inspect(json, {showHidden: false, depth: null}));
+        if (resp.ok) {
+            console.log("congrats! messages are on their way!");
+        } else {
+            console.log("oh-no! something went wrong...");
+        }
+        }
 
-        console.log(message)
-        console.log(number)
-        //var postData =  "{\n    \"message\": \"" + message + "\",\n    \"to\": \"" + number + "\"}";
-
-        //req.write(postData);
-
-        //req.end();
+        sendSMS();
     }
 
 }
