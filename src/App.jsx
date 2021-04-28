@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Overview from './components/overview';
-import Phonenumbers from './components/phonenumbers';
 import Startmachine from './components/startmachine';
 import Maintenance from './components/maintenance';
 import Machinepark from './components/machinepark';
@@ -24,6 +23,8 @@ function App() {
   const [allMachines, setAllMachines] = useState([])
   const [shownMachine, setShownMachine] = useState([])
   const [notes, setNotes] = useState([])
+  const [hours, setHours] = useState(-1)
+  const [days, setDays] = useState(-1)
   
   const machine = localStorage.getItem("machine")
   const pump = localStorage.getItem("pump")
@@ -150,6 +151,7 @@ function App() {
   
   function TimeChanged(event){
     const {name, value} = event.target
+
     
     var now = new Date();
 
@@ -160,8 +162,10 @@ function App() {
       now.setHours(now.getHours() + hours)
       now.setMinutes(now.getMinutes() + minutes)
       console.log(now)
+      setHours(1)
     } else {
       now = new Date(value);
+      setDays(1)
     }
     console.log(now)
     //Tue Feb 16 2021 10:25:00 GMT+0100 (Central European Standard Time)
@@ -356,6 +360,14 @@ function App() {
           // Prevents default behavior (Getting put at another site)
           event.preventDefault();
 
+          //hours // sat?
+          //days // Sat?
+
+          if (hours === -1 && days === -1) {
+            alert("Du skal vælge en tid")
+            return;
+          }
+
           startMachine.time = selectedTime;
 
           /*
@@ -432,14 +444,15 @@ function App() {
 
             <div id="timeremaining" className="tabcontent">
               <h3>Tid tilbage</h3>
-              <input name="timeremaining" onChange={(event) => TimeChanged(event)} type="time" size="50"></input>
+              <input name="timeremaining" defaultValue={hours} onChange={(event) => {
+                TimeChanged(event)
+              }} type="time" size="50"></input>
               <br></br>
               <button type="submit" className="choosetimesubmit">START</button>
             </div>
-
             <div id="date" className="tabcontent">
               <h3>Klokkeslæt</h3>
-              <input name="date" onChange={(event) => TimeChanged(event)} type="datetime-local" min={new Date().toISOString().slice(0, 16)} size="50"></input>
+              <input name="date" defaultValue={days} onChange={(event) => TimeChanged(event)} type="datetime-local" min={new Date().toISOString().slice(0, 16)} size="50"></input>
               <br></br>
               <button type="submit" className="choosetimesubmit">START</button>
             </div>
@@ -457,9 +470,6 @@ function App() {
               </li>
               <li>
                 <a href="#" onClick={(e) => HandleNavClick(e, "startmachine", "START VANDING")}>START VANDING</a>
-              </li>
-              <li>
-                <a href="#" onClick={(e) => HandleNavClick(e, "phonenumber", "TELEFONNUMRE")}>TELEFONNUMRE</a>
               </li>
               <li>
                 <a href="#" onClick={(e) => HandleNavClick(e, "maintenance", "VEDLIGEHOLDELSE")}>VEDLIGEHOLDELSE</a>
@@ -482,8 +492,6 @@ function App() {
             <Overview activePumps={activePumps} stopMachine={StopMachine} stopPump={StopPump} setSubmitted={setSubmitted} expiredMachines = {expiredMachines} stillgoingMachines = {stillgoingMachines}/>
           ) : stage === "startmachine" ? (
             <Startmachine setSubmitted={setSubmitted} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump} setSubmitted={setSubmitted}/>
-          ) : stage === "phonenumber" ? (
-            <Phonenumbers  allPumps={allPumps} setSubmitted={setSubmitted}/>
           ) : stage === "maintenance" ? (
             <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setStage={setStage} setShownMachine={setShownMachine} setNotes={setNotes}/>
           ) : stage === "machinepark" ? (
