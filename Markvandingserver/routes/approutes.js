@@ -48,4 +48,7 @@ module.exports = (app) => {
 
     app.route("/getnotes")
         .get(notes.getNotes)
+
+    app.route("/removenote")
+        .post(notes.removeNoteById)
 }

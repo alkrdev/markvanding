@@ -41,11 +41,11 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
 
           // SET PUMP TO ACTIVE ---- pump.id
           
-         
+          
           
           
           // UDFYLD RIGTIG DATA TIL SMS
-          var pumpnumber = "+45" + pump.number
+          var pumpnumber = "45" + pump.number
           var pumpstartcode = pump.startcode
           //sendStartSMS(pumpnumber, pumpstartcode)
           

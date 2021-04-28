@@ -5,6 +5,9 @@ function Showmachine({shownMachine, setStage, notes}) {
     const HandleClick = () => {
         setStage("maintenance")
     }
+
+    const [currentNote, setCurrentNote] = useState({
+    })
     
     const CreateNote = () => {
         var note = document.getElementById("createnoteinput")
@@ -36,6 +39,7 @@ function Showmachine({shownMachine, setStage, notes}) {
         })
         window.location.href = "/"
     }
+
     
 
 
@@ -79,8 +83,8 @@ function Showmachine({shownMachine, setStage, notes}) {
                     <table className="tables" id="tablenotes">
                         <colgroup>
                             <col style={{width: "10%"}}></col>
-                            <col style={{width: "35%"}}></col>
-                            <col style={{width: "55%"}}></col>
+                            <col style={{width: "30%"}}></col>
+                            <col style={{width: "50%"}}></col>
                             <col style={{width: "10%"}}></col>
                         </colgroup>
                         <thead>

@@ -1,3 +1,4 @@
+
 *{
   margin: 0px;
   padding: 0px;
@@ -13,6 +14,13 @@ body {
 
 .App {
   text-align: center;
+}
+
+input[type="datetime-local"] {
+  width: 160px;
+  height: 50px;
+  border-radius: 16px;
+  border: none;
 }
 
 .machineparktables {
@@ -112,6 +120,10 @@ body {
 }
 
 #machinemodal {
+  height: 316px;
+}
+
+#removemachinemodal {
   height: 180px;
 }
 
@@ -447,8 +459,11 @@ button {
 }
 
 #stopwateringbutton {
-  background-color: red;
   cursor: pointer;
+  background: #DF4848;
+  color: white;
+  font-size: 20px;
+  border-radius: 8px;
 }
 
 .tables {
@@ -954,6 +969,9 @@ form.select div {
   .removemodalbutton {
     width: 120px;
   }
+  #machinemodal {
+    height: 356px;
+  }
 }
 
 @media screen and (max-width:420px){
@@ -1015,6 +1033,15 @@ form.select div {
     #tablenotes td:nth-of-type(1):before { content: "Maskine nr."; }
 		#tablenotes td:nth-of-type(2):before { content: "Oprettet dato"; }
 		#tablenotes td:nth-of-type(3):before { content: "Note"; }
+
+    #tablemachineparkpumps td:nth-of-type(1):before { content: "Navn"; }
+		#tablemachineparkpumps td:nth-of-type(2):before { content: "Nummer"; }
+		#tablemachineparkpumps td:nth-of-type(3):before { content: "Startkode"; }
+    #tablemachineparkpumps td:nth-of-type(4):before { content: "Stopkode"; }
+
+    #tablemachineparkmachines td:nth-of-type(1):before { content: "Maskine nr."; }
+    #tablemachineparkmachines td:nth-of-type(2):before { content: "Model"; }
+    #tablemachineparkmachines td:nth-of-type(3):before { content: "Dyse størrelse"; }
 	}
 
 @keyframes navLinkFade{
