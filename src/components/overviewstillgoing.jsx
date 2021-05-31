@@ -46,7 +46,9 @@ function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, stopP
                         
                         stopMachine(machine)
                         stopPump(pump)
-                        window.location.href="/"
+
+                        setTimeout(() => {  window.location.href="/" }, 1000);
+
                         }}>
                     <h4>STOP</h4>
                     </td>

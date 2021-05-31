@@ -81,4 +81,4 @@ function Maintenance({history, allMachines, setStage, setShownMachine, setNotes}
 
 }
 
-export default Maintenance;
+export default withRouter(Maintenance);

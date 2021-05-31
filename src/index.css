@@ -6,14 +6,19 @@
   font-family: Tahoma, sans-serif;
 }
 
+html {
+  text-align: center;
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.App {
+.imgcontainer {
   text-align: center;
+  margin: 24px 0 12px 0;
 }
 
 input[type="datetime-local"] {
@@ -21,6 +26,16 @@ input[type="datetime-local"] {
   height: 50px;
   border-radius: 16px;
   border: none;
+}
+
+#loginform {
+  margin: auto;
+  padding: 16px;
+  width: 225px;
+}
+
+#loginbutton {
+  margin: auto;
 }
 
 .machineparktables {
