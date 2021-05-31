@@ -7,6 +7,8 @@ import Showmachine from './components/showmachine';
 
 function App() {
 
+  const storedJwt = localStorage.getItem('token');
+  const [allowNav, setAllowNav] = useState({})
   const windowWidth = window.innerWidth;
 
   const [stage, setStage] = useState("overview")

@@ -3,6 +3,7 @@ module.exports = (app) => {
     var pumps = require("../controllers/pumpController.js")
     var sms = require("../controllers/smsController.js")
     var notes = require("../controllers/noteController.js")
+    var users = require("../controllers/userController.js")
 
     app.route("/inactivemachines")
         .get(machines.getInactiveMachines)
@@ -51,4 +52,7 @@ module.exports = (app) => {
 
     app.route("/removenote")
         .post(notes.removeNoteById)
+
+    app.route("/auth")
+        .post(users.authenticate)
 }
