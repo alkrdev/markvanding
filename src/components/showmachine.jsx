@@ -5,9 +5,6 @@ function Showmachine({shownMachine, history, notes}) {
     const HandleClick = () => {
         history.push("/maintenance")
     }
-
-    const [currentNote, setCurrentNote] = useState({
-    })
     
     const CreateNote = () => {
         var note = document.getElementById("createnoteinput")
@@ -38,6 +35,22 @@ function Showmachine({shownMachine, history, notes}) {
         body: JSON.stringify(tempNote)
         })
         window.location.href = "/"
+    }
+
+    const RemoveNote = (note) => {
+        if (note) {
+
+            fetch("http://10.10.51.36:5000/removenote", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            }, body: JSON.stringify(note)
+            })
+            window.location.href = "/"
+        }
+        else {
+            alert("Ingen note fundet. Dette burde ikke kunne lade sig gøre. Kontakt KKPartner med det samme")
+        }
     }
 
     
@@ -108,8 +121,9 @@ function Showmachine({shownMachine, history, notes}) {
                                     <td>{note["machineid"]}</td>
                                     <td>{time}</td>
                                     <td>{note["note"]}</td>
-                                    <td id="removenotebutton" onClick={function() {
+                                    <td id="removenotebutton" onClick={function(event) {
                                         console.log(note["id"])
+                                        RemoveNote(note)
                                         alert("Fjern note her")
                                     }
                                     }>SLET</td>
@@ -117,7 +131,7 @@ function Showmachine({shownMachine, history, notes}) {
                             )
                             })}
                         </tbody>
-                    </table>
+                    </table> 
                 </div>
             </div>
         </div>
