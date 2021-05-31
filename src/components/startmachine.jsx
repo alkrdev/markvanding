@@ -7,7 +7,7 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
   const [pump, setPump] = useState("")
 
   function sendStartSMS(pumpnumber, pumpstartcode){
-    fetch("http://10.10.60.161:5000/sendsms", {
+    fetch("http://10.10.51.36:5000/sendsms", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

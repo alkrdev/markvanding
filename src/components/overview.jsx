@@ -6,7 +6,7 @@ function Overview({activeMachines, activePumps, stopMachine, stopPump, setSubmit
 
 
   function sendStopSMS(pumpnumber, pumpstopcode){
-    fetch("http://10.10.60.161:5000/sendsms", {
+    fetch("http://10.10.51.36:5000/sendsms", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

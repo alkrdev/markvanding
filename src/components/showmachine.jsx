@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-function Showmachine({shownMachine, setStage, notes}) {
+function Showmachine({shownMachine, history, notes}) {
 
     const HandleClick = () => {
-        setStage("maintenance")
+        history.push("/maintenance")
     }
 
     const [currentNote, setCurrentNote] = useState({
@@ -30,7 +30,7 @@ function Showmachine({shownMachine, setStage, notes}) {
             note : note.value
         }
 
-        fetch("http://10.10.60.161:5000/createnote", {
+        fetch("http://10.10.51.36:5000/createnote", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

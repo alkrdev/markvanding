@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react';
+
+import { Router } from "react-router";
+import { Route } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
+
+import LoginForm from "./components/loginform"
 import Overview from './components/overview';
 import Startmachine from './components/startmachine';
 import Maintenance from './components/maintenance';
 import Machinepark from './components/machinepark';
 import Showmachine from './components/showmachine';
+
+const history = createBrowserHistory();
 
 function App() {
 
@@ -11,7 +20,6 @@ function App() {
   const [allowNav, setAllowNav] = useState({})
   const windowWidth = window.innerWidth;
 
-  const [stage, setStage] = useState("overview")
   const [submitted, setSubmitted] = useState(false)
   const [selectedTime, setSelectedtime] = useState({})
 
@@ -56,7 +64,11 @@ function App() {
   }
 
   const HandleNavClick = function(event, stage, text) {
-    setStage(stage)
+    event.preventDefault();
+    if (allowNav == false) {
+      return;
+    }
+    history.push(stage)
     var array = event.target.parentNode.parentNode.children
 
 
@@ -77,26 +89,6 @@ function App() {
     if (windowWidth <= 1280) slide();
  }
 
-  // function HandleClick(navbar) {
-  //   switch (navbar) {
-  //     case "overview":
-  //       setStage("overview")
-  //       break;
-  //     case "startmachine":
-  //       setStage("startmachine")
-  //       break;
-  //     case "phonenumber":
-  //       setStage("phonenumber")
-  //       break;
-  //     case "maintenance":
-  //       setStage("maintenance")
-  //       break;
-  //     case "addmachine":
-  //       setStage("addmachine")
-  //       break;
-  //     default:
-  //       break;
-  //   }
 
     
   //   if (windowWidth <= 1280) slide();
@@ -189,7 +181,7 @@ function App() {
      tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
      tempMachine.time = tempTime.join(" ");
 
-    fetch("http://10.10.60.161:5000/updatemachine", {
+    fetch("http://10.10.51.36:5000/updatemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -206,7 +198,7 @@ function App() {
      tempPump.active = 1;
      
 
-    fetch("http://10.10.60.161:5000/updatepump", {
+    fetch("http://10.10.51.36:5000/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -223,7 +215,7 @@ function App() {
      tempPump.active = 0;
      
 
-    fetch("http://10.10.60.161:5000/updatepump", {
+    fetch("http://10.10.51.36:5000/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -242,7 +234,7 @@ function App() {
      tempMachine.active = 0
      
 
-    fetch("http://10.10.60.161:5000/updatemachine", {
+    fetch("http://10.10.51.36:5000/updatemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -254,13 +246,25 @@ function App() {
 
   useEffect(function() 
   {
+
+    if (storedJwt !== null && storedJwt !== "") {
+      console.log("LOGGED IN, PUSHED TO CHOOSE")
+      setAllowNav(true)
+      history.push("/overview")
+    } else if (storedJwt == null || storedJwt == "") {
+      console.log("NOT LOGGED IN, PUSHED TO LOG IN")
+      setAllowNav(false)
+      history.push("/")
+    }
+
     document.querySelectorAll(".nav-links")[0].children[0].children[0].style.color = "rgb(235, 101, 45)"
     var hasstarted = localStorage.getItem("hasstarted")
     if (hasstarted == "true") {
       console.log("Hej")
       setSubmitted(true)
     }
-    fetch("http://10.10.60.161:5000/activemachines")
+
+    fetch("http://10.10.51.36:5000/activemachines")
       .then(function(data) {
         return data.json();
       })
@@ -272,7 +276,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.60.161:5000/activepumps")
+      fetch("http://10.10.51.36:5000/activepumps")
       .then(function(data) {
         return data.json();
       })
@@ -282,7 +286,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.60.161:5000/inactivemachines")
+      fetch("http://10.10.51.36:5000/inactivemachines")
       .then(function(data) {
         return data.json();
       })
@@ -292,7 +296,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.60.161:5000/inactivepumps")
+      fetch("http://10.10.51.36:5000/inactivepumps")
       .then(function(data) {
         return data.json();
       })
@@ -302,7 +306,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.60.161:5000/allpumps")
+      fetch("http://10.10.51.36:5000/allpumps")
       .then(function(data) {
         return data.json();
       })
@@ -312,7 +316,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.60.161:5000/allmachines")
+      fetch("http://10.10.51.36:5000/allmachines")
       .then(function(data) {
         return data.json();
       })
@@ -326,7 +330,7 @@ function App() {
     }, [])
 
   return (
-    <div className="App">
+    <Router history={history}>
       {submitted ? (
         <form onSubmit={function(event) {
           
@@ -468,16 +472,16 @@ function App() {
             </div>
             <ul className="nav-links">
               <li>
-                <a href="#" onClick={(e) => HandleNavClick(e, "overview", "OVERSIGT")}>OVERSIGT</a>
+                <a href="" onClick={(e) => HandleNavClick(e, "overview", "OVERSIGT")}>OVERSIGT</a>
               </li>
               <li>
-                <a href="#" onClick={(e) => HandleNavClick(e, "startmachine", "START VANDING")}>START VANDING</a>
+                <a href="" onClick={(e) => HandleNavClick(e, "startmachine", "START VANDING")}>START VANDING</a>
               </li>
               <li>
-                <a href="#" onClick={(e) => HandleNavClick(e, "maintenance", "VEDLIGEHOLDELSE")}>VEDLIGEHOLDELSE</a>
+                <a href="" onClick={(e) => HandleNavClick(e, "maintenance", "VEDLIGEHOLDELSE")}>VEDLIGEHOLDELSE</a>
               </li>
               <li>
-                <a href="#" onClick={(e) => HandleNavClick(e, "machinepark", "MASKINPARK")}>MASKINPARK</a>
+                <a href="" onClick={(e) => HandleNavClick(e, "machinepark", "MASKINPARK")}>MASKINPARK</a>
               </li>
             </ul>
             <div className="burger" onClick={slide}>
@@ -487,24 +491,28 @@ function App() {
             </div>
           </nav>
         </header>
-        
-        <main>
-        {
-          stage === "overview" ? (
+        <main>  
+          <Route exact path="/">
+              <LoginForm />
+          </Route>        
+          <Route path="/overview">
             <Overview activePumps={activePumps} stopMachine={StopMachine} stopPump={StopPump} setSubmitted={setSubmitted} expiredMachines = {expiredMachines} stillgoingMachines = {stillgoingMachines}/>
-          ) : stage === "startmachine" ? (
+          </Route>
+          <Route path="/startmachine">
             <Startmachine setSubmitted={setSubmitted} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump} setSubmitted={setSubmitted}/>
-          ) : stage === "maintenance" ? (
-            <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setStage={setStage} setShownMachine={setShownMachine} setNotes={setNotes}/>
-          ) : stage === "machinepark" ? (
+          </Route>
+          <Route path="/maintenance">
+            <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setShownMachine={setShownMachine} setNotes={setNotes}/>
+          </Route>
+          <Route path="/machinepark">
             <Machinepark allPumps={allPumps} allMachines={allMachines} setSubmitted={setSubmitted}/>
-          ) : stage === "showmachine" ? (
-            <Showmachine shownMachine={shownMachine} setStage={setStage} notes={notes}/>
-          ) : <></>
-        }
-      </main>
+          </Route>
+          <Route path="/showmachine">            
+            <Showmachine shownMachine={shownMachine} notes={notes} history={history}/>
+          </Route>
+        </main>
       </>}
-    </div>
+    </Router>
   );
 }
 

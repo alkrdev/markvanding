@@ -18,7 +18,7 @@ function Addmachines({allPumps, allMachines}){
         return
       }
 
-      fetch("http://10.10.60.161:5000/removemachine", {
+      fetch("http://10.10.51.36:5000/removemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -48,7 +48,7 @@ function Addmachines({allPumps, allMachines}){
       active: 0
     }
 
-    fetch("http://10.10.60.161:5000/updatemachine", {
+    fetch("http://10.10.51.36:5000/updatemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -65,7 +65,7 @@ function Addmachines({allPumps, allMachines}){
         return
       }
 
-      fetch("http://10.10.60.161:5000/removepump", {
+      fetch("http://10.10.51.36:5000/removepump", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -156,7 +156,7 @@ function Addmachines({allPumps, allMachines}){
       stopcode: stopcode.value
     }
 
-    fetch("http://10.10.60.161:5000/updatepump", {
+    fetch("http://10.10.51.36:5000/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -185,7 +185,7 @@ function Addmachines({allPumps, allMachines}){
     } 
   
     // Sends tempPump to server
-    fetch("http://10.10.60.161:5000/createpump", {
+    fetch("http://10.10.51.36:5000/createpump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -217,7 +217,7 @@ function Addmachines({allPumps, allMachines}){
       active: 0
     } 
   
-    fetch("http://10.10.60.161:5000/createmachine", {
+    fetch("http://10.10.51.36:5000/createmachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

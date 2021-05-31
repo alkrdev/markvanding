@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react"
+import { withRouter } from "react-router-dom";
 
-function Maintenance({allMachines, setStage, setShownMachine, setNotes}){
+function Maintenance({history, allMachines, setStage, setShownMachine, setNotes}){
 
   const HandleClick = (machine) => {
 
     setShownMachine(machine)
-    setStage("showmachine")
+    history.push("/showmachine")
 
   }
 
   useEffect(function() 
   {
-    fetch("http://10.10.60.161:5000/getnotes")
+    fetch("http://10.10.51.36:5000/getnotes")
       .then(function(data) {
         return data.json();
       })
