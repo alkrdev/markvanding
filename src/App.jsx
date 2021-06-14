@@ -206,42 +206,6 @@ function App() {
     })
   }
 
-  function StopPump(pump){
-
-    // Set date of machine to selected date
-     var tempPump = {...pump}
-     
-     tempPump.active = 0;
-     
-
-    fetch("http://10.10.51.36:5000/updatepump", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempPump)
-    })
-  }
-
-  function StopMachine(machine){
-
-    // Set date of machine to selected date
-     var tempMachine = {...machine}
-    
-     tempMachine.pumpname = null
-     tempMachine.time = null
-     tempMachine.active = 0
-     
-
-    fetch("http://10.10.51.36:5000/updatemachine", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempMachine)
-    })
-  }
-
 
   useEffect(function() 
   {
@@ -259,7 +223,6 @@ function App() {
     document.querySelectorAll(".nav-links")[0].children[0].children[0].style.color = "rgb(235, 101, 45)"
     var hasstarted = localStorage.getItem("hasstarted")
     if (hasstarted == "true") {
-      console.log("Hej")
       setSubmitted(true)
     }
 
@@ -338,8 +301,6 @@ function App() {
           }
 
           startMachine.time = selectedTime;
-
-          console.log(startMachine)
           
           // Make new array with the old data from tempdatamachines, and add "tempMachine" to it
           setActiveMachines(activeMachines => [...activeMachines, startMachine])
@@ -414,7 +375,7 @@ function App() {
               <LoginForm />
           </Route>        
           <Route path="/overview">
-            <Overview activePumps={activePumps} stopMachine={StopMachine} stopPump={StopPump} expiredMachines={expiredMachines} stillgoingMachines={stillgoingMachines}/>
+            <Overview expiredMachines={expiredMachines} stillgoingMachines={stillgoingMachines}/>
           </Route>
           <Route path="/startmachine">
             <Startmachine setSubmitted={setSubmitted} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump} setSubmitted={setSubmitted}/>
