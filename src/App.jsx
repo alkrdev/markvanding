@@ -189,23 +189,6 @@ function App() {
     })
   }
 
-  function UpdatePump(pump){
-
-    // Set date of machine to selected date
-     var tempPump = {...pump}
-     
-     tempPump.active = 1;
-     
-
-    fetch("http://10.10.51.36:5000/updatepump", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempPump)
-    })
-  }
-
 
   useEffect(function() 
   {
@@ -378,13 +361,13 @@ function App() {
             <Overview expiredMachines={expiredMachines} stillgoingMachines={stillgoingMachines}/>
           </Route>
           <Route path="/startmachine">
-            <Startmachine setSubmitted={setSubmitted} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump} setSubmitted={setSubmitted}/>
+            <Startmachine setSubmitted={setSubmitted} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} />
           </Route>
           <Route path="/maintenance">
             <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setShownMachine={setShownMachine} setNotes={setNotes}/>
           </Route>
           <Route path="/machinepark">
-            <Machinepark allPumps={allPumps} allMachines={allMachines} setSubmitted={setSubmitted}/>
+            <Machinepark allMachines={allMachines} setSubmitted={setSubmitted}/>
           </Route>
           <Route path="/showmachine">            
             <Showmachine shownMachine={shownMachine} notes={notes} history={history}/>

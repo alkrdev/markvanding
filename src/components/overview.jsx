@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Overviewstillgoing from './overviewstillgoing';
 import Overviewexpired from './overviewexpired';
 
-function Overview({setSubmitted, expiredMachines, stillgoingMachines}) {
+const Overview = ({ expiredMachines, stillgoingMachines }) => {
   const [activePumps, setActivePumps] = useState([])
 
-
-  function sendStopSMS(pumpnumber, pumpStopcode){
+  const sendStopSMS = (pumpnumber, pumpStopcode) => {
     fetch("http://10.10.51.36:5000/sendsms", {
       method: "POST",
       headers: {
@@ -19,7 +18,7 @@ function Overview({setSubmitted, expiredMachines, stillgoingMachines}) {
     })
   }
 
-  function StopPump(pump){
+  const StopPump = (pump) => {
 
     // Set date of machine to selected date
      var tempPump = {...pump}
@@ -37,7 +36,7 @@ function Overview({setSubmitted, expiredMachines, stillgoingMachines}) {
   }
 
   
-  function StopMachine(machine){
+  const StopMachine = (machine) => {
     // Set date of machine to selected date
      var tempMachine = {...machine}
     
@@ -58,9 +57,7 @@ function Overview({setSubmitted, expiredMachines, stillgoingMachines}) {
   useEffect(function() 
   { 
     fetch("http://10.10.51.36:5000/activepumps")
-    .then(function(data) {
-      return data.json();
-    })
+    .then((data) => data.json())
     .then(function(json) {
       setActivePumps(json)     
     }).catch((error) => {

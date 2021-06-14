@@ -11,7 +11,8 @@ function Addmachines({allPumps, allMachines}){
   const [currentMachine, setCurrentMachine] = useState({
   })
 
-  const RemoveMachine = () => {
+  const RemoveMachine = () => {    
+    const [allPumps, setAllPumps] = useState([])
     if (currentMachine) {
       if(currentMachine.active == 1) {
         alert("Du kan ikke slette en aktiv maskine")
