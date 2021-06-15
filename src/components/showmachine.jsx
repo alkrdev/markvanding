@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-function Showmachine({shownMachine, history, notes}) {
+function Showmachine({shownMachine, history, notes, setNotes}) {
 
     const HandleClick = () => {
         history.push("/maintenance")
@@ -27,20 +27,21 @@ function Showmachine({shownMachine, history, notes}) {
             note : note.value
         }
 
-        fetch("http://10.10.51.36:5000/createnote", {
+        fetch("http://remote.kkpartner.dk:3001/createnote", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(tempNote)
         })
-        window.location.href = "/"
+        
+        //setNotes(...notes, tempNote)
     }
 
     const RemoveNote = (note) => {
         if (note) {
 
-            fetch("http://10.10.51.36:5000/removenote", {
+            fetch("http://remote.kkpartner.dk:3001/removenote", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"

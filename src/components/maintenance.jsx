@@ -12,7 +12,7 @@ function Maintenance({history, allMachines, setStage, setShownMachine, setNotes}
 
   useEffect(function() 
   {
-    fetch("http://10.10.51.36:5000/getnotes")
+    fetch("http://remote.kkpartner.dk:3001/getnotes")
       .then(function(data) {
         return data.json();
       })

@@ -27,7 +27,7 @@ function Overviewexpired ({expiredMachines, activePumps, stopMachine, stopPump})
                 });
                 
                 var pump = activePumps.find((pum) => {
-                return pum.name == machine.pumpname
+                    return pum.name == machine.pumpname
                 })
 
                 return (
@@ -45,8 +45,9 @@ function Overviewexpired ({expiredMachines, activePumps, stopMachine, stopPump})
                         //var pumpstopcode = pump.stopcode
                         //sendStopSMS(pumpnumber, pumpstopcode)
                         
-                        stopMachine(machine)
-                        stopPump(pump)
+                        console.log(machine)
+
+                        stopMachine(machine, pump)
                         window.location.href="/"
                     }}>
                     <h4>FJERN</h4></td>

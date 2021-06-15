@@ -12,7 +12,10 @@ const LoginForm = ({history}) => {
     const HandleLogin = (e) => {
         e.preventDefault();
 
-        fetch("http://10.10.51.36:5000/auth", {
+        console.log(email)
+        console.log(pass)
+
+        fetch("http://remote.kkpartner.dk:3001/auth", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
@@ -33,6 +36,7 @@ const LoginForm = ({history}) => {
             } else {
                 localStorage.setItem('token', json.token);
                 history.push("/overview")
+                window.location.href = "/"
             }
         })
     }
@@ -44,7 +48,7 @@ const LoginForm = ({history}) => {
             <form onSubmit={HandleLogin} method="post" className="flexCenteredColumn">
                 <label>{error}</label> 
                 <div id="loginform">
-                    <label><b>Brugernavn</b>
+                    <label><b>Email</b>
                         <input type="text" name={email} onChange={(e) => { setEmail(e.target.value) }} required></input>
                     </label>    
 

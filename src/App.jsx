@@ -168,20 +168,23 @@ function App() {
 
   function UpdateMachine(updatedMachine){
 
-    // Set date of machine to selected date
+    // tempMachine is a copy of updatedMachine
      var tempMachine = {...updatedMachine}
      
+     // Set date of tempMachine to selected date
      tempMachine.time = selectedTime.toLocaleString("da-DK", {
        dateStyle: "short",
        timeStyle: "medium"
      });
      
+     // Make time into the right format for mysql database
      var tempTime = tempMachine.time.split(" ");
      var date = tempTime[0].split(".")
      tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
      tempMachine.time = tempTime.join(" ");
 
-    fetch("http://10.10.51.36:5000/updatemachine", {
+     // Fetch that updates/sends tempMachine in/to databases
+    fetch("http://remote.kkpartner.dk:3001/updatemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -198,7 +201,7 @@ function App() {
      tempPump.active = 1;
      
 
-    fetch("http://10.10.51.36:5000/updatepump", {
+    fetch("http://remote.kkpartner.dk:3001/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -215,7 +218,7 @@ function App() {
      tempPump.active = 0;
      
 
-    fetch("http://10.10.51.36:5000/updatepump", {
+    fetch("http://remote.kkpartner.dk:3001/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -224,22 +227,18 @@ function App() {
     })
   }
 
-  function StopMachine(machine){
-
-    // Set date of machine to selected date
-     var tempMachine = {...machine}
+  function StopMachine(machine, pump){
     
-     tempMachine.pumpname = null
-     tempMachine.time = null
-     tempMachine.active = 0
-     
 
-    fetch("http://10.10.51.36:5000/updatemachine", {
+    fetch("http://remote.kkpartner.dk:3001/stopmachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(tempMachine)
+      body: JSON.stringify({
+        machineid: machine.id,
+        pumpid: pump.id
+      })
     })
   }
 
@@ -250,10 +249,12 @@ function App() {
     if (storedJwt !== null && storedJwt !== "") {
       console.log("LOGGED IN, PUSHED TO CHOOSE")
       setAllowNav(true)
+      document.getElementById("nav").style.display = "flex";
       history.push("/overview")
     } else if (storedJwt == null || storedJwt == "") {
       console.log("NOT LOGGED IN, PUSHED TO LOG IN")
       setAllowNav(false)
+      document.getElementById("nav").style.display = "none";
       history.push("/")
     }
 
@@ -264,7 +265,7 @@ function App() {
       setSubmitted(true)
     }
 
-    fetch("http://10.10.51.36:5000/activemachines")
+    fetch("http://remote.kkpartner.dk:3001/activemachines")
       .then(function(data) {
         return data.json();
       })
@@ -276,7 +277,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.51.36:5000/activepumps")
+      fetch("http://remote.kkpartner.dk:3001/activepumps")
       .then(function(data) {
         return data.json();
       })
@@ -286,7 +287,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.51.36:5000/inactivemachines")
+      fetch("http://remote.kkpartner.dk:3001/inactivemachines")
       .then(function(data) {
         return data.json();
       })
@@ -296,7 +297,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.51.36:5000/inactivepumps")
+      fetch("http://remote.kkpartner.dk:3001/inactivepumps")
       .then(function(data) {
         return data.json();
       })
@@ -306,7 +307,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.51.36:5000/allpumps")
+      fetch("http://remote.kkpartner.dk:3001/allpumps")
       .then(function(data) {
         return data.json();
       })
@@ -316,7 +317,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.51.36:5000/allmachines")
+      fetch("http://remote.kkpartner.dk:3001/allmachines")
       .then(function(data) {
         return data.json();
       })
@@ -439,6 +440,9 @@ function App() {
           localStorage.setItem("pump", "")
           localStorage.setItem("machine", "")
           localStorage.setItem("hasstarted", "false")
+
+          setTimeout(() => {  window.location.href="/" }, 1000);
+
           setSubmitted(false);
           window.location.href = "/"
         }}>
@@ -466,7 +470,7 @@ function App() {
         </form>
       ) : <>
         <header>
-          <nav>
+          <nav id="nav">
             <div className="logo">
               <h1>Markvanding</h1>
             </div>
@@ -508,7 +512,7 @@ function App() {
             <Machinepark allPumps={allPumps} allMachines={allMachines} setSubmitted={setSubmitted}/>
           </Route>
           <Route path="/showmachine">            
-            <Showmachine shownMachine={shownMachine} notes={notes} history={history}/>
+            <Showmachine shownMachine={shownMachine} notes={notes} history={history} setNotes={setNotes}/>
           </Route>
         </main>
       </>}

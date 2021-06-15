@@ -8,8 +8,9 @@ function Addmachines({allPumps, allMachines}){
     startcode: "",
     stopcode: ""
   })
-  const [currentMachine, setCurrentMachine] = useState({
-  })
+  const [currentMachine, setCurrentMachine] = useState({})
+  const [nozzle, setNozzle] = useState({})
+  const [model, setModel] = useState({})
 
   const RemoveMachine = () => {
     if (currentMachine) {
@@ -18,7 +19,7 @@ function Addmachines({allPumps, allMachines}){
         return
       }
 
-      fetch("http://10.10.51.36:5000/removemachine", {
+      fetch("http://remote.kkpartner.dk:3001/removemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -31,29 +32,34 @@ function Addmachines({allPumps, allMachines}){
     }
   }
 
-  const UpdateMachine = () =>{
-    var id = document.getElementById("editmachineid");
-    var model = document.getElementById("editmachinemodel")
-    var nozzle = document.getElementById("editmachinenozzle")
-
-    if (currentMachine.active == 1) {
-      alert("Du kan ikke rette en aktiv maskine")
-      return;
+  const EditMachine = (newmachine) => {
+    if(currentMachine.active == 1) {
+      alert("Du kan ikke redigere en aktiv maskine")
+      return
     }
 
-    var tempMachine = {
-      id: id.value,
-      model: model.value,
-      nozzle: nozzle.value,
-      active: 0
-    }
-
-    fetch("http://10.10.51.36:5000/updatemachine", {
+    fetch("http://remote.kkpartner.dk:3001/editmachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(tempMachine)
+      body: JSON.stringify(newmachine)
+    })
+  }
+
+  const UpdateMachine = () =>{
+
+    if(currentMachine.active == 1) {
+      alert("Du kan ikke redigere en aktiv maskine")
+      return
+    }
+
+    fetch("http://remote.kkpartner.dk:3001/updatemachine", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(currentMachine)
     })
    window.location.href = "/"
   }
@@ -65,7 +71,7 @@ function Addmachines({allPumps, allMachines}){
         return
       }
 
-      fetch("http://10.10.51.36:5000/removepump", {
+      fetch("http://remote.kkpartner.dk:3001/removepump", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -139,6 +145,12 @@ function Addmachines({allPumps, allMachines}){
   }
 
   const updatePump = () =>{
+
+    if(currentPump.active == 1) {
+      alert("Du kan ikke redigere en aktiv pumpe")
+      return
+    }
+
     var name = document.getElementById("editpumpname");
     var number = document.getElementById("editpumpnumber");
     var startcode = document.getElementById("editpumpstartcode")
@@ -156,7 +168,7 @@ function Addmachines({allPumps, allMachines}){
       stopcode: stopcode.value
     }
 
-    fetch("http://10.10.51.36:5000/updatepump", {
+    fetch("http://remote.kkpartner.dk:3001/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -185,7 +197,7 @@ function Addmachines({allPumps, allMachines}){
     } 
   
     // Sends tempPump to server
-    fetch("http://10.10.51.36:5000/createpump", {
+    fetch("http://remote.kkpartner.dk:3001/createpump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -217,7 +229,7 @@ function Addmachines({allPumps, allMachines}){
       active: 0
     } 
   
-    fetch("http://10.10.51.36:5000/createmachine", {
+    fetch("http://remote.kkpartner.dk:3001/createmachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -243,7 +255,6 @@ function Addmachines({allPumps, allMachines}){
   }
 
   return(
-    
     <div>
       <div className="machineparktableheaders">
       <h1 className="machineparktableheaderstext">Pumper</h1>
@@ -331,17 +342,11 @@ function Addmachines({allPumps, allMachines}){
                 <td>{data["nozzle"]}</td>
                 <td></td>
                 <td onClick={(event) => {
-                  setCurrentMachine(data)
-                  var id = document.getElementById("editmachineid")
-                  var model = document.getElementById("editmachinemodel")
-                  var nozzle = document.getElementById("editmachinenozzle")
-                  id.value = data.id
-                  model.value = data.model
-                  nozzle.value = data.nozzle
+                  setCurrentMachine(allMachines.find(x => x.id === data.id))
+
                   var modal = document.getElementById("modal2")
-                  setCurrentMachine(data)
                   modal.style.display = "block"
-                    }}>
+                }}>
                   <img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" style={{width: 24}}></img>
                 </td>
               </tr>
@@ -349,7 +354,7 @@ function Addmachines({allPumps, allMachines}){
           })}
         </tbody>
       </table>
-      <div className ="modal" id="modal">
+      <div className="modal" id="modal">
         <form className ="modalforms" id="pumpmodal" onSubmit={function(event){
             event.preventDefault();
             updatePump();
@@ -381,20 +386,26 @@ function Addmachines({allPumps, allMachines}){
             </div>
         </form>
       </div>
-      <div className ="modal" id="modal2">
+      <div className="modal" id="modal2">
         <form className ="modalforms" id="machinemodal" onSubmit={function(event){
             event.preventDefault();
-            UpdateMachine();
+
+            var newDetails = {...currentMachine}
+
+            newDetails.model = model;
+            newDetails.nozzle = nozzle;
+
+            EditMachine(newDetails);
           }}>
             <div className="modallabelbox">
               <label for ="editmachineid">
-                <span>Maskine nr.</span><input type="test" readOnly="true" className="bigmodalinputs" id="editmachineid" name="editmachineid" required></input><br></br>
+                <span>Maskine nr.</span><input type="test" readOnly="true" className="bigmodalinputs" id="editmachineid" name="editmachineid" value={currentMachine.id} required></input><br></br>
               </label>
-              <label for="editpumpname">
-              <span>Model</span><input type="text" className="modalinputs" id="editmachinemodel" name="editmachinemodel"></input><br></br>
+              <label for="editmachinemodel">
+              <span>Model</span><input type="text" className="modalinputs" id="editmachinemodel" name="editmachinemodel" defaultValue={currentMachine.model} onChange={e => setModel(e.target.value)}></input><br></br>
               </label>
-              <label for="editpumpnumber">
-              <span>Dyse</span><input type="text" className="modalinputs" id="editmachinenozzle" name="editmachinenozzle"></input><br></br>
+              <label for="editmachinenozzle">
+              <span>Dyse</span><input type="text" className="modalinputs" id="editmachinenozzle" name="editmachinenozzle" defaultValue={currentMachine.nozzle} onChange={e => setNozzle(e.target.value)}></input><br></br>
               </label>
             </div>
             <span className="removemodalbuttonspan"></span><button className="removemodalbutton" id="removemachinebutton" type="button" onClick={function(event){
@@ -434,7 +445,7 @@ function Addmachines({allPumps, allMachines}){
             </div>
         </form>
       </div>
-      <div className ="modal" id="modal4">
+      <div className="modal" id="modal4">
         <form className ="modalforms" id="createpumpmodal" onSubmit={function(event){
             event.preventDefault();
             createPump();
@@ -452,7 +463,7 @@ function Addmachines({allPumps, allMachines}){
             </div>
         </form>
       </div>
-      <div className ="modal" id="modal5">
+      <div className="modal" id="modal5">
         <form className ="modalforms" id="createmachinemodal" onSubmit={function(event){
             event.preventDefault();
             createMachine();

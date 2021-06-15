@@ -7,7 +7,7 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
   const [pump, setPump] = useState("")
 
   function sendStartSMS(pumpnumber, pumpstartcode){
-    fetch("http://10.10.51.36:5000/sendsms", {
+    fetch("http://remote.kkpartner.dk:3001/sendsms", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -47,7 +47,7 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
           // UDFYLD RIGTIG DATA TIL SMS
           var pumpnumber = "45" + pump.number
           var pumpstartcode = pump.startcode
-          //sendStartSMS(pumpnumber, pumpstartcode)
+          sendStartSMS(pumpnumber, pumpstartcode)
           
           // Sets "Submitted" hook to true
           localStorage.setItem("machine", machine)

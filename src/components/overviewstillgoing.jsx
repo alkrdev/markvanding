@@ -42,7 +42,7 @@ function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, stopP
 
                         var pumpnumber = "+45" + pump.number
                         var pumpstopcode = pump.stopcode
-                        //sendStopSMS(pumpnumber, pumpstopcode)
+                        sendStopSMS(pumpnumber, pumpstopcode)
                         
                         stopMachine(machine)
                         stopPump(pump)
