@@ -5,7 +5,7 @@ import Overviewexpired from './overviewexpired';
 const Overview = ({ expiredMachines, stillgoingMachines }) => {
   const [activePumps, setActivePumps] = useState([])
 
-  function sendStopSMS(pumpnumber, pumpstopcode){
+  function sendStopSMS(pumpnumber, pumpStopcode){
     fetch("http://remote.kkpartner.dk:3001/sendsms", {
       method: "POST",
       headers: {

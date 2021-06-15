@@ -375,7 +375,7 @@ function App() {
             <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setShownMachine={setShownMachine} setNotes={setNotes}/>
           </Route>
           <Route path="/machinepark">
-            <Machinepark allMachines={allMachines} setSubmitted={setSubmitted}/>
+            <Machinepark allMachines={allMachines} allPumps={allPumps}/>
           </Route>
           <Route path="/showmachine">            
             <Showmachine shownMachine={shownMachine} notes={notes} history={history} setNotes={setNotes}/>
