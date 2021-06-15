@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 import { Router } from "react-router";
-import { Route } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { Route } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 
 import LoginForm from "./components/loginform"
-import Overview from './components/overview';
-import Startmachine from './components/startmachine';
-import Maintenance from './components/maintenance';
-import Machinepark from './components/machinepark';
-import Showmachine from './components/showmachine';
+import Overview from "./components/overview";
+import Startmachine from "./components/startmachine";
+import Maintenance from "./components/maintenance";
+import Machinepark from "./components/machinepark";
+import Showmachine from "./components/showmachine";
 
 const history = createBrowserHistory();
 
 function App() {
 
-  const storedJwt = localStorage.getItem('token');
+  const storedJwt = localStorage.getItem("token");
   const [allowNav, setAllowNav] = useState({})
   const windowWidth = window.innerWidth;
 
@@ -26,7 +26,6 @@ function App() {
   const [stillgoingMachines, setStillgoingMachines] = useState([])
   const [expiredMachines, setExpiredMachines] = useState([])
   const [activeMachines, setActiveMachines] = useState([])
-  const [activePumps, setActivePumps] = useState([])
   const [inactiveMachines, setInactiveMachines] = useState([])
   const [inactivePumps, setInactivePumps] = useState([])
   const [allPumps, setAllPumps] = useState([])
@@ -41,18 +40,18 @@ function App() {
 
 
   function slide(){
-    const burger = document.querySelector('.burger');
-    const nav = document.querySelector('.nav-links');
-    const navLinks = document.querySelectorAll('.nav-links li');
+    const burger = document.querySelector(".burger");
+    const nav = document.querySelector(".nav-links");
+    const navLinks = document.querySelectorAll(".nav-links li");
 
     //Toggle Nav
-    nav.classList.toggle('nav-active');
+    nav.classList.toggle("nav-active");
     
     //Animate Links
     navLinks.forEach(function(link, index){
-      link.classList.toggle('nav-active-li');
+      link.classList.toggle("nav-active-li");
       if(link.style.animation){
-        link.style.animation = '';
+        link.style.animation = "";
       }
       else{
         link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5}s`
@@ -60,7 +59,7 @@ function App() {
     });
 
     //Animate Burger
-    burger.classList.toggle('toggle');
+    burger.classList.toggle("toggle");
   }
 
   const HandleNavClick = function(event, stage, text) {
@@ -98,7 +97,7 @@ function App() {
 
     var tabcontent = document.getElementsByClassName("tabcontent");
     var tablinks = document.getElementsByClassName("tablinks");
-    var choosetime = document.getElementById('choosetime');
+    var choosetime = document.getElementById("choosetime");
 
     for (var i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
@@ -193,55 +192,6 @@ function App() {
     })
   }
 
-  function UpdatePump(pump){
-
-    // Set date of machine to selected date
-     var tempPump = {...pump}
-     
-     tempPump.active = 1;
-     
-
-    fetch("http://remote.kkpartner.dk:3001/updatepump", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempPump)
-    })
-  }
-
-  function StopPump(pump){
-
-    // Set date of machine to selected date
-     var tempPump = {...pump}
-     
-     tempPump.active = 0;
-     
-
-    fetch("http://remote.kkpartner.dk:3001/updatepump", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempPump)
-    })
-  }
-
-  function StopMachine(machine, pump){
-    
-
-    fetch("http://remote.kkpartner.dk:3001/stopmachine", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        machineid: machine.id,
-        pumpid: pump.id
-      })
-    })
-  }
-
 
   useEffect(function() 
   {
@@ -261,7 +211,6 @@ function App() {
     document.querySelectorAll(".nav-links")[0].children[0].children[0].style.color = "rgb(235, 101, 45)"
     var hasstarted = localStorage.getItem("hasstarted")
     if (hasstarted == "true") {
-      console.log("Hej")
       setSubmitted(true)
     }
 
@@ -277,17 +226,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://remote.kkpartner.dk:3001/activepumps")
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        setActivePumps(json)     
-      }).catch((error) => {
-        console.log(error);
-      });
-
-      fetch("http://remote.kkpartner.dk:3001/inactivemachines")
+      fetch("http://10.10.51.36:5000/inactivemachines")
       .then(function(data) {
         return data.json();
       })
@@ -334,41 +273,15 @@ function App() {
     <Router history={history}>
       {submitted ? (
         <form onSubmit={function(event) {
-          
-          if(machine && pump){
-            console.log(machine)
-            console.log(pump)
-          }
-
-
           var startMachine = {
             id: machine,
             pumpname: pump,
             time: "2000-01-01 00:00:00",
             active: 1
           }
-          
-          
-          var months = {
-            "Jan": "January",
-            "Feb": "February",
-            "Mar": "March",
-            "Apr": "April",
-            "Maj": "May",
-            "Jun": "June",
-            "Jul": "July",
-            "Aug": "August",
-            "Sep": "September",
-            "Oct": "October",
-            "Nov": "November",
-            "Dec": "December"
-          }
 
           // Prevents default behavior (Getting put at another site)
           event.preventDefault();
-
-          //hours // sat?
-          //days // Sat?
 
           if (hours === -1 && days === -1) {
             alert("Du skal vælge en tid")
@@ -376,53 +289,6 @@ function App() {
           }
 
           startMachine.time = selectedTime;
-
-          /*
-          // Set time to whatever the user picked
-          tempMachine["time"] = selectedTime.replace("T", " "); // Temp value, not correct
-          console.log(tempMachine.time)
-
-          //"October 13, 2014 11:13:00"
-          //"06 Mar 03:24"
-
-          console.log(tempMachine.time)
-          //06 Mar 03:24
-
-          tempMachine.time += ":00";
-
-          console.log(tempMachine.time)
-          //06 Mar 03:24:00
-
-          var tempTime = tempMachine.time.split(" ");
-
-          tempTime.push(new Date().getFullYear());
-
-          console.log(tempTime)
-          //06 Mar 03:24:00 2021
-
-          tempMachine.time = months[tempTime[1]] + " " + tempTime[0] + " " + tempTime[3] + " " + tempTime[2];
-
-          console.log(tempMachine.time)
-          //Mar 06 2021 03:24:00
- 
-          
-          var newDate = new Date(tempMachine.time)
-
-          var timeDiff = newDate.getTime() - new Date().getTime()
-
-          
-          var hours = Math.floor(timeDiff / 3.6e6);
-          
-          var minutes = Math.floor((timeDiff % 3.6e6) / 6e4);
-          
-          var seconds = Math.floor((timeDiff % 6e4) / 1000)
-          
-          tempMachine.time = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds)
-          */
-          
-          // var returned = formatTime(newDate, "hh:mm:ss")
-
-          console.log(startMachine)
           
           // Make new array with the old data from tempdatamachines, and add "tempMachine" to it
           setActiveMachines(activeMachines => [...activeMachines, startMachine])
@@ -448,8 +314,8 @@ function App() {
         }}>
           <div id="choosetime">
             <div className="tab">
-              <button type="button" className="tablinks" onClick={(event) => chooseTime(event, 'timeremaining')}>Tid tilbage</button>
-              <button type="button" className="tablinks" onClick={(event) => chooseTime(event, 'date')}>Klokkeslæt</button>
+              <button type="button" className="tablinks" onClick={(event) => chooseTime(event, "timeremaining")}>Tid tilbage</button>
+              <button type="button" className="tablinks" onClick={(event) => chooseTime(event, "date")}>Klokkeslæt</button>
             </div>
 
             <div id="timeremaining" className="tabcontent">
@@ -500,16 +366,16 @@ function App() {
               <LoginForm />
           </Route>        
           <Route path="/overview">
-            <Overview activePumps={activePumps} stopMachine={StopMachine} stopPump={StopPump} setSubmitted={setSubmitted} expiredMachines = {expiredMachines} stillgoingMachines = {stillgoingMachines}/>
+            <Overview expiredMachines={expiredMachines} stillgoingMachines={stillgoingMachines}/>
           </Route>
           <Route path="/startmachine">
-            <Startmachine setSubmitted={setSubmitted} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump} setSubmitted={setSubmitted}/>
+            <Startmachine setSubmitted={setSubmitted} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} />
           </Route>
           <Route path="/maintenance">
             <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setShownMachine={setShownMachine} setNotes={setNotes}/>
           </Route>
           <Route path="/machinepark">
-            <Machinepark allPumps={allPumps} allMachines={allMachines} setSubmitted={setSubmitted}/>
+            <Machinepark allMachines={allMachines} setSubmitted={setSubmitted}/>
           </Route>
           <Route path="/showmachine">            
             <Showmachine shownMachine={shownMachine} notes={notes} history={history} setNotes={setNotes}/>
