@@ -25,9 +25,7 @@ function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, stopP
                 timeStyle: "short"
             });
             
-            var pump = activePumps.find((pum) => {
-                return pum.name == machine.pumpname
-            })
+            var pump = activePumps.find((pum) => pum.name === machine.pumpname)
 
             return (
                 <tr key={machine["id"]}>
@@ -40,9 +38,9 @@ function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, stopP
                         
                         if (!answer === true) return;
 
-                        var pumpnumber = "+45" + pump.number
-                        var pumpstopcode = pump.stopcode
-                        //sendStopSMS(pumpnumber, pumpstopcode)
+                        // var pumpnumber = "+45" + pump.number
+                        // var pumpstopcode = pump.stopcode
+                        // sendStopSMS(pumpnumber, pumpstopcode)
                         
                         stopMachine(machine)
                         stopPump(pump)

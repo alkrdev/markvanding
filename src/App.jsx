@@ -5,12 +5,12 @@ import { Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 
-import LoginForm from "./components/loginform"
-import Overview from "./components/overview";
-import Startmachine from "./components/startmachine";
-import Maintenance from "./components/maintenance";
-import Machinepark from "./components/machinepark";
-import Showmachine from "./components/showmachine";
+import LoginForm from "./components/LoginForm"
+import Overview from "./components/Overview";
+import Startmachine from "./components/StartMachine";
+import Maintenance from "./components/Maintenance";
+import Machinepark from "./components/MachinePark/index";
+import Showmachine from "./components/ShowMachine";
 
 const history = createBrowserHistory();
 
@@ -25,10 +25,8 @@ function App() {
 
   const [stillgoingMachines, setStillgoingMachines] = useState([])
   const [expiredMachines, setExpiredMachines] = useState([])
-  const [activeMachines, setActiveMachines] = useState([])
   const [inactiveMachines, setInactiveMachines] = useState([])
   const [inactivePumps, setInactivePumps] = useState([])
-  const [allPumps, setAllPumps] = useState([])
   const [allMachines, setAllMachines] = useState([])
   const [shownMachine, setShownMachine] = useState([])
   const [notes, setNotes] = useState([])
@@ -64,7 +62,7 @@ function App() {
 
   const HandleNavClick = function(event, stage, text) {
     event.preventDefault();
-    if (allowNav == false) {
+    if (allowNav === false) {
       return;
     }
     history.push(stage)
@@ -73,16 +71,12 @@ function App() {
 
     for (const line of array) {
       var anchor = line.children[0];
-      anchor.style.color = "rgb(233, 233, 233)"
-    }
 
-    for (const line of array) {
-      var anchor = line.children[0];
-
-      if (anchor.innerHTML.toLowerCase() == text.toLowerCase()) {
+      if (anchor.innerHTML.toLowerCase() === text.toLowerCase()) {
         anchor.style.color = "rgb(235, 101, 45)"
-        break
-      }
+        continue;
+      } 
+      anchor.style.color = "rgb(233, 233, 233)"
     }
 
     if (windowWidth <= 1280) slide();
@@ -118,29 +112,6 @@ function App() {
     }
     event.currentTarget.className += " active";
   }
-/*
-  function formatDate(date, format) {
-    const months = ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    const map = {
-        dd: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),  
-        mm: months[date.getMonth()],
-        t: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
-        m: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
-    }
-
-    return format.replace(/dd|mm|t|m/gi, matched => map[matched])
-  }
-  
-  function formatTime(date, format) {
-    const map = {
-        hh: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),  
-        mm: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
-        ss: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
-    }
-
-    return format.replace(/hh|mm|ss/gi, matched => map[matched])
-  }
-  */
   
   function TimeChanged(event){
     const {name, value} = event.target
@@ -154,13 +125,13 @@ function App() {
 
       now.setHours(now.getHours() + hours)
       now.setMinutes(now.getMinutes() + minutes)
-      console.log(now)
+
       setHours(1)
     } else {
       now = new Date(value);
       setDays(1)
     }
-    console.log(now)
+    
     //Tue Feb 16 2021 10:25:00 GMT+0100 (Central European Standard Time)
     setSelectedtime(now)
   }
@@ -176,11 +147,12 @@ function App() {
      });
      
      var tempTime = tempMachine.time.split(" ");
+
      var date = tempTime[0].split(".")
      tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
      tempMachine.time = tempTime.join(" ");
 
-    fetch("http://10.10.51.36:5000/updatemachine", {
+    fetch("http://remote.kkpartner.dk:3001/updatemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -194,35 +166,33 @@ function App() {
   {
 
     if (storedJwt !== null && storedJwt !== "") {
-      console.log("LOGGED IN, PUSHED TO CHOOSE")
+      //console.log("LOGGED IN, PUSHED TO CHOOSE")
       setAllowNav(true)
       history.push("/overview")
-    } else if (storedJwt == null || storedJwt == "") {
-      console.log("NOT LOGGED IN, PUSHED TO LOG IN")
+    } else if (storedJwt === null || storedJwt === "") {
+      //console.log("NOT LOGGED IN, PUSHED TO LOG IN")
       setAllowNav(false)
       history.push("/")
     }
 
     document.querySelectorAll(".nav-links")[0].children[0].children[0].style.color = "rgb(235, 101, 45)"
+
     var hasstarted = localStorage.getItem("hasstarted")
-    if (hasstarted == "true") {
+    if (hasstarted === "true") {
       setSubmitted(true)
     }
 
-    fetch("http://10.10.51.36:5000/activemachines")
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        setActiveMachines(json)
+    fetch("http://remote.kkpartner.dk:3001/activemachines")
+      .then((data) => data.json())
+      .then((json) => {
         setStillgoingMachines(json.filter(x => new Date() < new Date(x.time)))
         setExpiredMachines(json.filter(x => new Date() > new Date(x.time)))
       }).catch((error) => {
         console.log(error);
       });
 
-      fetch("http://10.10.51.36:5000/inactivemachines")
-      .then(function(data) {
+      fetch("http://remote.kkpartner.dk:3001/inactivemachines")
+      .then((data) => {
         return data.json();
       })
       .then(function(json) {
@@ -231,7 +201,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.51.36:5000/inactivepumps")
+      fetch("http://remote.kkpartner.dk:3001/inactivepumps")
       .then(function(data) {
         return data.json();
       })
@@ -241,17 +211,7 @@ function App() {
         console.log(error);
       });
 
-      fetch("http://10.10.51.36:5000/allpumps")
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        setAllPumps(json)     
-      }).catch((error) => {
-        console.log(error);
-      });
-
-      fetch("http://10.10.51.36:5000/allmachines")
+      fetch("http://remote.kkpartner.dk:3001/allmachines")
       .then(function(data) {
         return data.json();
       })
@@ -262,7 +222,7 @@ function App() {
       });
       
   
-    }, [])
+    }, [storedJwt])
 
   return (
     <Router history={history}>
@@ -284,15 +244,12 @@ function App() {
           }
 
           startMachine.time = selectedTime;
-          
-          // Make new array with the old data from tempdatamachines, and add "tempMachine" to it
-          setActiveMachines(activeMachines => [...activeMachines, startMachine])
 
           // Removes active machine from dropdown menu
-          setInactiveMachines(inactiveMachines.filter(machine => startMachine.id != machine.id))
+          setInactiveMachines(inactiveMachines.filter(machine => startMachine.id !== machine.id))
 
           // Removes active pump from dropdown menu
-          setInactivePumps(inactivePumps.filter(pump => startMachine.pumpname != pump.name))
+          setInactivePumps(inactivePumps.filter(pump => startMachine.pumpname !== pump.name))
 
           UpdateMachine(startMachine);
           
@@ -302,7 +259,7 @@ function App() {
           localStorage.setItem("machine", "")
           localStorage.setItem("hasstarted", "false")
           setSubmitted(false);
-          window.location.href = "/"
+          history.push("/")
         }}>
           <div id="choosetime">
             <div className="tab">
@@ -334,16 +291,16 @@ function App() {
             </div>
             <ul className="nav-links">
               <li>
-                <a href="" onClick={(e) => HandleNavClick(e, "overview", "OVERSIGT")}>OVERSIGT</a>
+                <button onClick={(e) => HandleNavClick(e, "overview", "OVERSIGT")}>OVERSIGT</button>
               </li>
               <li>
-                <a href="" onClick={(e) => HandleNavClick(e, "startmachine", "START VANDING")}>START VANDING</a>
+                <button onClick={(e) => HandleNavClick(e, "startmachine", "START VANDING")}>START VANDING</button>
               </li>
               <li>
-                <a href="" onClick={(e) => HandleNavClick(e, "maintenance", "VEDLIGEHOLDELSE")}>VEDLIGEHOLDELSE</a>
+                <button onClick={(e) => HandleNavClick(e, "maintenance", "VEDLIGEHOLDELSE")}>VEDLIGEHOLDELSE</button>
               </li>
               <li>
-                <a href="" onClick={(e) => HandleNavClick(e, "machinepark", "MASKINPARK")}>MASKINPARK</a>
+                <button onClick={(e) => HandleNavClick(e, "machinepark", "MASKINPARK")}>MASKINPARK</button>
               </li>
             </ul>
             <div className="burger" onClick={slide}>
@@ -355,7 +312,7 @@ function App() {
         </header>
         <main>  
           <Route exact path="/">
-              <LoginForm />
+            <LoginForm />
           </Route>        
           <Route path="/overview">
             <Overview expiredMachines={expiredMachines} stillgoingMachines={stillgoingMachines}/>
@@ -370,7 +327,7 @@ function App() {
             <Machinepark allMachines={allMachines} setSubmitted={setSubmitted}/>
           </Route>
           <Route path="/showmachine">            
-            <Showmachine shownMachine={shownMachine} notes={notes} history={history}/>
+            <Showmachine shownMachine={shownMachine} notes={notes} />
           </Route>
         </main>
       </>}

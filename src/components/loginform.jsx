@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { withRouter } from "react-router";
 
 
@@ -12,7 +12,7 @@ const LoginForm = ({history}) => {
     const HandleLogin = (e) => {
         e.preventDefault();
 
-        fetch("http://10.10.51.36:5000/auth", {
+        fetch("http://remote.kkpartner.dk:3001/auth", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",

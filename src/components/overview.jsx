@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Overviewstillgoing from './overviewstillgoing';
-import Overviewexpired from './overviewexpired';
+import Overviewstillgoing from './OverviewStillGoing';
+import Overviewexpired from './OverviewExpired';
 
 const Overview = ({ expiredMachines, stillgoingMachines }) => {
   const [activePumps, setActivePumps] = useState([])
 
   const sendStopSMS = (pumpnumber, pumpStopcode) => {
-    fetch("http://10.10.51.36:5000/sendsms", {
+    fetch("http://remote.kkpartner.dk:3001/sendsms", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -26,7 +26,7 @@ const Overview = ({ expiredMachines, stillgoingMachines }) => {
      tempPump.active = 0;
      
 
-    fetch("http://10.10.51.36:5000/updatepump", {
+    fetch("http://remote.kkpartner.dk:3001/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -45,7 +45,7 @@ const Overview = ({ expiredMachines, stillgoingMachines }) => {
      tempMachine.active = 0
      
 
-    fetch("http://10.10.51.36:5000/updatemachine", {
+    fetch("http://remote.kkpartner.dk:3001/updatemachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -56,7 +56,7 @@ const Overview = ({ expiredMachines, stillgoingMachines }) => {
 
   useEffect(function() 
   { 
-    fetch("http://10.10.51.36:5000/activepumps")
+    fetch("http://remote.kkpartner.dk:3001/activepumps")
     .then((data) => data.json())
     .then(function(json) {
       setActivePumps(json)     
@@ -65,7 +65,7 @@ const Overview = ({ expiredMachines, stillgoingMachines }) => {
     });
   }, [])
 
-  if (expiredMachines != 0) {
+  if (expiredMachines !== 0) {
     return (
       <div>
         <Overviewexpired expiredMachines = {expiredMachines} activePumps = {activePumps} StopMachine = {StopMachine} StopPump = {StopPump}/>

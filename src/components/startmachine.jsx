@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
 
 function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
-  const [data, setData] = useState([]);
   const [checked, setChecked] = useState(false)
   const [machine, setMachine] = useState("")
   const [pump, setPump] = useState("")
 
-  function sendStartSMS(pumpnumber, pumpstartcode){
-    fetch("http://10.10.51.36:5000/sendsms", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ 
-        number: pumpnumber,
-        message: pumpstartcode
-      })
-    })
-  }  
+  // function sendStartSMS(pumpnumber, pumpstartcode){
+  //   fetch("http://remote.kkpartner.dk:3001/sendsms", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({ 
+  //       number: pumpnumber,
+  //       message: pumpstartcode
+  //     })
+  //   })
+  // }  
 
   function UpdatePump(pump){
 
@@ -27,7 +26,7 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
      tempPump.active = 1;
      
 
-    fetch("http://10.10.51.36:5000/updatepump", {
+    fetch("http://remote.kkpartner.dk:3001/updatepump", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -55,9 +54,9 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
           
           
           // UDFYLD RIGTIG DATA TIL SMS
-          var pumpnumber = "45" + pump.number
-          var pumpstartcode = pump.startcode
-          //sendStartSMS(pumpnumber, pumpstartcode)
+          // var pumpnumber = "45" + pump.number
+          // var pumpstartcode = pump.startcode
+          // sendStartSMS(pumpnumber, pumpstartcode)
           
           // Sets "Submitted" hook to true
           localStorage.setItem("machine", machine)
@@ -69,10 +68,10 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
         <div id="choosemachine">
           <label htmlFor="chosenmachine">Vælg en maskine</label>
           <br></br>
-          <select name="chosenmachine" id="chosenmachine" onChange={function(event){
+          <select name="chosenmachine" id="chosenmachine" defaultValue="blank" onChange={function(event){
             setMachine(event.target.value);
           }}>
-            <option selected disabled hidden></option>
+            <option value="blank" disabled hidden></option>
             {inactiveMachines.map((element) => <option key={element.id}>{element.id}</option>)}
           </select>
         </div>
@@ -82,15 +81,15 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
         <div id="choosepump">
           <label htmlFor="">Vælg en pumpe</label>
           <br></br>
-          <select name="chosenpump" id="chosenpump" onChange={function(event){
+          <select name="chosenpump" id="chosenpump" defaultValue="blank" onChange={function(event){
             var options = event.target.children;
             var option = options[event.target.selectedIndex];
 
-            var correctPump = inactivePumps.find((pump) => pump.id == option.dataset.id)
+            var correctPump = inactivePumps.find((pump) => pump.id === option.dataset.id)
 
             setPump(correctPump);
           }}>
-            <option selected disabled hidden></option>
+            <option value="blank" disabled hidden></option>
             {inactivePumps.map(function(element) {
               return <option key={element.id} data-id={element.id}>{element.name}</option>
             })}

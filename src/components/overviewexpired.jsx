@@ -26,9 +26,7 @@ function Overviewexpired ({expiredMachines, activePumps, stopMachine, stopPump})
                 timeStyle: "short"
                 });
                 
-                var pump = activePumps.find((pum) => {
-                return pum.name == machine.pumpname
-                })
+                var pump = activePumps.find((pum) => pum.name === machine.pumpname)
 
                 return (
                 <tr key={machine["id"]}>

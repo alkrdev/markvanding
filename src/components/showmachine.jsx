@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { withRouter } from "react-router";
 
 function Showmachine({shownMachine, history, notes}) {
 
@@ -27,26 +28,26 @@ function Showmachine({shownMachine, history, notes}) {
             note : note.value
         }
 
-        fetch("http://10.10.51.36:5000/createnote", {
+        fetch("http://remote.kkpartner.dk:3001/createnote", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(tempNote)
         })
-        window.location.href = "/"
+        history.push("/")
     }
 
     const RemoveNote = (note) => {
         if (note) {
 
-            fetch("http://10.10.51.36:5000/removenote", {
+            fetch("http://remote.kkpartner.dk:3001/removenote", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
             }, body: JSON.stringify(note)
             })
-            window.location.href = "/"
+            history.push("/")
         }
         else {
             alert("Ingen note fundet. Dette burde ikke kunne lade sig gøre. Kontakt KKPartner med det samme")
@@ -79,7 +80,7 @@ function Showmachine({shownMachine, history, notes}) {
                 </div>
                 <div className="machineattributes">
                     <h1 className="showmachineh1">Aktivitet</h1>
-                    <p>{shownMachine.active == 0 ? "Inaktiv" : "Aktiv"}</p>
+                    <p>{shownMachine.active === 0 ? "Inaktiv" : "Aktiv"}</p>
                 </div>
             </div>
             <div id="allaboutnotes">
@@ -109,7 +110,7 @@ function Showmachine({shownMachine, history, notes}) {
                             </tr>
                         </thead>
                         <tbody>
-                            {notes.filter(x => x.machineid == shownMachine.id).map(function(note)
+                            {notes.filter(x => x.machineid === shownMachine.id).map(function(note)
                             {
                             var time = new Date(note["time"]).toLocaleString("da-DK", {
                                 dateStyle: "medium",
@@ -137,4 +138,4 @@ function Showmachine({shownMachine, history, notes}) {
         </div>
     )
 }
-export default Showmachine;
+export default withRouter(Showmachine);

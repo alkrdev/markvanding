@@ -356,6 +356,10 @@ select {
 }
 
 button {
+  color: rgb(233,233,233);
+  background: none;
+  text-decoration: none;
+  border: none;
   cursor: pointer;
 }
 
