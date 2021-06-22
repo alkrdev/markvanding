@@ -26,7 +26,6 @@ function App() {
   const [stillgoingMachines, setStillgoingMachines] = useState([])
   const [expiredMachines, setExpiredMachines] = useState([])
   const [activeMachines, setActiveMachines] = useState([])
-  const [activePumps, setActivePumps] = useState([])
   const [inactiveMachines, setInactiveMachines] = useState([])
   const [inactivePumps, setInactivePumps] = useState([])
   const [allPumps, setAllPumps] = useState([])
@@ -191,55 +190,6 @@ function App() {
     })
   }
 
-  function UpdatePump(pump){
-
-    // Set date of machine to selected date
-     var tempPump = {...pump}
-     
-     tempPump.active = 1;
-     
-
-    fetch("http://remote.kkpartner.dk:3001/updatepump", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempPump)
-    })
-  }
-
-  function StopPump(pump){
-
-    // Set date of machine to selected date
-     var tempPump = {...pump}
-     
-     tempPump.active = 0;
-     
-
-    fetch("http://remote.kkpartner.dk:3001/updatepump", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempPump)
-    })
-  }
-
-  function StopMachine(machine, pump){
-    
-
-    fetch("http://remote.kkpartner.dk:3001/stopmachine", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        machineid: machine.id,
-        pumpid: pump.id
-      })
-    })
-  }
-
 
   useEffect(function() 
   {
@@ -270,16 +220,6 @@ function App() {
         setActiveMachines(json)
         setStillgoingMachines(json.filter(x => new Date() < new Date(x.time)))
         setExpiredMachines(json.filter(x => new Date() > new Date(x.time)))
-      }).catch((error) => {
-        console.log(error);
-      });
-
-      fetch("http://remote.kkpartner.dk:3001/activepumps")
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        setActivePumps(json)     
       }).catch((error) => {
         console.log(error);
       });
@@ -428,16 +368,16 @@ function App() {
               <LoginForm />
           </Route>        
           <Route path="/overview">
-            <Overview activePumps={activePumps} stopMachine={StopMachine} stopPump={StopPump} setSubmitted={setSubmitted} expiredMachines = {expiredMachines} stillgoingMachines = {stillgoingMachines}/>
+            <Overview expiredMachines={expiredMachines} stillgoingMachines={stillgoingMachines}/>
           </Route>
           <Route path="/startmachine">
-            <Startmachine setSubmitted={setSubmitted} activeMachines={activeMachines} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} updatePump={UpdatePump} setSubmitted={setSubmitted}/>
+            <Startmachine setSubmitted={setSubmitted} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} />
           </Route>
           <Route path="/maintenance">
             <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setShownMachine={setShownMachine} setNotes={setNotes}/>
           </Route>
           <Route path="/machinepark">
-            <Machinepark allPumps={allPumps} allMachines={allMachines} setSubmitted={setSubmitted}/>
+            <Machinepark allMachines={allMachines} allPumps={allPumps}/>
           </Route>
           <Route path="/showmachine">            
             <Showmachine shownMachine={shownMachine} notes={notes} history={history} setNotes={setNotes}/>

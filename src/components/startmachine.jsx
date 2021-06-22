@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePumps, inactiveMachines, updatePump}){
+function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
   const [data, setData] = useState([]);
   const [checked, setChecked] = useState(false)
   const [machine, setMachine] = useState("")
@@ -73,10 +73,7 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
             setMachine(event.target.value);
           }}>
             <option selected disabled hidden></option>
-            {
-            inactiveMachines.map(function(element) {
-              return <option key={element.id}>{element.id}</option>
-            })}
+            {inactiveMachines.map((element) => <option key={element.id}>{element.id}</option>)}
           </select>
         </div>
   
