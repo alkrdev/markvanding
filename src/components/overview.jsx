@@ -18,39 +18,16 @@ const Overview = ({ expiredMachines, stillgoingMachines }) => {
     })
   }
 
-  const StopPump = (pump) => {
-
-    // Set date of machine to selected date
-     var tempPump = {...pump}
-     
-     tempPump.active = 0;
-     
-
-    fetch("http://remote.kkpartner.dk:3001/updatepump", {
+  const StopMachine = (machine, pump) => {
+    fetch("http://remote.kkpartner.dk:3001/stopmachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(tempPump)
-    })
-  }
-
-  
-  const StopMachine = (machine) => {
-    // Set date of machine to selected date
-     var tempMachine = {...machine}
-    
-     tempMachine.pumpname = null
-     tempMachine.time = null
-     tempMachine.active = 0
-     
-
-    fetch("http://remote.kkpartner.dk:3001/updatemachine", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempMachine)
+      body: JSON.stringify({
+        machineid: machine.id,
+        pumpid: pump.id
+      })
     })
   }
 
@@ -79,4 +56,4 @@ const Overview = ({ expiredMachines, stillgoingMachines }) => {
   )
 }
 
-export default Overview;
+export default withRouter(Overview);

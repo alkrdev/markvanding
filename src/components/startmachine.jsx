@@ -33,6 +33,23 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
       },
       body: JSON.stringify(tempPump)
     })
+  }  
+
+  function UpdatePump(pump){
+
+    // Set date of machine to selected date
+     var tempPump = {...pump}
+     
+     tempPump.active = 1;
+     
+
+    fetch("http://remote.kkpartner.dk:3001/updatepump", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(tempPump)
+    })
   }
 
   useEffect(function() 

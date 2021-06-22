@@ -32,9 +32,7 @@ function App() {
   const [notes, setNotes] = useState([])
   const [hours, setHours] = useState(-1)
   const [days, setDays] = useState(-1)
-  
-  const machine = localStorage.getItem("machine")
-  const pump = localStorage.getItem("pump")
+
 
 
   function slide(){
@@ -138,20 +136,23 @@ function App() {
 
   function UpdateMachine(updatedMachine){
 
-    // Set date of machine to selected date
+    // tempMachine is a copy of updatedMachine
      var tempMachine = {...updatedMachine}
      
+     // Set date of tempMachine to selected date
      tempMachine.time = selectedTime.toLocaleString("da-DK", {
        dateStyle: "short",
        timeStyle: "medium"
      });
      
+     // Make time into the right format for mysql database
      var tempTime = tempMachine.time.split(" ");
 
      var date = tempTime[0].split(".")
      tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
      tempMachine.time = tempTime.join(" ");
 
+     // Fetch that updates/sends tempMachine in/to databases
     fetch("http://remote.kkpartner.dk:3001/updatemachine", {
       method: "POST",
       headers: {
@@ -168,10 +169,12 @@ function App() {
     if (storedJwt !== null && storedJwt !== "") {
       //console.log("LOGGED IN, PUSHED TO CHOOSE")
       setAllowNav(true)
+      document.getElementById("nav").style.display = "flex";
       history.push("/overview")
     } else if (storedJwt === null || storedJwt === "") {
       //console.log("NOT LOGGED IN, PUSHED TO LOG IN")
       setAllowNav(false)
+      document.getElementById("nav").style.display = "none";
       history.push("/")
     }
 
@@ -228,6 +231,10 @@ function App() {
     <Router history={history}>
       {submitted ? (
         <form onSubmit={function(event) {
+
+          var machine = localStorage.getItem("machine")
+          var pump = localStorage.getItem("pump")
+
           var startMachine = {
             id: machine,
             pumpname: pump,
@@ -258,6 +265,9 @@ function App() {
           localStorage.setItem("pump", "")
           localStorage.setItem("machine", "")
           localStorage.setItem("hasstarted", "false")
+
+          setTimeout(() => {  window.location.href="/" }, 1000);
+
           setSubmitted(false);
           history.push("/")
         }}>
@@ -285,7 +295,7 @@ function App() {
         </form>
       ) : <>
         <header>
-          <nav>
+          <nav id="nav">
             <div className="logo">
               <h1>Markvanding</h1>
             </div>
@@ -324,10 +334,10 @@ function App() {
             <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setShownMachine={setShownMachine} setNotes={setNotes}/>
           </Route>
           <Route path="/machinepark">
-            <Machinepark allMachines={allMachines} setSubmitted={setSubmitted}/>
+            <Machinepark allMachines={allMachines} allPumps={allPumps}/>
           </Route>
           <Route path="/showmachine">            
-            <Showmachine shownMachine={shownMachine} notes={notes} />
+            <Showmachine shownMachine={shownMachine} notes={notes} history={history} setNotes={setNotes}/>
           </Route>
         </main>
       </>}

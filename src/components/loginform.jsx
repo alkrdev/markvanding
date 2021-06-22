@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from "react"
 import { withRouter } from "react-router";
 
-
-
 const LoginForm = ({history}) => {
     const [email, setEmail] = useState("")
     const [pass, setPassword] = useState("")
@@ -33,6 +31,7 @@ const LoginForm = ({history}) => {
             } else {
                 localStorage.setItem('token', json.token);
                 history.push("/overview")
+                window.location.href = "/"
             }
         })
     }
@@ -44,7 +43,7 @@ const LoginForm = ({history}) => {
             <form onSubmit={HandleLogin} method="post" className="flexCenteredColumn">
                 <label>{error}</label> 
                 <div id="loginform">
-                    <label><b>Brugernavn</b>
+                    <label><b>Email</b>
                         <input type="text" name={email} onChange={(e) => { setEmail(e.target.value) }} required></input>
                     </label>    
 

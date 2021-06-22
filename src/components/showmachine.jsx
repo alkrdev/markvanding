@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from "react-router";
 
-function Showmachine({shownMachine, history, notes}) {
+function Showmachine({shownMachine, history, notes, setNotes}) {
 
     const HandleClick = () => {
         history.push("/maintenance")

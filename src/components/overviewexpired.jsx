@@ -1,4 +1,4 @@
-function Overviewexpired ({expiredMachines, activePumps, stopMachine, stopPump}) {
+function Overviewexpired ({expiredMachines, activePumps, StopMachine, stopPump}) {
     
     return (
         <div>
@@ -39,12 +39,7 @@ function Overviewexpired ({expiredMachines, activePumps, stopMachine, stopPump})
                         
                         if (!answer === true) return;
 
-                        //var pumpnumber = "+45" + pump.number
-                        //var pumpstopcode = pump.stopcode
-                        //sendStopSMS(pumpnumber, pumpstopcode)
-                        
-                        stopMachine(machine)
-                        stopPump(pump)
+                        StopMachine(machine, pump)
                         window.location.href="/"
                     }}>
                     <h4>FJERN</h4></td>
