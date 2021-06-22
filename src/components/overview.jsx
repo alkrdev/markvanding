@@ -42,17 +42,11 @@ const Overview = ({ expiredMachines, stillgoingMachines }) => {
     });
   }, [])
 
-  if (expiredMachines !== 0) {
-    return (
-      <div>
-        <Overviewexpired expiredMachines = {expiredMachines} activePumps = {activePumps} StopMachine = {StopMachine} StopPump = {StopPump}/>
-        <Overviewstillgoing stillgoingMachines = {stillgoingMachines} activePumps = {activePumps} StopMachine = {StopMachine} StopPump = {StopPump} sendStopSMS={sendStopSMS}/>
-      </div>
-    )
-  }
-
   return (
-    <Overviewstillgoing stillgoingMachines = {stillgoingMachines} activePumps = {activePumps} StopMachine = {StopMachine} StopPump = {StopPump} sendStopSMS={sendStopSMS}/>
+    <div>
+      {expiredMachines.length > 0 ? <Overviewexpired expiredMachines = {expiredMachines} activePumps = {activePumps} StopMachine = {StopMachine} StopPump = {StopPump}/> : <></>}
+      <Overviewstillgoing stillgoingMachines = {stillgoingMachines} activePumps = {activePumps} StopMachine = {StopMachine} StopPump = {StopPump} sendStopSMS={sendStopSMS}/>
+    </div>   
   )
 }
 

@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import { withRouter } from "react-router";
 
 const Modals = ({ currentPump, currentMachine, validatePump, allMachines, history }) => {
+    const [model, setModel] = useState({})
+    const [nozzle, setNozzle] = useState({})
+
     const RemoveMachine = () => {    
         if (currentMachine) {
           if(currentMachine.active === 1) {
@@ -22,31 +25,26 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
         }
       }
     
-      const UpdateMachine = () =>{
-        var id = document.getElementById("editmachineid");
-        var model = document.getElementById("editmachinemodel")
-        var nozzle = document.getElementById("editmachinenozzle")
-    
+      const UpdateMachine = () =>{    
         if (currentMachine.active === 1) {
           alert("Du kan ikke rette en aktiv maskine")
           return;
         }
     
-        var tempMachine = {
-          id: id.value,
-          model: model.value,
-          nozzle: nozzle.value,
-          active: 0
-        }
+        var tempMachine = {...currentMachine}
+
+        tempMachine.model = model;
+        tempMachine.nozzle = nozzle;
     
-        fetch("http://remote.kkpartner.dk:3001/updatemachine", {
+        fetch("http://remote.kkpartner.dk:3001/editmachine", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify(tempMachine)
         })
-       history.push("/")
+        history.push("/")
+        
       }
     
       const RemovePump = () => {
@@ -216,18 +214,18 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
                         <span>Maskine nr.</span><input type="test" readOnly={true} className="bigmodalinputs" id="editmachineid" name="editmachineid" defaultValue={currentMachine.id} required></input><br></br>
                     </label>
                     <label htmlFor="editmachinemodel">
-                    <span>Model</span><input type="text" className="modalinputs" id="editmachinemodel" name="editmachinemodel" defaultValue={currentMachine.model}></input><br></br>
+                    <span>Model</span><input type="text" className="modalinputs" id="editmachinemodel" name="editmachinemodel" onChange={e => setModel(e.target.value)} defaultValue={currentMachine.model}></input><br></br>
                     </label>
                     <label htmlFor="editmachinenozzle">
-                    <span>Dyse</span><input type="text" className="modalinputs" id="editmachinenozzle" name="editmachinenozzle" defaultValue={currentMachine.nozzle}></input><br></br>
+                    <span>Dyse</span><input type="text" className="modalinputs" id="editmachinenozzle" name="editmachinenozzle" onChange={e => setNozzle(e.target.value)} defaultValue={currentMachine.nozzle}></input><br></br>
                     </label>
                     </div>
                     <span className="removemodalbuttonspan"></span><button className="removemodalbutton" id="removemachinebutton" type="button" onClick={function(event){
-                    event.preventDefault();
-                    var modal = document.getElementById("modal2")
-                    modal.style.display = "none"
-                    var modal6 = document.getElementById("modal6")
-                    modal6.style.display = "block"
+                        event.preventDefault();
+                        var modal = document.getElementById("modal2")
+                        modal.style.display = "none"
+                        var modal6 = document.getElementById("modal6")
+                        modal6.style.display = "block"
                     }}>Slet Maskine</button>
                     <div className="modalbuttonbox">
                     <button className="cancelmodalbutton" type="button" onClick={CloseAllModals}>Anuller</button>
