@@ -17,6 +17,23 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
         message: pumpstartcode
       })
     })
+  }  
+
+  function UpdatePump(pump){
+
+    // Set date of machine to selected date
+     var tempPump = {...pump}
+     
+     tempPump.active = 1;
+     
+
+    fetch("http://remote.kkpartner.dk:3001/updatepump", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(tempPump)
+    })
   }
 
   useEffect(function() 
@@ -25,23 +42,16 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
 
   return(
       <form className="select" id="formstartmachine" onSubmit={function(event){
-
         // Prevents default behavior (Getting put at another site)
         event.preventDefault();
-
 
         // Check if Checkbox is true or false
         if(!checked) return;
 
-
         // Checks if a machine and pump is selected
         if(machine && pump){
           // MAKE MACHINE OBJECT
-          updatePump(pump)
-
-          // SET PUMP TO ACTIVE ---- pump.id
-          
-          
+          UpdatePump(pump)
           
           
           // UDFYLD RIGTIG DATA TIL SMS
@@ -79,9 +89,9 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
             var options = event.target.children;
             var option = options[event.target.selectedIndex];
 
-            setPump(inactivePumps.find((pump) => {
-              return pump.id == option.dataset.id
-            }));
+            var correctPump = inactivePumps.find((pump) => pump.id == option.dataset.id)
+
+            setPump(correctPump);
           }}>
             <option selected disabled hidden></option>
             {inactivePumps.map(function(element) {
@@ -91,20 +101,17 @@ function Startmachine({setSubmitted, setStartmachine, activeMachines, inactivePu
         </div>
   
         <br></br>
-  
-      <div id="checkboxtext">
-        <h2>Tjek følgene</h2>
-        </div>
-        <p id="checks">1. Hydrant åben <br></br>2. Maskine er sat i gear <br></br>3. Slange korrekt placeret <br></br>4. Aflæs tiden <br></br>5. Dyse valg korrekt</p>
-        <label className="container">Jeg har tjekket overstående
-          <input onChange={function(){
-            //Set Checked Hook to "Checked" = true/false
-            setChecked(!checked)
-          }} type="checkbox"></input>
-          <span className="checkmark"></span>
-        </label>
-  
-      <button type="submit" id="buttonstartmachine">START VANDING</button>
+    
+        <div id="checkboxtext">
+          <h2>Tjek følgene</h2>
+          </div>
+          <p id="checks">1. Hydrant åben <br></br>2. Maskine er sat i gear <br></br>3. Slange korrekt placeret <br></br>4. Aflæs tiden <br></br>5. Dyse valg korrekt</p>
+          <label className="container">Jeg har tjekket overstående
+            <input onChange={() => setChecked(!checked)} type="checkbox"></input>
+            <span className="checkmark"></span>
+          </label>
+    
+        <button type="submit" id="buttonstartmachine">START VANDING</button>
 
       </form>
   );

@@ -2,8 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react"
 import { withRouter } from "react-router";
 
-
-
 const LoginForm = ({history}) => {
     const [email, setEmail] = useState("")
     const [pass, setPassword] = useState("")

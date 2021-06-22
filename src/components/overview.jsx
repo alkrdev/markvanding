@@ -4,8 +4,7 @@ import Overviewexpired from './overviewexpired';
 
 function Overview({activeMachines, activePumps, stopMachine, stopPump, setSubmitted, expiredMachines, stillgoingMachines}) {
 
-
-  function sendStopSMS(pumpnumber, pumpstopcode){
+  function sendStopSMS(pumpnumber, pumpStopcode){
     fetch("http://remote.kkpartner.dk:3001/sendsms", {
       method: "POST",
       headers: {
@@ -13,7 +12,7 @@ function Overview({activeMachines, activePumps, stopMachine, stopPump, setSubmit
       },
       body: JSON.stringify({ 
         number: pumpnumber,
-        message: pumpstopcode
+        message: pumpStopcode
       })
     })
   }
