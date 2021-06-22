@@ -1,4 +1,4 @@
-function Overviewexpired ({expiredMachines, activePumps, StopMachine, stopPump}) {
+function Overviewexpired ({expiredMachines, activePumps, StopMachine}) {
     
     return (
         <div>

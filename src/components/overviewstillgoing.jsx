@@ -1,4 +1,4 @@
-function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, stopPump, sendStopSMS}) {
+function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, sendStopSMS}) {
     return (
     <div>
         <h1 className="tablelabel">Aktive vandinger</h1>
@@ -42,12 +42,11 @@ function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, stopP
                         // var pumpstopcode = pump.stopcode
                         // sendStopSMS(pumpnumber, pumpstopcode)
                         
-                        stopMachine(machine)
-                        stopPump(pump)
+                        stopMachine(machine.id, pump.id)
 
                         setTimeout(() => {  window.location.href="/" }, 1000);
 
-                        }}>
+                    }}>
                     <h4>STOP</h4>
                     </td>
                 </tr>

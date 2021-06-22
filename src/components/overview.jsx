@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Overviewstillgoing from './OverviewStillGoing';
 import Overviewexpired from './OverviewExpired';
+import { withRouter } from "react-router";
 
 const Overview = ({ expiredMachines, stillgoingMachines }) => {
   const [activePumps, setActivePumps] = useState([])
@@ -44,8 +45,9 @@ const Overview = ({ expiredMachines, stillgoingMachines }) => {
 
   return (
     <div>
-      {expiredMachines.length > 0 ? <Overviewexpired expiredMachines = {expiredMachines} activePumps = {activePumps} StopMachine = {StopMachine} StopPump = {StopPump}/> : <></>}
-      <Overviewstillgoing stillgoingMachines = {stillgoingMachines} activePumps = {activePumps} StopMachine = {StopMachine} StopPump = {StopPump} sendStopSMS={sendStopSMS}/>
+      {expiredMachines.length > 0 ? 
+      <Overviewexpired expiredMachines = {expiredMachines} activePumps = {activePumps} StopMachine = {StopMachine} /> : <></>}
+      <Overviewstillgoing stillgoingMachines = {stillgoingMachines} activePumps = {activePumps} StopMachine = {StopMachine}  sendStopSMS={sendStopSMS}/>
     </div>   
   )
 }
