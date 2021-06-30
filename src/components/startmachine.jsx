@@ -5,33 +5,16 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
   const [machine, setMachine] = useState("")
   const [pump, setPump] = useState("")
 
-  // function sendStartSMS(pumpnumber, pumpstartcode){
-  //   fetch("http://remote.kkpartner.dk:3001/sendsms", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify({ 
-  //       number: pumpnumber,
-  //       message: pumpstartcode
-  //     })
-  //   })
-  // }  
-
-  function UpdatePump(pump){
-
-    // Set date of machine to selected date
-     var tempPump = {...pump}
-     
-     tempPump.active = 1;
-     
-
-    fetch("http://remote.kkpartner.dk:3001/updatepump", {
+  function sendStartSMS(pumpnumber, pumpstartcode){
+    fetch("http://remote.kkpartner.dk:3001/sendsms", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(tempPump)
+      body: JSON.stringify({ 
+        number: pumpnumber,
+        message: pumpstartcode
+      })
     })
   }  
 
@@ -69,11 +52,10 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
           // MAKE MACHINE OBJECT
           UpdatePump(pump)
           
-          
-          // UDFYLD RIGTIG DATA TIL SMS
-          // var pumpnumber = "45" + pump.number
-          // var pumpstartcode = pump.startcode
-          // sendStartSMS(pumpnumber, pumpstartcode)
+          // // UDFYLD RIGTIG DATA TIL SMS
+          var pumpnumber = "45" + pump.number
+          var pumpstartcode = pump.startcode
+          sendStartSMS(pumpnumber, pumpstartcode)
           
           // Sets "Submitted" hook to true
           localStorage.setItem("machine", machine)
@@ -102,8 +84,9 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
             var options = event.target.children;
             var option = options[event.target.selectedIndex];
 
-            var correctPump = inactivePumps.find((pump) => pump.id === option.dataset.id)
-
+            var correctPump = inactivePumps.find((pump) => {
+              return pump.id == option.dataset.id
+            })
             setPump(correctPump);
           }}>
             <option value="blank" disabled hidden></option>

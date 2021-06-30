@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 
-import LoginForm from "./components/LoginForm"
+import LoginForm from "./components/LoginForm.jsx"
 import Overview from "./components/Overview";
 import Startmachine from "./components/StartMachine";
 import Maintenance from "./components/Maintenance";

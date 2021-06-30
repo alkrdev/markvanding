@@ -3,7 +3,6 @@ import { withRouter } from "react-router";
 
 const Modals = ({ currentPump, currentMachine, validatePump, allMachines, history }) => {
     const [model, setModel] = useState({})
-    const [nozzle, setNozzle] = useState({})
 
     const RemoveMachine = () => {    
         if (currentMachine) {
@@ -34,7 +33,6 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
         var tempMachine = {...currentMachine}
 
         tempMachine.model = model;
-        tempMachine.nozzle = nozzle;
     
         fetch("http://remote.kkpartner.dk:3001/editmachine", {
           method: "POST",
@@ -43,7 +41,8 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
           },
           body: JSON.stringify(tempMachine)
         })
-        history.push("/")
+        CloseAllModals();
+        window.location.href = "/" 
         
       }
     
@@ -215,9 +214,6 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
                     </label>
                     <label htmlFor="editmachinemodel">
                     <span>Model</span><input type="text" className="modalinputs" id="editmachinemodel" name="editmachinemodel" onChange={e => setModel(e.target.value)} defaultValue={currentMachine.model}></input><br></br>
-                    </label>
-                    <label htmlFor="editmachinenozzle">
-                    <span>Dyse</span><input type="text" className="modalinputs" id="editmachinenozzle" name="editmachinenozzle" onChange={e => setNozzle(e.target.value)} defaultValue={currentMachine.nozzle}></input><br></br>
                     </label>
                     </div>
                     <span className="removemodalbuttonspan"></span><button className="removemodalbutton" id="removemachinebutton" type="button" onClick={function(event){
