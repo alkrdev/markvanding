@@ -17,7 +17,7 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
             "Content-Type": "application/json"
           }, body: JSON.stringify(currentMachine)
           })
-          history.push("/")
+          window.location.href = "/machinepark"
         }
         else {
           alert("Ingen maskine valgt")
@@ -42,7 +42,7 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
           body: JSON.stringify(tempMachine)
         })
         CloseAllModals();
-        window.location.href = "/" 
+        window.location.href = "/machinepark" 
         
       }
     
@@ -60,7 +60,7 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
             },
             body: JSON.stringify(currentPump)
           })
-          history.push("/")
+          window.location.href = "/machinepark"
         }
         else {
           alert("Ingen pumpe valgt")
@@ -92,7 +92,7 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
           },
           body: JSON.stringify(tempPump)
         })
-       history.push("/")
+        window.location.href = "/machinepark"
       }
     
       const createPump = () =>{
@@ -121,7 +121,7 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
           },
           body: JSON.stringify(tempPump)
         })
-        history.push("/")
+        window.location.href = "/machinepark"
       }
     
       const createMachine = () =>{
@@ -153,7 +153,7 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
           },
           body: JSON.stringify(tempMachine)
         })
-        window.location.href="/"
+        window.location.href="/machinepark"
       }
     
       const CloseAllModals = () => {

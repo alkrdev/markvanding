@@ -38,13 +38,15 @@ function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, sendS
                         
                         if (!answer === true) return;
 
-                        // var pumpnumber = "+45" + pump.number
-                        // var pumpstopcode = pump.stopcode
-                        // sendStopSMS(pumpnumber, pumpstopcode)
+                        var pumpnumber = "+45" + pump.number
+                        var pumpstopcode = pump.stopcode
+                        sendStopSMS(pumpnumber, pumpstopcode)
                         
+                        console.log(machine.id)
+                        console.log(pump.id)
                         stopMachine(machine.id, pump.id)
 
-                        setTimeout(() => {  window.location.href="/" }, 1000);
+                        setTimeout(() => {  window.location.href="/overview" }, 1000);
 
                     }}>
                     <h4>STOP</h4>

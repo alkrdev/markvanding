@@ -31,7 +31,7 @@ const LoginForm = ({history}) => {
             } else {
                 localStorage.setItem('token', json.token);
                 history.push("/overview")
-                window.location.href = "/"
+                window.location.href = "/overview"
             }
         })
     }

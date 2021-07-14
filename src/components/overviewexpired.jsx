@@ -1,4 +1,4 @@
-function Overviewexpired ({expiredMachines, activePumps, StopMachine}) {
+function Overviewexpired ({expiredMachines, activePumps, stopMachine}) {
     
     return (
         <div>
@@ -39,8 +39,10 @@ function Overviewexpired ({expiredMachines, activePumps, StopMachine}) {
                         
                         if (!answer === true) return;
 
-                        StopMachine(machine, pump)
-                        window.location.href="/"
+                        console.log(machine["id"])
+                        console.log(pump.id)
+                        stopMachine(machine["id"], pump.id)
+                        window.location.href="/overview"
                     }}>
                     <h4>FJERN</h4></td>
                 </tr>

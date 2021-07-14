@@ -35,7 +35,7 @@ function Showmachine({shownMachine, history, notes, setNotes}) {
         },
         body: JSON.stringify(tempNote)
         })
-        history.push("/")
+        window.location.href = "/maintenance"
     }
 
     const RemoveNote = (note) => {
@@ -47,7 +47,7 @@ function Showmachine({shownMachine, history, notes, setNotes}) {
             "Content-Type": "application/json"
             }, body: JSON.stringify(note)
             })
-            history.push("/")
+            window.location.href = "/maintenance"
         }
         else {
             alert("Ingen note fundet. Dette burde ikke kunne lade sig gøre. Kontakt KKPartner med det samme")

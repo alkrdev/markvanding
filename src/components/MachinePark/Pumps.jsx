@@ -1,6 +1,19 @@
 import React from "react";
 
 const Pumps = ({ allPumps, setCurrentPump }) => {
+    const setInactivePump = (data) => {
+        var tempPump = {}
+        tempPump.id = data
+
+        fetch("http://remote.kkpartner.dk:3001/setinactivepump", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(tempPump)
+        })
+        window.location.href = "/machinepark"
+    }
     return (
         <React.Fragment>
             <div className="machineparktableheaders">
@@ -25,6 +38,7 @@ const Pumps = ({ allPumps, setCurrentPump }) => {
                         <th>Startkode</th>
                         <th>Stopkode</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,6 +56,12 @@ const Pumps = ({ allPumps, setCurrentPump }) => {
                             }}>
                             <img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" alt="" style={{width: 24}}></img>
                             </td>
+                            <td id="setinactive" onClick={() => {
+                                var answer = window.confirm("Hvis du vil sætte " + data.name + " til Inaktiv")
+                        
+                                if (!answer === true) return;
+                                setInactivePump(data["id"])
+                            }}>Gør Inaktiv</td>
                         </tr>
                         )
                     })}

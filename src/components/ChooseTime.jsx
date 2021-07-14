@@ -117,7 +117,7 @@ const ChooseTime = ({ setInactiveMachines, inactiveMachines, setInactivePumps, i
             localStorage.setItem("machine", "")
             localStorage.setItem("hasstarted", "false")
             setSubmitted(false);
-            window.location.href = "/"
+            window.location.href = "/overview"
           }}>
             <div id="choosetime">
               <div className="tab">

@@ -101,7 +101,9 @@ function App() {
       setSubmitted(true)
     }
 
-    fetch("http://remote.kkpartner.dk:3001/activemachines")
+    fetch("http://remote.kkpartner.dk:3001/activemachines", {
+      credentials: "include"
+    })
       .then((data) => data.json())
       .then((json) => {
         setStillgoingMachines(json.filter(x => new Date() < new Date(x.time)))
