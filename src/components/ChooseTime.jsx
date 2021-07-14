@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ChooseTime = ({ setInactiveMachines, inactiveMachines, setInactivePumps, inactivePumps, setSubmitted }) => {
+const ChooseTime = ({ machines, setMachines, pumps, setPumps, setSubmitted }) => {
 
   const [hours, setHours] = useState(-1)
   const [days, setDays] = useState(-1)
@@ -62,18 +62,17 @@ const ChooseTime = ({ setInactiveMachines, inactiveMachines, setInactivePumps, i
   function UpdateMachine(updatedMachine){
 
     // Set date of machine to selected date
-     var tempMachine = {...updatedMachine}
-     
-     tempMachine.time = selectedTime.toLocaleString("da-DK", {
-       dateStyle: "short",
-       timeStyle: "medium"
-     });
-     
-     var tempTime = tempMachine.time.split(" ");
+    var tempMachine = {...updatedMachine}
 
-     var date = tempTime[0].split(".")
-     tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
-     tempMachine.time = tempTime.join(" ");
+     
+    var tempTime = selectedTime.toLocaleString("da-DK", {
+      dateStyle: "short",
+      timeStyle: "medium"
+    }).split(" ");
+
+    var date = tempTime[0].split(".")
+    tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
+    tempMachine.time = tempTime.join(" ");
 
     fetch("http://remote.kkpartner.dk:3001/updatemachine", {
       method: "POST",
@@ -104,10 +103,15 @@ const ChooseTime = ({ setInactiveMachines, inactiveMachines, setInactivePumps, i
             startMachine.time = selectedTime;
   
             // Removes active machine from dropdown menu
-            setInactiveMachines(inactiveMachines.filter(machine => startMachine.id !== machine.id))
-  
-            // Removes active pump from dropdown menu
-            setInactivePumps(inactivePumps.filter(pump => startMachine.pumpname !== pump.name))
+            setMachines(machines.map(machine => {
+              if (machine.id === startMachine.id) machine.active = 1;
+              return machine;
+            }))
+
+            setPumps(pumps.map(pump => {
+              if (startMachine.pumpname === pump.name) pump.active = 1;
+              return pump;
+            }))
   
             UpdateMachine(startMachine);
             

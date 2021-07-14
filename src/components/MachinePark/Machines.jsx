@@ -1,6 +1,6 @@
 import React from "react";
 
-const Machines = ({ allMachines, setCurrentMachine }) => {
+const Machines = ({ machines, setCurrentMachine }) => {
 
 
     return(
@@ -30,7 +30,7 @@ const Machines = ({ allMachines, setCurrentMachine }) => {
                 </tr>
                 </thead>
                 <tbody>
-                {allMachines.map(function(data) {
+                {machines.map(function(data) {
                     return (
                     <tr key={data["id"]}>
                         <td>{data["id"]}</td>
@@ -38,12 +38,12 @@ const Machines = ({ allMachines, setCurrentMachine }) => {
                         <td>{data["nozzle"]}</td>
                         <td></td>
                         <td onClick={(event) => {
-                            setCurrentMachine(allMachines.find(x => x.id === data.id))
+                            setCurrentMachine(machines.find(x => x.id === data.id))
 
                             var modal = document.getElementById("modal2")
                             modal.style.display = "block"
                         }}>
-                        <img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" alt="" style={{width: 24}}></img>
+                            <img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" alt="" style={{width: 24}}></img>
                         </td>
                     </tr>
                     )

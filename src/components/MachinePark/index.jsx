@@ -5,7 +5,7 @@ import Machines from "./Machines.jsx"
 import Pumps from "./Pumps.jsx"
 import Modals from "./Modals.jsx"
 
-function MachinePark({ allMachines }){
+function MachinePark({ machines, pumps }){
 
   const [currentPump, setCurrentPump] = useState({
     name: "",
@@ -14,9 +14,6 @@ function MachinePark({ allMachines }){
     stopcode: ""
   })
   const [currentMachine, setCurrentMachine] = useState({})
-  
-  const [allPumps, setAllPumps] = useState([])
-
   
   const validatePump = (name, number) => {
     var re = new RegExp("[0-9]{8}$")
@@ -32,8 +29,8 @@ function MachinePark({ allMachines }){
 
     // Variables for name (na), and number (nu)
     // Checks if name and number already exists
-    var na = allPumps.some(a => a.name === name.value)
-    var nu = allPumps.some(a => a.number === number.value)
+    var na = pumps.some(a => a.name === name.value)
+    var nu = pumps.some(a => a.number === number.value)
 
     // If name or number exists, make an alert with the problem, and return out / stop the function
     if (name.value !== currentPump.name){
@@ -53,29 +50,13 @@ function MachinePark({ allMachines }){
     return true;
   }
 
-  useEffect(() => {
-    let mounted = true;
-    fetch("http://remote.kkpartner.dk:3001/allpumps")
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        if (mounted) {
-
-          setAllPumps(json)   
-        }  
-      }).catch((error) => {
-        console.log(error);
-      });
-  }, [])
-
   return(
     
     <div>
-      <Pumps allPumps={allPumps} setCurrentPump={setCurrentPump}/>
-      <Machines allMachines={allMachines} setCurrentMachine={setCurrentMachine}/>    
+      <Pumps pumps={pumps} setCurrentPump={setCurrentPump}/>
+      <Machines machines={machines} setCurrentMachine={setCurrentMachine}/>    
       
-      <Modals currentPump={currentPump} currentMachine={currentMachine} validatePump={validatePump} allMachines={allMachines} />
+      <Modals currentPump={currentPump} currentMachine={currentMachine} validatePump={validatePump} machines={machines} />
     </div>
   )
 }

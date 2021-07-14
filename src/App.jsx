@@ -16,18 +16,14 @@ import ChooseTime from "./components/ChooseTime";
 const history = createBrowserHistory();
 
 function App() {
-
-  const storedJwt = localStorage.getItem("token");
   const [allowNav, setAllowNav] = useState({})
   const windowWidth = window.innerWidth;
 
   const [submitted, setSubmitted] = useState(false)
 
-  const [stillgoingMachines, setStillgoingMachines] = useState([])
-  const [expiredMachines, setExpiredMachines] = useState([])
-  const [inactiveMachines, setInactiveMachines] = useState([])
-  const [inactivePumps, setInactivePumps] = useState([])
-  const [allMachines, setAllMachines] = useState([])
+  const [machines, setMachines] = useState([])
+  const [pumps, setPumps] = useState([])
+
   const [shownMachine, setShownMachine] = useState([])
   const [notes, setNotes] = useState([])
 
@@ -121,16 +117,24 @@ function App() {
       .then((json) => setInactivePumps(json))
       .catch((error) => console.log(error));
 
-    fetch("http://remote.kkpartner.dk:3001/allmachines")
-      .then((data) => data.json())
-      .then((json) => setAllMachines(json))
-      .catch((error) => console.log(error));  
-    }, [storedJwt])
+    fetch("http://remote.kkpartner.dk:3001/pumps", {
+      credentials: "include"
+    })
+      .then(async (data) => { 
+        if (!data.ok) { 
+          console.log(data)
+        } else {
+          var json = await data.json()
+          setPumps(json)
+        }
+      })
+      .catch((error) => console.log(error));
+    }, [])
 
   return (
     <Router history={history}>
       {submitted ? (
-        <ChooseTime setInactiveMachines={setInactiveMachines} inactiveMachines={inactiveMachines} setInactivePumps={setInactivePumps} inactivePumps={inactivePumps} setSubmitted={setSubmitted} />
+        <ChooseTime setMachines={setMachines} machines={machines} setPumps={setPumps} pumps={pumps} setSubmitted={setSubmitted} />
       ) : <>
         <header>
           <nav id="nav">
@@ -163,16 +167,16 @@ function App() {
             <LoginForm />
           </Route>        
           <Route path="/overview">
-            <Overview expiredMachines={expiredMachines} stillgoingMachines={stillgoingMachines}/>
+            <Overview machines={machines}/>
           </Route>
           <Route path="/startmachine">
-            <Startmachine setSubmitted={setSubmitted} inactivePumps={inactivePumps} inactiveMachines={inactiveMachines} />
+            <Startmachine setSubmitted={setSubmitted} pumps={pumps} machines={machines} />
           </Route>
           <Route path="/maintenance">
-            <Maintenance allMachines={allMachines} setSubmitted={setSubmitted} setShownMachine={setShownMachine} setNotes={setNotes}/>
+            <Maintenance machines={machines} setSubmitted={setSubmitted} setShownMachine={setShownMachine} setNotes={setNotes}/>
           </Route>
           <Route path="/machinepark">
-            <Machinepark allMachines={allMachines} />
+            <Machinepark machines={machines} />
           </Route>
           <Route path="/showmachine">            
             <Showmachine shownMachine={shownMachine} notes={notes} history={history} setNotes={setNotes}/>

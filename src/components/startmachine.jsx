@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
+function Startmachine({setSubmitted, pumps, machines}){
   const [checked, setChecked] = useState(false)
   const [machine, setMachine] = useState("")
   const [pump, setPump] = useState("")
@@ -35,10 +35,6 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
     })
   }
 
-  useEffect(function() 
-  {
-  }, [])
-
   return(
       <form className="select" id="formstartmachine" onSubmit={function(event){
         // Prevents default behavior (Getting put at another site)
@@ -52,10 +48,10 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
           // MAKE MACHINE OBJECT
           UpdatePump(pump)
           
-          // // UDFYLD RIGTIG DATA TIL SMS
-          var pumpnumber = "45" + pump.number
-          var pumpstartcode = pump.startcode
-          sendStartSMS(pumpnumber, pumpstartcode)
+          // // // UDFYLD RIGTIG DATA TIL SMS
+          // var pumpnumber = "45" + pump.number
+          // var pumpstartcode = pump.startcode
+          // sendStartSMS(pumpnumber, pumpstartcode)
           
           // Sets "Submitted" hook to true
           localStorage.setItem("machine", machine)
@@ -71,7 +67,7 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
             setMachine(event.target.value);
           }}>
             <option value="blank" disabled hidden></option>
-            {inactiveMachines.map((element) => <option key={element.id}>{element.id}</option>)}
+            {machines.filter(machine => machine.active == 0).map((element) => <option key={element.id}>{element.id}</option>)}
           </select>
         </div>
   
@@ -84,13 +80,13 @@ function Startmachine({setSubmitted, inactivePumps, inactiveMachines}){
             var options = event.target.children;
             var option = options[event.target.selectedIndex];
 
-            var correctPump = inactivePumps.find((pump) => {
-              return pump.id == option.dataset.id
+            var correctPump = pumps.find((pump) => {
+              return pump.id == option.dataset.id && pump.active == 0
             })
             setPump(correctPump);
           }}>
             <option value="blank" disabled hidden></option>
-            {inactivePumps.map(function(element) {
+            {pumps.filter(pump => pump.active == 0).map(function(element) {
               return <option key={element.id} data-id={element.id}>{element.name}</option>
             })}
           </select>

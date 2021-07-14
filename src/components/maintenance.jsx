@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { withRouter } from "react-router-dom";
 
-function Maintenance({history, allMachines, setShownMachine, setNotes}){
+function Maintenance({history, machines, setShownMachine, setNotes}){
 
   const HandleClick = (machine) => {
 
@@ -26,7 +26,7 @@ function Maintenance({history, allMachines, setShownMachine, setNotes}){
   return(
     <div id="maintenance">
       <h1 id="maintenancetext">Tryk på en boks for at tilgå maskinen</h1>
-      {allMachines.map((machine) => {
+      {machines.map((machine) => {
         var data = machine.active === 1 ? {
           color: "#42CB6B",
           active: "Aktiv",

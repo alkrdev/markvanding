@@ -1,4 +1,4 @@
-function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, sendStopSMS}) {
+function Overviewstillgoing({machines, pumps, stopMachine, sendStopSMS}) {
     return (
     <div>
         <h1 className="tablelabel">Aktive vandinger</h1>
@@ -18,14 +18,14 @@ function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, sendS
             </tr>
         </thead>
         <tbody>
-            {stillgoingMachines.map(function(machine)
+            {machines.filter(machine => new Date() < new Date(machine.time) && machine.active == 1).map(function(machine)
             {
             var time = new Date(machine["time"]).toLocaleString("da-DK", {
                 dateStyle: "medium",
                 timeStyle: "short"
             });
             
-            var pump = activePumps.find((pum) => pum.name === machine.pumpname)
+            var pump = pumps.find((pump) => pump.name === machine.pumpname && pump.active == 1)
 
             return (
                 <tr key={machine["id"]}>
@@ -34,22 +34,20 @@ function Overviewstillgoing({stillgoingMachines, activePumps, stopMachine, sendS
                     <td>{time}</td>
                     <td id="stopwateringbutton" onClick={(event) => {
 
-                        var answer = window.confirm("Hvis du vil stoppe vanding tryk OK")
+                        var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
                         
-                        if (!answer === true) return;
+                        if (!confirmed === true) return;
 
-                        var pumpnumber = "+45" + pump.number
-                        var pumpstopcode = pump.stopcode
-                        sendStopSMS(pumpnumber, pumpstopcode)
+                        // var pumpnumber = "+45" + pump.number
+                        // var pumpstopcode = pump.stopcode
+                        // sendStopSMS(pumpnumber, pumpstopcode)
                         
-                        console.log(machine.id)
-                        console.log(pump.id)
                         stopMachine(machine.id, pump.id)
 
                         setTimeout(() => {  window.location.href="/overview" }, 1000);
 
                     }}>
-                    <h4>STOP</h4>
+                        <h4>STOP</h4>
                     </td>
                 </tr>
             )

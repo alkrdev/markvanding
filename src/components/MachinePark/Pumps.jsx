@@ -1,6 +1,6 @@
 import React from "react";
 
-const Pumps = ({ allPumps, setCurrentPump }) => {
+const Pumps = ({ pumps, setCurrentPump }) => {
     const setInactivePump = (data) => {
         var tempPump = {}
         tempPump.id = data
@@ -42,7 +42,7 @@ const Pumps = ({ allPumps, setCurrentPump }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {allPumps.map(function(data) {
+                    {pumps.map(function(data) {
                         return (
                         <tr key={data["id"]}>
                             <td>{data["name"]}</td>

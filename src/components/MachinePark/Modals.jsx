@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { withRouter } from "react-router";
 
-const Modals = ({ currentPump, currentMachine, validatePump, allMachines, history }) => {
+const Modals = ({ currentPump, currentMachine, validatePump, machines, history }) => {
     const [model, setModel] = useState({})
 
     const RemoveMachine = () => {    
@@ -134,7 +134,7 @@ const Modals = ({ currentPump, currentMachine, validatePump, allMachines, histor
           return;
         }
     
-        var nu = allMachines.some(a => a.id === id.value)
+        var nu = machines.some(a => a.id === id.value)
         
         if (nu === true) {
           alert("Maskine nummeret findes allerede")

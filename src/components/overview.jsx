@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Overviewstillgoing from './OverviewStillgoing';
 import Overviewexpired from './OverviewExpired';
 import { withRouter } from "react-router";
 
-const Overview = ({ expiredMachines, stillgoingMachines }) => {
-  const [activePumps, setActivePumps] = useState([])
+const Overview = ({ machines, pumps }) => {
 
   const sendStopSMS = (pumpnumber, pumpStopcode) => {
     fetch("http://remote.kkpartner.dk:3001/sendsms", {
@@ -32,22 +31,11 @@ const Overview = ({ expiredMachines, stillgoingMachines }) => {
     })
   }
 
-  useEffect(function() 
-  { 
-    fetch("http://remote.kkpartner.dk:3001/activepumps")
-    .then((data) => data.json())
-    .then(function(json) {
-      setActivePumps(json)     
-    }).catch((error) => {
-      console.log(error);
-    });
-  }, [])
-
   return (
     <div>
-      {expiredMachines.length > 0 ? 
-      <Overviewexpired expiredMachines = {expiredMachines} activePumps = {activePumps} StopMachine = {StopMachine} /> : <></>}
-      <Overviewstillgoing stillgoingMachines = {stillgoingMachines} activePumps = {activePumps} StopMachine = {StopMachine}  sendStopSMS={sendStopSMS}/>
+      
+      <Overviewexpired machines={machines} pumps={pumps} StopMachine = {StopMachine} />
+      <Overviewstillgoing machines={machines} pumps={pumps} StopMachine = {StopMachine} sendStopSMS={sendStopSMS}/>
     </div>   
   )
 }

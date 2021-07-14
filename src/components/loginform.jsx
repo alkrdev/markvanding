@@ -16,23 +16,14 @@ const LoginForm = ({history}) => {
                 "Content-type": "application/json",
                 "Accept" : "application/json"
             },
+            credentials: 'include',
             body: JSON.stringify({
                 email: email,
                 password: pass
             })
         })
-        .then(res => res.json())
-        .then(json => {
-            console.log(json)
-            if (json.error === "wrongdetails") {
-                setError("Email eller Kode er forkert")
-            } else if (json.error === "missingdetails") {
-                setError("Venligst udfyld begge felter") 
-            } else {
-                localStorage.setItem('token', json.token);
-                history.push("/overview")
-                window.location.href = "/overview"
-            }
+        .then(res => {
+            history.push("/overview")
         })
     }
     

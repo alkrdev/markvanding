@@ -1,4 +1,4 @@
-function Overviewexpired ({expiredMachines, activePumps, stopMachine}) {
+function Overviewexpired ({ machines, pumps, stopMachine}) {
     
     return (
         <div>
@@ -19,14 +19,14 @@ function Overviewexpired ({expiredMachines, activePumps, stopMachine}) {
             </tr>
             </thead>
             <tbody>
-            {expiredMachines.map(function(machine)
+            {machines.filter(machine => new Date() > new Date(machine.time) && machine.active == 1).map(function(machine)
             {
                 var time = new Date(machine["time"]).toLocaleString("da-DK", {
-                dateStyle: "medium",
-                timeStyle: "short"
+                    dateStyle: "medium",
+                    timeStyle: "short"
                 });
                 
-                var pump = activePumps.find((pum) => pum.name === machine.pumpname)
+                var pump = pumps.find((pump) => pump.name === machine.pumpname && pump.active == 1)
 
                 return (
                 <tr key={machine["id"]}>
@@ -35,13 +35,11 @@ function Overviewexpired ({expiredMachines, activePumps, stopMachine}) {
                     <td>{time}</td>
                     <td id="stopwateringbutton" onClick={(event) => {
 
-                        var answer = window.confirm("Hvis du vil stoppe vanding tryk OK")
+                        var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
                         
-                        if (!answer === true) return;
+                        if (!confirmed === true) return;
 
-                        console.log(machine["id"])
-                        console.log(pump.id)
-                        stopMachine(machine["id"], pump.id)
+                        stopMachine(machine.id, pump.id)
                         window.location.href="/overview"
                     }}>
                     <h4>FJERN</h4></td>
