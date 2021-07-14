@@ -77,17 +77,28 @@ function App() {
 
   useEffect(function() 
   {
+    if (document.cookie) {
+      var cookies = document.cookie.split(";")
 
-    if (storedJwt !== null && storedJwt !== "") {
-      //console.log("LOGGED IN")
-      setAllowNav(true)
-      document.getElementById("nav").style.display = "flex";
-      history.push("/overview")
-    } else if (storedJwt === null || storedJwt === "") {
-      //console.log("NOT LOGGED IN")
-      setAllowNav(false)
-      document.getElementById("nav").style.display = "none";
-      history.push("/")
+      var parsedCookies = {};
+
+      cookies.forEach(cookiekeypair => {
+        var keyvaluepair = cookiekeypair.split("=")
+        let key = keyvaluepair[0];
+        let value = keyvaluepair[1];
+
+        parsedCookies[key] = value;
+      });
+
+      var token = parsedCookies["token"];
+
+      if (token) {        
+        setAllowNav(true)
+        history.push("/overview")
+      } else {          
+        setAllowNav(false)
+        history.push("/")
+      }
     }
 
     document.querySelectorAll(".nav-links")[0].children[0].children[0].style.color = "rgb(235, 101, 45)"
@@ -97,24 +108,25 @@ function App() {
       setSubmitted(true)
     }
 
-    fetch("http://remote.kkpartner.dk:3001/activemachines", {
+    fetch("http://remote.kkpartner.dk:3001/machines", {
       credentials: "include"
     })
-      .then((data) => data.json())
-      .then((json) => {
-        setStillgoingMachines(json.filter(x => new Date() < new Date(x.time)))
-        setExpiredMachines(json.filter(x => new Date() > new Date(x.time)))
+      .then(async (data) => { 
+        if (!data.ok) {
+          var text = await data.text();
+        
+          var error = JSON.parse(text);
+          console.log(error)
+
+          if (JSON.parse(text).name === "TokenExpiredError") {
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.href = "/";
+          }
+        } else {
+          var json = await data.json()
+          setMachines(json)   
+        }
       })
-      .catch((error) => console.log(error));
-
-    fetch("http://remote.kkpartner.dk:3001/inactivemachines")
-      .then((data) => data.json())
-      .then((json) => setInactiveMachines(json))
-      .catch((error) => console.log(error));
-
-    fetch("http://remote.kkpartner.dk:3001/inactivepumps")
-      .then((data) => data.json())
-      .then((json) => setInactivePumps(json))
       .catch((error) => console.log(error));
 
     fetch("http://remote.kkpartner.dk:3001/pumps", {
