@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Machine {
+    id              Int @id
+    pumpname        String?
+    time            DateTime?
+    active          Boolean
+    maintenances    Maintenance[]
+
+}
+
+model Pump {
+    id              Int @id @default(autoincrement())
+    name            String?
+    number          String?
+    active          Boolean?
+    startcode       String?
+    stopcode        String?
+}
+
+model Maintenance {
+    id              Int @id @default(autoincrement())
+    machine         Machine? @relation(fields: [machineId], references: [id])
+    machineId       Int?
+    time            DateTime?
+    note            String?
+}
