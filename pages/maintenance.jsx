@@ -13,8 +13,7 @@ function Maintenance({ history, machines, setShownMachine, setNotes }) {
     // fetch("http://remote.kkpartner.dk:3001/getnotes")
     //   .then(function (data) {
     //     return data.json();
-    //   })
-    //   .then(function (json) {
+    //   }).then(function (json) {
     //     setNotes(json)
     //   }).catch((error) => {
     //     console.log(error);

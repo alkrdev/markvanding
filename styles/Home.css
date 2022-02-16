@@ -42,91 +42,6 @@ input[type="datetime-local"] {
   margin: auto;
 }
 
-.machineparktables {
-  border-collapse: collapse;
-  width: 60%;
-  margin: auto;
-  margin-top: 50px;
-}
-
-.machineparktables td, .machineparktables th {
-  padding: 8px 2px;
-}
-
-.machineparktables tr:nth-child(even){background-color: #e4e4e4;}
-.machineparktables tr:nth-child(odd){background-color: #f8f8f8;}
-
-.machineparktables th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: center;
-  background-color: rgb(72, 71, 113);
-  color: rgb(255, 255, 255);
-}
-
-.machineparktableheaders {
-  background: #1a1a4e;
-  width: 60%;
-  margin: auto;
-  margin-bottom: -50px;
-  margin-top: 50px;
-  text-align: left;
-  overflow: auto;
-}
-
-.machineparktableheaderstext {
-  margin-left: 20px;
-  color: white;
-  padding: 10px;
-  font-size: 32px;
-  float: left;
-}
-
-.machineparktableheadersplus {
-  color: white;
-  float: right;
-  font-size: 42px;
-  padding-left: 10px;
-  padding-right: 10px;
-  cursor: pointer;
-}
-
-#createmachinemodaltext {
-  width: fit-content;
-  margin: auto;
-  padding-top: 10px;
-  font-size: 30px;
-}
-
-#createmachineid {
-  font-size: 18px;
-  width: 80%;
-  height: 36px;
-  border-radius: 10px;
-  border: solid rgb(230, 230, 230) 1px;
-  margin-left: 10%;
-  margin-top: 20px;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 9999;
-  width: 100%;
-  height: 100%;
-  padding-top: 100px;
-  background-color: black;
-  background-color: rgba(0, 0, 0, 0.4);
-  -webkit-transition: 0.5s;
-  overflow: auto;
-  transition: all 0.3s linear;
-}
-
-#createmachinemodal {
-  height: 215px;
-}
 
 .forms {
   position: relative;
@@ -138,159 +53,12 @@ input[type="datetime-local"] {
   margin: auto;
 }
 
-#machinemodal {
-  height: 316px;
-}
-
-#removemachinemodal {
-  height: 180px;
-}
-
-#removepumpmodal {
-  height: 180px;
-}
-
 #removenotebutton {
   background-color: #DF4848;
   color: white;
   cursor: pointer;
 }
 
-.modalforms {
-  position: relative;
-  border-radius: 24px;
-  background: rgb(245, 245, 245);
-  width: 30%;
-  top: 21%;
-  height: 360px;
-  margin: auto;
-  text-align: left;
-}
-
-.modallabelbox {
-  padding-top: 4%;
-  padding-left: 2%;
-}
-
-.modalforms label {
-	display:block;
-  margin-left: 4%;
-	margin-bottom: 10px;
-}
-.modalforms label > span{
-	display: inline-block;
-	width: 30%;
-  font-size: 24px;
-  color: #777777;
-}
-
-.removemodalbuttonspan {
-  display: inline-block;
-  margin-left: 4%;
-  width: 30%;
-}
-
-#cancelmachinemodal {
-  border: solid orange 1px;
-  color: orange;
-}
-
-#cancelpumpmodal {
-  border: solid orange 1px;
-  color: orange;
-}
-
-.removemodalbutton {
-  margin-top: 8px;
-  color: #DF4848;
-  width: 180px;
-  border: solid #DF4848 1px;
-  height: 36px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.modalbuttons {
-  margin-top: 8px;
-  width: 140px;
-  height: 36px;
-  border-radius: 10px;
-}
-
-.cancelmodalbutton {
-  border: solid blue 1px;
-  margin-right: 5px;
-  margin-top: 8px;
-  width: 140px;
-  height: 36px;
-  border-radius: 10px;
-}
-
-#updatemodalbutton {
- background-color: #42CB6B;
- border: none;
- color: white;
- margin-left: 5px;
-}
-
-.modalbuttonbox {
-  width: fit-content;
-  margin: auto;
-}
-
-.labelremovemodal {
-  width: fit-content;
-  margin: auto;
-  padding-top: 20px;
-  margin-bottom: 60px;
-}
-
-#removemachinemodalbutton {
-  color: white;
-  background: #DF4848;
-}
-
-#removepumpmodalbutton {
-  color: white;
-  background: #DF4848;
-}
-
-.modalinputs {
-  font-size: 18px;
-  width: 180px;
-  height: 36px;
-  border-radius: 10px;
-  border: solid rgb(230, 230, 230) 1px;
-}
-
-#createpumpmodallabelbox {
-  margin: auto;
-}
-
-#createpumpmodaltext {
-  width: fit-content;
-  margin: auto;
-  padding-top: 10px;
-  font-size: 30px;
-}
-
-#createpumpmodal {
-  height: 400px;
-}
-
-#createpumpmodalbuttonbox {
-  margin-top: 50px;
-}
-
-.createpumpmodalinputs {
-  font-size: 18px;
-  width: 80%;
-  height: 36px;
-  border-radius: 10px;
-  border: solid rgb(230, 230, 230) 1px;
-  margin-left: 10%;
-  margin-top: 20px;
-}
 
 #createpumpname {
   width: 80%;
@@ -298,18 +66,6 @@ input[type="datetime-local"] {
   margin-left: 10%;
 }
 
-.bigmodalinputs {
-  font-size: 30px;
-  width: 250px;
-  height: 54px;
-  border-radius: 10px;
-  border: solid rgb(230, 230, 230) 1px;
-}
-
-.tablelabel {
-  margin-bottom: -40px;
-  margin-top: 30px;
-}
 
 #machineid {
   font-size: 64px;
@@ -489,28 +245,6 @@ button {
   border-radius: 8px;
 }
 
-.tables {
-  border-collapse: collapse;
-  width: 60%;
-  margin: auto;
-  margin-top: 50px;
-}
-
-.tables td, .tables th {
-  border: 1px solid #ddd;
-  padding: 8px 2px;
-}
-
-.tables tr:nth-child(even){background-color: #f2f2f2;}
-
-.tables th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: center;
-  background-color: #1a1a4e;
-  color: rgb(255, 255, 255);
-}
-
 nav{
   display :flex;
   justify-content: space-around;
@@ -589,21 +323,6 @@ nav{
   margin-left: auto;
   margin-right: auto;
   margin-top: 50px;
-}
-
-#phonenumbers td, #phonenumbers th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-#phonenumbers tr:nth-child(even){background-color: #f2f2f2;}
-
-#phonenumbers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: center;
-  background-color: #1a1a4e;
-  color: rgb(255, 255, 255);
 }
 
 
@@ -849,9 +568,6 @@ form.select div {
   .forms {
     width: 40% !important;
   }
-  .tables{
-    width: 80%;
-  }
 }
 
 @media screen and (max-width:1280px){
@@ -1004,68 +720,6 @@ form.select div {
 }
 
 /*
-	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
-	*/
-	@media
-	  only screen 
-    and (max-width: 760px) {
-
-		/* Force table to not be like tables anymore */
-		table, thead, tbody, th, td, tr {
-			display: block;
-		}
-
-		/* Hide table headers (but not display: none;, for accessibility) */
-		thead tr {
-			position: absolute;
-			top: -9999px;
-			left: -9999px;
-		}
-
-    tr {
-      margin: 0 0 1rem 0;
-    }
-    
-      
-    tr:nth-child(odd) {
-      background: #ccc;
-    }
-    
-		td {
-      position: relative;
-      padding-left: 50% !important;
-      text-align: left;
-		}
-
-		td:before {
-      position: absolute;
-      left: 5px;
-      padding-right: 10px;
-      white-space: nowrap;
-		}
-
-		/*
-		Label the data
-    You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
-		*/
-		#tableoverview td:nth-of-type(1):before { content: "Maskine nr."; }
-		#tableoverview td:nth-of-type(2):before { content: "Pumpe Navn"; }
-		#tableoverview td:nth-of-type(3):before { content: "Færdig"; }
-    #tableoverview td:nth-of-type(4):before { content: "Stop Vanding";}
-
-    #tablenotes td:nth-of-type(1):before { content: "Maskine nr."; }
-		#tablenotes td:nth-of-type(2):before { content: "Oprettet dato"; }
-		#tablenotes td:nth-of-type(3):before { content: "Note"; }
-
-    #tablemachineparkpumps td:nth-of-type(1):before { content: "Navn"; }
-		#tablemachineparkpumps td:nth-of-type(2):before { content: "Nummer"; }
-		#tablemachineparkpumps td:nth-of-type(3):before { content: "Startkode"; }
-    #tablemachineparkpumps td:nth-of-type(4):before { content: "Stopkode"; }
-
-    #tablemachineparkmachines td:nth-of-type(1):before { content: "Maskine nr."; }
-    #tablemachineparkmachines td:nth-of-type(2):before { content: "Model"; }
-    #tablemachineparkmachines td:nth-of-type(3):before { content: "Dyse størrelse"; }
-	}
 
 @keyframes navLinkFade{
   from{
@@ -1078,4 +732,5 @@ form.select div {
   }
 }
 
+*/
 

@@ -1,40 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from "./../components/Header";
 
-function Startmachine({setSubmitted, pumps, machines}){
+function Startmachine({setSubmitted}){
   const [checked, setChecked] = useState(false)
   const [machine, setMachine] = useState("")
   const [pump, setPump] = useState("")
+  const [pumps, setPumps] = useState([])
+  const [machines, setMachines] = useState([])
 
-  function sendStartSMS(pumpnumber, pumpstartcode){
-    fetch("http://remote.kkpartner.dk:3001/sendsms", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ 
-        number: pumpnumber,
-        message: pumpstartcode
-      })
-    })
-  }  
+  // function sendStartSMS(pumpnumber, pumpstartcode){
+  //   fetch("http://remote.kkpartner.dk:3001/sendsms", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({ 
+  //       number: pumpnumber,
+  //       message: pumpstartcode
+  //     })
+  //   })
+  // }  
 
-  function UpdatePump(pump){
+  // function UpdatePump(pump){
 
-    // Set date of machine to selected date
-     var tempPump = {...pump}
+  //   // Set date of machine to selected date
+  //    var tempPump = {...pump}
      
-     tempPump.active = 1;
+  //    tempPump.active = 1;
      
 
-    fetch("http://remote.kkpartner.dk:3001/updatepump", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tempPump)
-    })
-  }
+  //   fetch("http://remote.kkpartner.dk:3001/updatepump", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify(tempPump)
+  //   })
+  // }
+
+  useEffect(() => {    
+    fetch("/api/machines").then(res => res.json()).then(json => setMachines(json))
+    fetch("/api/pumps").then(res => res.json()).then(json => setPumps(json))
+  }, [])
 
   return(
      <React.Fragment>

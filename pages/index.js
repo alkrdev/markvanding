@@ -5,13 +5,7 @@ import ChooseTime from "./../components/ChooseTime";
 import Header from "./../components/Header";
 
 function Home() {
-  const [allowNav, setAllowNav] = useState({})
-  const [shownMachine, setShownMachine] = useState([])
-  const [notes, setNotes] = useState([])
-
   const [submitted, setSubmitted] = useState(false)
-
-
   const [email, setEmail] = useState("")
   const [pass, setPassword] = useState("")
   const [error, setError] = useState("")
