@@ -23,23 +23,22 @@ const overview = () => {
     // })
   }
 
-  const StopMachine = (machine, pump) => {
-    // fetch("http://remote.kkpartner.dk:3001/stopmachine", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     machineid: machine.id,
-    //     pumpid: pump.id
-    //   })
-    // })
+  const stopMachine = (machine) => {
+    fetch("/api/machines/stop/" + machine.id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(machine)
+    }).then(res => res.json()).then(json => setMachines(json))
   }
 
   useEffect(() => {
     fetch("/api/machines").then(res => res.json()).then(json => setMachines(json))
     fetch("/api/pumps").then(res => res.json()).then(json => setPumps(json))
   }, [])
+
+  var machineWithoutTime = machines.find(machine => machine.pumpname && machine.time == null)
 
   return (
     <React.Fragment>
@@ -52,8 +51,6 @@ const overview = () => {
                 dateStyle: "medium",
                 timeStyle: "short"
             });
-            
-            var pump = pumps.find((pump) => pump.name === machine.pumpname && pump.active == 1)
 
             return (
             <div key={machine["id"]}>
