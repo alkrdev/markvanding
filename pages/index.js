@@ -9,6 +9,8 @@ function Home() {
   const [email, setEmail] = useState("")
   const [pass, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [machines, setMachines] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const router = useRouter();
 
@@ -42,33 +44,34 @@ function Home() {
     if (hasstarted === "true") {
       setSubmitted(true)
     }
+    fetch("/api/machines").then(res => res.json()).then(json => { setLoading(false); setMachines(json) })
   }, [])
 
-  if (submitted) {
-    return <ChooseTime setSubmitted={setSubmitted} />
-  }
+  var machineWithoutTime = machines.find(machine => machine.pumpname && machine.time == null)
 
   return (
     <React.Fragment>
-      <Header />
-      <main>
-          <div className="imgcontainer">
-          </div>
-          <form onSubmit={HandleLogin} method="post" className="flexCenteredColumn">
-              <label>{error}</label> 
-              <div id="loginform">
-                  <label><b>Email</b>
-                      <input type="text" name={email} onChange={(e) => { setEmail(e.target.value) }} required></input>
-                  </label>    
+      {machineWithoutTime == undefined && !loading ? <React.Fragment>
+        <Header />
+        <main>
+            <div className="imgcontainer">
+            </div>
+            <form onSubmit={HandleLogin} method="post" className="flexCenteredColumn">
+                <label>{error}</label> 
+                <div id="loginform">
+                    <label><b>Email</b>
+                        <input type="text" name={email} onChange={(e) => { setEmail(e.target.value) }} required></input>
+                    </label>    
 
-                  <label><b>Kode</b>
-                      <input type="password" name={pass} onChange={(e) => { setPassword(e.target.value) }} required></input>
-                  </label>
+                    <label><b>Kode</b>
+                        <input type="password" name={pass} onChange={(e) => { setPassword(e.target.value) }} required></input>
+                    </label>
 
-                  <button id="loginbutton" type="submit">Log ind</button>          
-              </div>
-          </form>
-      </main>    
+                    <button id="loginbutton" type="submit">Log ind</button>          
+                </div>
+            </form>
+        </main>    
+      </React.Fragment> : <ChooseTime machineWithoutTime={machineWithoutTime} />}
     </React.Fragment>
   );
 }
