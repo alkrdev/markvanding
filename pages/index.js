@@ -51,7 +51,7 @@ function Home() {
 
   return (
     <React.Fragment>
-      {machineWithoutTime == undefined && !loading ? <React.Fragment>
+      {machineWithoutTime != undefined ? <ChooseTime machineWithoutTime={machineWithoutTime} /> : !loading ? <React.Fragment>
         <Header />
         <main>
             <div className="imgcontainer">
@@ -71,7 +71,7 @@ function Home() {
                 </div>
             </form>
         </main>    
-      </React.Fragment> : <ChooseTime machineWithoutTime={machineWithoutTime} />}
+      </React.Fragment> : <></>}
     </React.Fragment>
   );
 }

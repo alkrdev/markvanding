@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Header from "./../components/Header";
+import ChooseTime from "./../components/ChooseTime"
 
 const overview = () => {
   const [machines, setMachines] = useState([])
@@ -39,7 +40,9 @@ const overview = () => {
 
   return (
     <React.Fragment>
-      <Header />      
+      {machineWithoutTime != undefined ? <ChooseTime machineWithoutTime={machineWithoutTime} /> : 
+      <React.Fragment>
+        <Header />      
         <h1 className="tablelabel">Færdige vandinger</h1>
         {machines ? machines.filter(machine => new Date() > new Date(machine.time) && machine.active == 1).map(function(machine) {
             var time = new Date(machine["time"]).toLocaleString("da-DK", {
@@ -102,7 +105,8 @@ const overview = () => {
               </div>
           )
         }) : <></>}
-    </React.Fragment>      
+      </React.Fragment>} 
+    </React.Fragment>  
   )
 }
 
