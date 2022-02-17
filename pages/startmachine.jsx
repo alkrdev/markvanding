@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Header from "./../components/Header";
 
-function Startmachine({setSubmitted}){
+function Startmachine() {
   const [checked, setChecked] = useState(false)
-  const [machine, setMachine] = useState("")
-  const [pump, setPump] = useState("")
+  const [currentMachine, setCurrentMachine] = useState("")
+  const [currentPump, setCurrentPump] = useState("")
   const [pumps, setPumps] = useState([])
   const [machines, setMachines] = useState([])
 
@@ -21,64 +21,57 @@ function Startmachine({setSubmitted}){
   //   })
   // }  
 
-  // function UpdatePump(pump){
-
-  //   // Set date of machine to selected date
-  //    var tempPump = {...pump}
-     
-  //    tempPump.active = 1;
-     
-
-  //   fetch("http://remote.kkpartner.dk:3001/updatepump", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify(tempPump)
-  //   })
-  // }
+  function start(pump) {
+    fetch("/api/machines/start/" + currentMachine.id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ pumpid: currentPump.id })
+    }).then(res => res.json()).then(json => setMachines(json))
+  }
 
   useEffect(() => {    
     fetch("/api/machines").then(res => res.json()).then(json => setMachines(json))
     fetch("/api/pumps").then(res => res.json()).then(json => setPumps(json))
   }, [])
 
+  console.log(pumps)
+  console.log(machines)
+
   return(
      <React.Fragment>
         <Header />
 
         <form className="select" id="formstartmachine" onSubmit={function(event){
-        // Prevents default behavior (Getting put at another site)
-        event.preventDefault();
+          // Prevents default behavior (Getting put at another site)
+          event.preventDefault();
 
-        // Check if Checkbox is true or false
-        if(!checked) return;
+          // Check if Checkbox is true or false
+          if(!checked) return;
 
-        // Checks if a machine and pump is selected
-        if(machine && pump){
-          // MAKE MACHINE OBJECT
-          UpdatePump(pump)
-          
-          // // // UDFYLD RIGTIG DATA TIL SMS
-          // var pumpnumber = "45" + pump.number
-          // var pumpstartcode = pump.startcode
-          // sendStartSMS(pumpnumber, pumpstartcode)
-          
-          // Sets "Submitted" hook to true
-          localStorage.setItem("machine", machine)
-          localStorage.setItem("pump", pump.name)
-          localStorage.setItem("hasstarted", "true")
-          setSubmitted(true)
-        };
-      }}>
+          // Check if a machine and pump is selected
+          if(currentMachine && currentPump){
+            start()
+            
+            // //UDFYLD RIGTIG DATA TIL SMS
+            // var pumpnumber = "45" + pump.number
+            // var pumpstartcode = pump.startcode
+            // sendStartSMS(pumpnumber, pumpstartcode)
+            
+          };
+        }}>
         <div id="choosemachine">
           <label htmlFor="chosenmachine">Vælg en maskine</label>
           <br></br>
           <select name="chosenmachine" id="chosenmachine" defaultValue="blank" onChange={function(event){
-            setMachine(event.target.value);
+            var correctMachine = machines.find((machine) => {
+              return machine.id == event.target.value
+            })
+            setCurrentMachine(correctMachine);
           }}>
             <option value="blank" disabled hidden></option>
-            {machines ? machines.filter(machine => machine.active == 0).map((element) => <option key={element.id}>{element.id}</option>) : <></>}
+            {machines ? machines.filter(machine => !machine.active).map((element) => <option key={element.id} value={element.id}>{element.id}</option>) : <></>}
           </select>
         </div>
   
@@ -94,10 +87,10 @@ function Startmachine({setSubmitted}){
             var correctPump = pumps.find((pump) => {
               return pump.id == option.dataset.id && pump.active == 0
             })
-            setPump(correctPump);
+            setCurrentPump(correctPump);
           }}>
             <option value="blank" disabled hidden></option>
-            {pumps ? pumps.filter(pump => pump.active == 0).map(function(element) {
+            {pumps ? pumps.filter(pump => !pump.active).map(function(element) {
               return <option key={element.id} data-id={element.id}>{element.name}</option>
             }) : <></>}
           </select>
