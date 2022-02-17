@@ -50,11 +50,11 @@ const overview = () => {
             var pump = pumps.find((pump) => pump.name === machine.pumpname && pump.active == 1)
 
             return (
-            <tr key={machine["id"]}>
-                <td style={{background: "#DF4848"}}>{machine["id"]}</td>
-                <td>{machine["pumpname"]}</td>
-                <td>{time}</td>
-                <td id="stopwateringbutton" onClick={(event) => {
+            <div key={machine["id"]}>
+                <div style={{background: "#DF4848"}}>{machine["id"]}</div>
+                <div>{machine["pumpname"]}</div>
+                <div>{time}</div>
+                <div id="stopwateringbutton" onClick={(event) => {
 
                     var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
                     
@@ -63,8 +63,8 @@ const overview = () => {
                     stopMachine(machine.id, pump.id)
                     window.location.href="/overview"
                 }}>
-                <h4>FJERN</h4></td>
-            </tr>
+                <h4>FJERN</h4></div>
+            </div>
             )
         }) : <></>}
 
@@ -78,11 +78,11 @@ const overview = () => {
           var pump = pumps.find((pump) => pump.name === machine.pumpname && pump.active == 1)
 
           return (
-              <tr key={machine["id"]}>
-                  <td style={{background: "#42CB6B"}}>{machine["id"]}</td>
-                  <td>{machine["pumpname"]}</td>
-                  <td>{time}</td>
-                  <td id="stopwateringbutton" onClick={(event) => {
+              <div key={machine["id"]}>
+                  <div style={{background: "#42CB6B"}}>{machine["id"]}</div>
+                  <div>{machine["pumpname"]}</div>
+                  <div>{time}</div>
+                  <div id="stopwateringbutton" onClick={(event) => {
 
                       var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
                       
@@ -98,8 +98,8 @@ const overview = () => {
 
                   }}>
                       <h4>STOP</h4>
-                  </td>
-              </tr>
+                  </div>
+              </div>
           )
         }) : <></>}
     </React.Fragment>      
