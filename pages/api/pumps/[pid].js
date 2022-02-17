@@ -13,7 +13,17 @@ export default async function handle(req, res) {
             res.end(`Pump: ${pid}`)
             break;
         case "PUT":
-            res.end(`Pump: ${pid}`)
+            const { pump } = req.body;
+
+            await prisma.pump.update({
+                where: { 
+                    id: Number(pid)
+                },
+                data: pump
+            })
+
+            var pumps = await prisma.pump.findMany()
+            res.json(pumps)
             break;
     }    
 }

@@ -13,7 +13,18 @@ export default async function handle(req, res) {
             res.end(`Machine: ${mid}`)
             break;
         case "PUT":
-            res.end(`Machine: ${mid}`)
+            const { id, time } = req.body
+            var machine = await prisma.machine.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    time: new Date(time)
+                }
+                
+            })
+            res.json(machine)
+            
             break;
     }    
 }
