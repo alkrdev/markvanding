@@ -18,8 +18,8 @@ model Machine {
 
 model Pump {
     id              Int @id @default(autoincrement())
-    name            String?
-    number          String?
+    name            String @unique
+    number          String @unique
     active          Boolean?
     startcode       String?
     stopcode        String?
