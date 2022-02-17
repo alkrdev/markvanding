@@ -1,27 +1,11 @@
 import React, { useState } from "react";
+import { useRouter } from 'next/router';
 
 const ChooseTime = ({ machineWithoutTime }) => {
   const [selectedTime, setSelectedtime] = useState({})
   const [selectedTimeType, setSelectedTimeType] = useState("")
-  
-  
 
-  function chooseTime(event, time) {
-
-    var tabcontent = document.getElementsByClassName("tabcontent");
-    var tablinks = document.getElementsByClassName("tablinks");
-
-    for (var i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-
-    event.currentTarget.className += " active";
-  }
+  const router = useRouter();
   
   function TimeChanged(event){
     const {name, value} = event.target
@@ -45,22 +29,9 @@ const ChooseTime = ({ machineWithoutTime }) => {
 
     return (
         <form onSubmit={function(event) {  
-            // Prevents default behavior (Getting put at another site)
             event.preventDefault();
             
-            // var tempTime = selectedTime.toLocaleString("da-DK", {
-            //   dateStyle: "short",
-            //   timeStyle: "medium"
-            // }).split(" ");
-
-            // var date = tempTime[0].split(".")
-            // tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
-
-            // var correctValue = tempTime.join(" ")
-
-            
-            machineWithoutTime.time = selectedTime
-            
+            machineWithoutTime.time = selectedTime            
 
             fetch("/api/machines/" + machineWithoutTime.id, {
               method: "PUT",
@@ -69,13 +40,8 @@ const ChooseTime = ({ machineWithoutTime }) => {
               },
               body: JSON.stringify(machineWithoutTime)
             })
-            
-            // Set current stage to "overview", and set "Submitted" hook to false
-  
-            localStorage.setItem("pump", "")
-            localStorage.setItem("machine", "")
-            localStorage.setItem("hasstarted", "false")
-            // RELOAD?
+
+            router.push("/overview")
           }}>
             <div id="choosetime">
               <div className="tab">

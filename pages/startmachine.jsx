@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from "./../components/Header";
+import { useRouter } from 'next/router';
 
 function Startmachine() {
   const [checked, setChecked] = useState(false)
@@ -7,6 +8,8 @@ function Startmachine() {
   const [currentPump, setCurrentPump] = useState("")
   const [pumps, setPumps] = useState([])
   const [machines, setMachines] = useState([])
+
+  const router = useRouter();
 
   // function sendStartSMS(pumpnumber, pumpstartcode){
   //   fetch("http://remote.kkpartner.dk:3001/sendsms", {
@@ -36,9 +39,6 @@ function Startmachine() {
     fetch("/api/pumps").then(res => res.json()).then(json => setPumps(json))
   }, [])
 
-  console.log(pumps)
-  console.log(machines)
-
   return(
      <React.Fragment>
         <Header />
@@ -59,6 +59,7 @@ function Startmachine() {
             // var pumpstartcode = pump.startcode
             // sendStartSMS(pumpnumber, pumpstartcode)
             
+            router.push("/overview")
           };
         }}>
         <div id="choosemachine">

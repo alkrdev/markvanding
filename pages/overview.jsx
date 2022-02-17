@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import Header from "./../components/Header";
 import ChooseTime from "./../components/ChooseTime"
@@ -6,6 +7,8 @@ import ChooseTime from "./../components/ChooseTime"
 const overview = () => {
   const [machines, setMachines] = useState([])
   const [pumps, setPumps] = useState([])
+
+  const router = useRouter();
 
   const sendStopSMS = (pumpnumber, pumpStopcode) => {
     // fetch("http://remote.kkpartner.dk:3001/sendsms", {
@@ -63,8 +66,8 @@ const overview = () => {
                     
                     if (!confirmed === true) return;
 
-                    stopMachine(machine.id, pump.id)
-                    window.location.href="/overview"
+                    stopMachine(machine)
+                    router.push("/overview")
                 }}>
                 <h4>FJERN</h4></div>
             </div>
@@ -95,9 +98,8 @@ const overview = () => {
                       // var pumpstopcode = pump.stopcode
                       // sendStopSMS(pumpnumber, pumpstopcode)
                       
-                      stopMachine(machine.id, pump.id)
-
-                      setTimeout(() => {  window.location.href="/overview" }, 1000);
+                      stopMachine(machine)
+                      router.push("/overview")
 
                   }}>
                       <h4>STOP</h4>
@@ -105,9 +107,23 @@ const overview = () => {
               </div>
           )
         }) : <></>}
+        
       </React.Fragment>} 
     </React.Fragment>  
   )
+}
+
+export async function getServerSideProps(context) {
+  const resMachines = await fetch("http://localhost:3002/api/machines")
+  const machines = await resMachines.json();
+
+  const resPumps = await fetch("http://localhost:3002/api/pumps")
+  const pumps = await resPumps.json();
+
+
+  return {
+    props: { machines: machines, pumps: pumps }, // will be passed to the page component as props
+  }
 }
 
 export default overview;
