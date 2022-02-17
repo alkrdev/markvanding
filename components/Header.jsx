@@ -31,18 +31,6 @@ const Header = () => {
     const HandleNavClick = function(event, stage, text) {
       event.preventDefault();
       router.push(stage)
-      var array = event.target.parentNode.parentNode.children
-  
-  
-      for (const line of array) {
-        var anchor = line.children[0];
-  
-        if (anchor.innerHTML.toLowerCase() === text.toLowerCase()) {
-          anchor.style.color = "rgb(235, 101, 45)"
-          continue;
-        } 
-        anchor.style.color = "rgb(233, 233, 233)"
-      }
   
       if (window.innerWidth <= 1280) slide();
     }
@@ -57,16 +45,16 @@ const Header = () => {
             </div>
             <ul className="nav-links">
               <li>
-                <button style={{color: "rgb(235, 101, 45)"}} onClick={(e) => HandleNavClick(e, "overview", "OVERSIGT")}>OVERSIGT</button>
+                <button onClick={(e) => HandleNavClick(e, "overview")}>OVERSIGT</button>
               </li>
               <li>
-                <button onClick={(e) => HandleNavClick(e, "startmachine", "START VANDING")}>START VANDING</button>
+                <button onClick={(e) => HandleNavClick(e, "startmachine")}>START VANDING</button>
               </li>
               <li>
-                <button onClick={(e) => HandleNavClick(e, "maintenance", "VEDLIGEHOLDELSE")}>VEDLIGEHOLDELSE</button>
+                <button onClick={(e) => HandleNavClick(e, "maintenance")}>VEDLIGEHOLDELSE</button>
               </li>
               <li>
-                <button onClick={(e) => HandleNavClick(e, "machinepark", "MASKINPARK")}>MASKINPARK</button>
+                <button onClick={(e) => HandleNavClick(e, "machinepark")}>MASKINPARK</button>
               </li>
             </ul>
             <div className="burger" onClick={slide}>
