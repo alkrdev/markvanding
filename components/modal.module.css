@@ -194,22 +194,42 @@
 
   
 .pump {        
-    width: "1000px";
-    height: "200px";
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 200px;
+  background: whitesmoke;
+  border-radius: 24px;
+  border: 1px solid lightgray;
+  overflow: hidden;
+}
+.pump div {
+  font-size: 24px;
 }
 .machine {        
-    width: "1000px";
-    height: "200px";
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 200px;
+  background: whitesmoke;
+  border-radius: 24px;
+  border: 1px solid lightgray;
+  overflow: hidden;
 }
 .pumpContainer {
-    display: "flex";
-    justify-content: "center";
-    align-items: "center";
-    flex-wrap: "wrap";
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .machineContainer {
-    display: "flex";
-    justify-content: "center";
-    align-items: "center";
-    flex-wrap: "wrap";
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.machine div {
+  font-size: 24px;
 }
