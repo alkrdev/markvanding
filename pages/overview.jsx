@@ -4,6 +4,11 @@ import { useRouter } from 'next/router';
 import Header from "./../components/Header";
 import ChooseTime from "./../components/ChooseTime"
 
+import machinestyles from "./../components/machines.module.css"
+import pumpstyles from "./../components/pumps.module.css"
+import Head from "next/head";
+
+
 const overview = () => {
   const [machines, setMachines] = useState([])
   const [pumps, setPumps] = useState([])
@@ -46,65 +51,68 @@ const overview = () => {
       <React.Fragment>
         <Header />      
         <h1 className="tablelabel">Færdige vandinger</h1>
-        {machines ? machines.filter(machine => new Date() > new Date(machine.time) && machine.active == 1).map(function(machine) {
+        <div className={machinestyles.machineContainer}>
+
+          {machines ? machines.filter(machine => new Date() > new Date(machine.time) && machine.active == 1).map(function(machine) {
+                var time = new Date(machine["time"]).toLocaleString("da-DK", {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                });
+
+                return (
+                <div className={machinestyles.machine} key={machine["id"]}>
+                    <div style={{background: "#DF4848"}}>{machine["id"]}</div>
+                    <div>{machine["pumpname"]}</div>
+                    <div>{time}</div>
+                    <div id="stopwateringbutton" onClick={(event) => {
+
+                        var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
+                        
+                        if (!confirmed === true) return;
+
+                        stopMachine(machine)
+                        router.push("/overview")
+                    }}>
+                    <h4>FJERN</h4></div>
+                </div>
+                )
+            }) : <></>}
+        </div>
+
+        <h1 className="tablelabel">Aktive vandinger</h1>
+        <div className={pumpstyles.pumpContainer}>
+          {machines ? machines.filter(machine => new Date() < new Date(machine.time) && machine.active == 1).map(function(machine) {
             var time = new Date(machine["time"]).toLocaleString("da-DK", {
                 dateStyle: "medium",
                 timeStyle: "short"
             });
-
+            
             return (
-            <div key={machine["id"]}>
-                <div style={{background: "#DF4848"}}>{machine["id"]}</div>
-                <div>{machine["pumpname"]}</div>
-                <div>{time}</div>
-                <div id="stopwateringbutton" onClick={(event) => {
+                <div className={pumpstyles.pump} key={machine["id"]}>
+                    <div style={{background: "#42CB6B"}}>{machine["id"]}</div>
+                    <div>{machine["pumpname"]}</div>
+                    <div>{time}</div>
+                    <div id="stopwateringbutton" onClick={(event) => {
 
-                    var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
-                    
-                    if (!confirmed === true) return;
+                        var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
+                        
+                        if (!confirmed === true) return;
 
-                    stopMachine(machine)
-                    router.push("/overview")
-                }}>
-                <h4>FJERN</h4></div>
-            </div>
+                        // var pumpnumber = "+45" + pump.number
+                        // var pumpstopcode = pump.stopcode
+                        // sendStopSMS(pumpnumber, pumpstopcode)
+                        
+                        stopMachine(machine)
+                        router.push("/overview")
+
+                    }}>
+                        <h4>STOP</h4>
+                    </div>
+                </div>
             )
-        }) : <></>}
-
-        <h1 className="tablelabel">Aktive vandinger</h1>
-        {machines ? machines.filter(machine => new Date() < new Date(machine.time) && machine.active == 1).map(function(machine) {
-          var time = new Date(machine["time"]).toLocaleString("da-DK", {
-              dateStyle: "medium",
-              timeStyle: "short"
-          });
+          }) : <></>}
+        </div>
           
-          var pump = pumps.find((pump) => pump.name === machine.pumpname && pump.active == 1)
-
-          return (
-              <div key={machine["id"]}>
-                  <div style={{background: "#42CB6B"}}>{machine["id"]}</div>
-                  <div>{machine["pumpname"]}</div>
-                  <div>{time}</div>
-                  <div id="stopwateringbutton" onClick={(event) => {
-
-                      var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
-                      
-                      if (!confirmed === true) return;
-
-                      // var pumpnumber = "+45" + pump.number
-                      // var pumpstopcode = pump.stopcode
-                      // sendStopSMS(pumpnumber, pumpstopcode)
-                      
-                      stopMachine(machine)
-                      router.push("/overview")
-
-                  }}>
-                      <h4>STOP</h4>
-                  </div>
-              </div>
-          )
-        }) : <></>}
-        
       </React.Fragment>} 
     </React.Fragment>  
   )

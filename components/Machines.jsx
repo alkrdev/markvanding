@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import styles from "./modal.module.css"
+import styles from "./machines.module.css"
 
 const Machines = (props) => {  
     const [machines, setMachines] = useState([])

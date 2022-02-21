@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useState } from "react"
 import { useRouter } from 'next/router'
 
 const Header = () => {
+    const [title, setTitle] = useState()
 
     const router = useRouter();
 
@@ -20,9 +21,10 @@ const Header = () => {
           link.style.animation = "";
         }
         else{
-          link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5}s`
+          link.style.animation = `0.5s ease forwards ${index / 7 + 0.5}s`
         }
       });
+
   
       //Animate Burger
       burger.classList.toggle("toggle");
@@ -31,31 +33,26 @@ const Header = () => {
     const HandleNavClick = function(event, stage, text) {
       event.preventDefault();
       router.push(stage)
+
+      setTitle(event.target.innerHTML)
   
       if (window.innerWidth <= 1280) slide();
     }
 
 
 
-    return (         
+    return (   
+      <>
         <header>
           <nav id="nav">
             <div className="logo">
               <h1>Markvanding</h1>
             </div>
             <ul className="nav-links">
-              <li>
-                <button onClick={(e) => HandleNavClick(e, "overview")}>OVERSIGT</button>
-              </li>
-              <li>
-                <button onClick={(e) => HandleNavClick(e, "startmachine")}>START VANDING</button>
-              </li>
-              <li>
-                <button onClick={(e) => HandleNavClick(e, "maintenance")}>VEDLIGEHOLDELSE</button>
-              </li>
-              <li>
-                <button onClick={(e) => HandleNavClick(e, "machinepark")}>MASKINPARK</button>
-              </li>
+                <li onClick={(e) => HandleNavClick(e, "overview")}>OVERSIGT</li>
+                <li onClick={(e) => HandleNavClick(e, "startmachine")}>START VANDING</li>
+                <li onClick={(e) => HandleNavClick(e, "maintenance")}>VEDLIGEHOLDELSE</li>
+                <li onClick={(e) => HandleNavClick(e, "machinepark")}>MASKINPARK</li>
             </ul>
             <div className="burger" onClick={slide}>
               <div className="line1"></div>
@@ -64,6 +61,8 @@ const Header = () => {
             </div>
           </nav>
         </header>
+      </>      
+
     )
 }
 
