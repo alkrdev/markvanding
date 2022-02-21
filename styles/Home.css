@@ -428,14 +428,14 @@ label{
   text-align: center;
   border: solid #1a1a4e;
   margin: auto;
-  width: 330px;
+  width: 30%;
 }
 
 #choosepump{
   text-align: center;
   border: solid #1a1a4e;
   margin: auto;
-  width: 330px;
+  width: 30% ;
 }
 
 #checkboxtext{
@@ -569,6 +569,12 @@ form.select div {
   .forms {
     width: 40% !important;
   }
+  #choosepump {
+    width: 30% !important;
+  }
+  #choosemachine {
+    width: 30% !important;
+  }
 }
 
 @media screen and (max-width:1280px){
@@ -602,7 +608,12 @@ form.select div {
   .nav-active-li{
     display: flex !important;
   }
-  
+  #choosepump {
+    width: 40% !important;
+  }
+  #choosemachine {
+    width: 40% !important;
+  }
   .nav-active{
     height: 24rem;
   }
@@ -624,6 +635,12 @@ form.select div {
   .modalforms {
     width: 55%;
   }
+  #choosepump {
+    width: 50% !important;
+  }
+  #choosemachine {
+    width: 50% !important;
+  }
 }
 
 @media screen and (max-width:740px){
@@ -635,6 +652,12 @@ form.select div {
   }
   .modalforms {
     width: 65%;
+  }
+  #choosepump {
+    width: 60% !important;
+  }
+  #choosemachine {
+    width: 60% !important;
   }
 }
 
@@ -648,6 +671,12 @@ form.select div {
   }
   .modalforms {
     width: 75%;
+  }
+  #choosepump {
+    width: 70% !important;
+  }
+  #choosemachine {
+    width: 70% !important;
   }
 }
 
@@ -663,6 +692,12 @@ form.select div {
     width: 80%;
     height: 430px;
     top: 10%;
+  }
+  #choosepump {
+    width: 90% !important;
+  }
+  #choosemachine {
+    width: 90% !important;
   }
   .modalforms label {
     margin-left: 6%;
@@ -715,6 +750,12 @@ form.select div {
 
 @media screen and (max-width:420px){
   p{
+    width: 100% !important;
+  }
+  #choosepump {
+    width: 100% !important;
+  }
+  #choosemachine {
     width: 100% !important;
   }
 }
