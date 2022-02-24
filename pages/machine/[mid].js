@@ -2,10 +2,8 @@ import React from 'react';
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 
-function machine({ notes }) {
+function Machine({ query }) {
 
-    const router = useRouter();
-    const {mid} = router.query
     const [machine, setMachine] = useState({})
 
     const HandleClick = () => {
@@ -60,17 +58,16 @@ function machine({ notes }) {
     }
 
     useEffect(() => {
-        fetch("/api/machines/" + mid).then(res => res.json()).then(json => setMachine(json))
+        fetch("/api/machines/" + query.mid).then(res => res.json()).then(json => setMachine(json))
     }, [])
 
     var datePart = new Date(machine.time).toLocaleString("da-DK", {
         month: "short", day: "numeric"
-      });
-      var timePart = new Date(machine.time).toLocaleTimeString("da-DK", {
+    });
+    var timePart = new Date(machine.time).toLocaleTimeString("da-DK", {
         hour: "numeric", minute: "numeric"
-      }).replace("." , ":")
+    }).replace("." , ":")
 
-      console.log(machine.maintenances)
     return(
         <div id="shownmachine">
             <button id="backbutton" onClick={HandleClick}>Tilbage</button>
@@ -121,27 +118,7 @@ function machine({ notes }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {notes ? notes.filter(x => x.machineid === machine.id).map(function(note)
-                            {
-                            var time = new Date(note["time"]).toLocaleString("da-DK", {
-                                dateStyle: "medium",
-                                timeStyle: "short"
-                            });
-
-                            return (
-                                <tr key={note["id"]}>
-                                    <td>{note["machineid"]}</td>
-                                    <td>{time}</td>
-                                    <td>{note["note"]}</td>
-                                    <td id="removenotebutton" onClick={function(event) {
-                                        console.log(note["id"])
-                                        RemoveNote(note)
-                                        alert("Fjern note her")
-                                    }
-                                    }>SLET</td>
-                                </tr>
-                            )
-                            }) : "Fejl"}
+                           
                         </tbody>
                     </table> 
                 </div>
@@ -149,4 +126,11 @@ function machine({ notes }) {
         </div>
     )
 }
-export default machine;
+
+export async function getServerSideProps(context) {
+
+    return {
+        props: { query: context.query }, // will be passed to the page component as props
+    }
+}
+export default Machine;

@@ -9,7 +9,7 @@ import pumpstyles from "./../components/pumps.module.css"
 import Head from "next/head";
 
 
-const overview = () => {
+const Overview = () => {
   const [machines, setMachines] = useState([])
   const [pumps, setPumps] = useState([])
 
@@ -139,7 +139,7 @@ const overview = () => {
                       stopMachine(machine)
                       router.push("/overview")
 
-                      }}>
+                    }}>
                       <h4>STOP</h4>
                       </div>
                   </div>
@@ -166,4 +166,4 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default overview;
+export default Overview;
