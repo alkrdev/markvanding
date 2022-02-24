@@ -50,21 +50,38 @@ const overview = () => {
       {machineWithoutTime != undefined ? <ChooseTime machineWithoutTime={machineWithoutTime} /> : 
       <React.Fragment>
         <Header />      
-        <h1 className="tablelabel">Færdige vandinger</h1>
+        <h1 className={machinestyles.tableLabel}>Færdige vandinger</h1>
         <div className={machinestyles.machineContainer}>
 
           {machines ? machines.filter(machine => new Date() > new Date(machine.time) && machine.active == 1).map(function(machine) {
-                var time = new Date(machine["time"]).toLocaleString("da-DK", {
-                    dateStyle: "medium",
-                    timeStyle: "short"
+                var datePart = new Date(machine["time"]).toLocaleString("da-DK", {
+                  month: "short", day: "numeric"
                 });
+                var timePart = new Date(machine["time"]).toLocaleTimeString("da-DK", {
+                  hour: "numeric", minute: "numeric"
+                }).replace("." , ":")
 
                 return (
                 <div className={machinestyles.machine} key={machine["id"]}>
-                    <div style={{background: "#DF4848"}}>{machine["id"]}</div>
-                    <div>{machine["pumpname"]}</div>
-                    <div>{time}</div>
-                    <div id="stopwateringbutton" onClick={(event) => {
+                  <div className={machinestyles.mainContainer}>
+                    <div style={{height: "198px"}} className={machinestyles.dataContainer}>
+                      <div>
+                        <div className={machinestyles.header}>Maskine</div>
+                        <div>{machine["id"]}</div>
+                      </div>
+                      <div>
+                        <div className={machinestyles.header}>Pumpe</div>
+                        <div>{machine["pumpname"]}</div>
+                      </div>
+                      <div>
+                        <div className={machinestyles.header}>Færdig</div>
+                        <div>{datePart + " " + timePart}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{background: "#DF4848", height: "200px", width: "80px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}asddxcftt>
+                    <div style={{position: "absolute"}}>Inaktiv</div>
+                    <div style={{ background: "darkorange" }} id="stopwateringbutton" onClick={(event) => {
 
                         var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
                         
@@ -74,40 +91,58 @@ const overview = () => {
                         router.push("/overview")
                     }}>
                     <h4>FJERN</h4></div>
+                  </div>
                 </div>
                 )
             }) : <></>}
         </div>
 
-        <h1 className="tablelabel">Aktive vandinger</h1>
+        <h1 className={machinestyles.tableLabel}>Aktive vandinger</h1>
         <div className={pumpstyles.pumpContainer}>
           {machines ? machines.filter(machine => new Date() < new Date(machine.time) && machine.active == 1).map(function(machine) {
-            var time = new Date(machine["time"]).toLocaleString("da-DK", {
-                dateStyle: "medium",
-                timeStyle: "short"
+            var datePart = new Date(machine["time"]).toLocaleString("da-DK", {
+              month: "short", day: "numeric"
             });
+            var timePart = new Date(machine["time"]).toLocaleTimeString("da-DK", {
+              hour: "numeric", minute: "numeric"
+            }).replace("." , ":")
             
             return (
-                <div className={pumpstyles.pump} key={machine["id"]}>
-                    <div style={{background: "#42CB6B"}}>{machine["id"]}</div>
-                    <div>{machine["pumpname"]}</div>
-                    <div>{time}</div>
-                    <div id="stopwateringbutton" onClick={(event) => {
-
-                        var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
-                        
-                        if (!confirmed === true) return;
-
-                        // var pumpnumber = "+45" + pump.number
-                        // var pumpstopcode = pump.stopcode
-                        // sendStopSMS(pumpnumber, pumpstopcode)
-                        
-                        stopMachine(machine)
-                        router.push("/overview")
-
-                    }}>
-                        <h4>STOP</h4>
+                <div className={machinestyles.machine} key={machine["id"]}>
+                  <div className={machinestyles.mainContainer}>
+                    <div style={{height: "198px"}} className={machinestyles.dataContainer}>
+                      <div>
+                        <div className={machinestyles.header}>Maskine</div>
+                        <div>{machine["id"]}</div>
+                      </div>
+                      <div>
+                        <div className={machinestyles.header}>Pumpe</div>
+                        <div>{machine["pumpname"]}</div>
+                      </div>
+                      <div>
+                        <div className={machinestyles.header}>Færdig</div>
+                        <div>{datePart + " " + timePart}</div>
+                      </div>
                     </div>
+                  </div>
+                  <div style={{background: "#42CB6B", height: "200px", width: "80px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                    <div style={{position: "absolute"}}>Aktiv</div>
+                    <div id="stopwateringbutton" onClick={(event) => {
+                      var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
+
+                      if (!confirmed === true) return;
+
+                      // var pumpnumber = "+45" + pump.number
+                      // var pumpstopcode = pump.stopcode
+                      // sendStopSMS(pumpnumber, pumpstopcode)
+
+                      stopMachine(machine)
+                      router.push("/overview")
+
+                      }}>
+                      <h4>STOP</h4>
+                      </div>
+                  </div>
                 </div>
             )
           }) : <></>}

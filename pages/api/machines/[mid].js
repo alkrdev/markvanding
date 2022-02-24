@@ -4,7 +4,13 @@ export default async function handle(req, res) {
     const { mid } = req.query
     switch (req.method) {
         case "GET": 
-            res.end(`Machine: ${mid}`)
+            var machine = await prisma.machine.findUnique({
+                where: {
+                    id: Number(mid)
+                }
+            })
+            res.json(machine)
+            
             break;
         case "POST":
             res.end(`Machine: ${mid}`)

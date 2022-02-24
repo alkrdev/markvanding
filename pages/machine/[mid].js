@@ -1,10 +1,15 @@
 import React from 'react';
-import { withRouter } from "react-router";
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router';
 
-function Showmachine({shownMachine, history, notes, setNotes}) {
+function machine({ notes }) {
+
+    const router = useRouter();
+    const {mid} = router.query
+    const [machine, setMachine] = useState({})
 
     const HandleClick = () => {
-        history.push("/maintenance")
+        router.push("/maintenance")
     }
     
     const CreateNote = () => {
@@ -23,7 +28,7 @@ function Showmachine({shownMachine, history, notes, setNotes}) {
         time = tempTime.join(" ");
 
         var tempNote = {
-            machineid : shownMachine.id,
+            machineid : machine.id,
             time : time,
             note : note.value
         }
@@ -54,8 +59,16 @@ function Showmachine({shownMachine, history, notes, setNotes}) {
         }
     }
 
-    
+    useEffect(() => {
+        fetch("/api/machines/" + mid).then(res => res.json()).then(json => setMachine(json))
+    }, [])
 
+    var datePart = new Date(machine.time).toLocaleString("da-DK", {
+        month: "short", day: "numeric"
+      });
+      var timePart = new Date(machine.time).toLocaleTimeString("da-DK", {
+        hour: "numeric", minute: "numeric"
+      }).replace("." , ":")
 
     return(
         <div id="shownmachine">
@@ -63,24 +76,21 @@ function Showmachine({shownMachine, history, notes, setNotes}) {
             <div id="allmachineattributes">
                 <div className="machineattributes">
                     <h1 className="showmachineh1">Maskine nr.</h1>
-                    <p>{shownMachine.id}</p>
+                    <p>{machine ? machine.id : "Fejl"}</p>
                 </div>
                 <div className="machineattributes">
                     <h1 className="showmachineh1">Pumpe navn</h1>
-                    <p>{shownMachine.pumpname == null ? "Ingen pumpe" : shownMachine.pumpname}</p>
+                    <p>{machine ? machine.pumpname == null ? "Ingen pumpe" : machine.pumpname : "Fejl"}</p>
                 </div>
                 <div className="machineattributes">
                     <h1 className="showmachineh1">Tid tilbage</h1>
                     <p>
-                        {shownMachine.time == null ? "Ingen tid" : new Date(shownMachine["time"]).toLocaleString("da-DK", {
-                            dateStyle: "medium",
-                            timeStyle: "short"
-                        })}
+                        {machine ? machine.time == null ? "Ingen tid" : datePart + " " + timePart : "Fejl"}
                     </p>
                 </div>
                 <div className="machineattributes">
                     <h1 className="showmachineh1">Aktivitet</h1>
-                    <p>{shownMachine.active === 0 ? "Inaktiv" : "Aktiv"}</p>
+                    <p>{machine ? machine.active === 0 ? "Inaktiv" : "Aktiv" : "Fejl"}</p>
                 </div>
             </div>
             <div id="allaboutnotes">
@@ -110,7 +120,7 @@ function Showmachine({shownMachine, history, notes, setNotes}) {
                             </tr>
                         </thead>
                         <tbody>
-                            {notes.filter(x => x.machineid === shownMachine.id).map(function(note)
+                            {notes ? notes.filter(x => x.machineid === machine.id).map(function(note)
                             {
                             var time = new Date(note["time"]).toLocaleString("da-DK", {
                                 dateStyle: "medium",
@@ -130,7 +140,7 @@ function Showmachine({shownMachine, history, notes, setNotes}) {
                                     }>SLET</td>
                                 </tr>
                             )
-                            })}
+                            }) : "Fejl"}
                         </tbody>
                     </table> 
                 </div>
@@ -138,4 +148,4 @@ function Showmachine({shownMachine, history, notes, setNotes}) {
         </div>
     )
 }
-export default withRouter(Showmachine);
+export default machine;

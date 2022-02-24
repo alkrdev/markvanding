@@ -13,6 +13,8 @@ model Machine {
     time            DateTime?
     active          Boolean
     maintenances    Maintenance[]
+    nozzle          String?
+    model           String?
 
 }
 

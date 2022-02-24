@@ -1,12 +1,18 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
+import { useRouter } from 'next/router';
 import Header from "./../components/Header";
 
-function Maintenance({ history, machines, setShownMachine, setNotes }) {
+function Maintenance({ history, setNotes }) {
+
+  const router = useRouter();
+
+  const [machines, setMachines] = useState([])
+  const [shownMachine, setShownMachine] = useState({})
 
   const HandleClick = (machine) => {
 
     setShownMachine(machine)
-    history.push("/showmachine")
+    router.push("/machine/" + machine.id)
   }
 
   useEffect(function () {
@@ -20,13 +26,17 @@ function Maintenance({ history, machines, setShownMachine, setNotes }) {
     //   });
   }, [setNotes])
 
+  useEffect(() => {
+    fetch("/api/machines").then(res => res.json()).then(json => setMachines(json))
+  }, [])
+
   return (
     <React.Fragment>
       <Header />
       <div id="maintenance">
         <h1 id="maintenancetext">Tryk på en boks for at tilgå maskinen</h1>
         {machines ? machines.map((machine) => {
-          var data = machine.active === 1 ? {
+          var data = machine.active == 1 ? {
             color: "#42CB6B",
             active: "Aktiv",
             pumpname: machine.pumpname,
