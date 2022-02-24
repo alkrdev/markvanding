@@ -5,7 +5,6 @@ import Header from "./../components/Header";
 import ChooseTime from "./../components/ChooseTime"
 
 import machinestyles from "./../components/machines.module.css"
-import pumpstyles from "./../components/pumps.module.css"
 import Head from "next/head";
 
 
@@ -98,7 +97,7 @@ const Overview = () => {
         </div>
 
         <h1 className={machinestyles.tableLabel}>Aktive vandinger</h1>
-        <div className={pumpstyles.pumpContainer}>
+        <div className={machinestyles.pumpContainer}>
           {machines ? machines.filter(machine => new Date() < new Date(machine.time) && machine.active == 1).map(function(machine) {
             var datePart = new Date(machine["time"]).toLocaleString("da-DK", {
               month: "short", day: "numeric"
