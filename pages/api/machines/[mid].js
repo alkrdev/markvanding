@@ -7,7 +7,8 @@ export default async function handle(req, res) {
             var machine = await prisma.machine.findUnique({
                 where: {
                     id: Number(mid)
-                }
+                },
+                include: {maintenances: true}
             })
             res.json(machine)
             

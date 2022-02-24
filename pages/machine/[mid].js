@@ -70,6 +70,7 @@ function machine({ notes }) {
         hour: "numeric", minute: "numeric"
       }).replace("." , ":")
 
+      console.log(machine.maintenances)
     return(
         <div id="shownmachine">
             <button id="backbutton" onClick={HandleClick}>Tilbage</button>
