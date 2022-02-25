@@ -3,62 +3,55 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 
 function Machine({ query }) {
-
     const [machine, setMachine] = useState({})
+    const [note, setNote] = useState("")
+    const [notes, setNotes] = useState([])
+
+    const router = useRouter();
 
     const HandleClick = () => {
         router.push("/maintenance")
     }
     
     const CreateNote = () => {
-        var note = document.getElementById("createnoteinput")
-        
-        var time = new Date()
+        if (note == "") return;  
 
-        time = time.toLocaleString("da-DK", {
-            dateStyle: "short",
-            timeStyle: "medium"
-        });
-          
-        var tempTime = time.split(" ");
-        var date = tempTime[0].split(".")
-        tempTime[0] = date[2] + "-" + date[1] + "-" + date[0]
-        time = tempTime.join(" ");
-
-        var tempNote = {
-            machineid : machine.id,
-            time : time,
-            note : note.value
-        }
-
-        fetch("http://remote.kkpartner.dk:3001/createnote", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(tempNote)
-        })
-        window.location.href = "/maintenance"
-    }
-
-    const RemoveNote = (note) => {
-        if (note) {
-
-            fetch("http://remote.kkpartner.dk:3001/removenote", {
+        fetch(`/api/machines/note/${machine.id}`, {
             method: "POST",
             headers: {
-            "Content-Type": "application/json"
-            }, body: JSON.stringify(note)
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                text: note
             })
-            window.location.href = "/maintenance"
-        }
-        else {
-            alert("Ingen note fundet. Dette burde ikke kunne lade sig gøre. Kontakt KKPartner med det samme")
-        }
+        }).then(res => res.json()).then(json => {
+            setNotes(json.maintenances)
+            setMachine(json)
+        })
+    }
+
+    const DeleteNote = (note) => {
+        fetch(`/api/machines/note/${machine.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                id: note.id
+            })
+        }).then(res => res.json()).then(json => {            
+            setNotes(json.maintenances)
+            setMachine(json)
+        })
     }
 
     useEffect(() => {
-        fetch("/api/machines/" + query.mid).then(res => res.json()).then(json => setMachine(json))
+        fetch("/api/machines/" + query.mid)
+            .then(res => res.json())
+            .then(json => {
+                setNotes(json.maintenances)
+                setMachine(json)
+            })
     }, [])
 
     var datePart = new Date(machine.time).toLocaleString("da-DK", {
@@ -94,33 +87,21 @@ function Machine({ query }) {
             <div id="allaboutnotes">
                 <form onSubmit={(event) => {
                     event.preventDefault()
+                    event.target.reset();
                     CreateNote()
                 }}>
                     <h2 id="createnotetext">Tilføj vedligeholdelses note til maskine</h2>
                     <label>Note:</label>
-                    <input id="createnoteinput" type="text" required></input>
+                    <input id="createnoteinput" type="text" required onChange={(e) => setNote(e.target.value)}></input>
                     <button id="createnotebutton" type="submit">Opret note</button>
                 </form>
                 <div id="shownotes">
-                    <table className="tables" id="tablenotes">
-                        <colgroup>
-                            <col style={{width: "10%"}}></col>
-                            <col style={{width: "30%"}}></col>
-                            <col style={{width: "50%"}}></col>
-                            <col style={{width: "10%"}}></col>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                            <th>Maskine nr.</th>
-                            <th>Oprettet dato</th>
-                            <th>Note</th>
-                            <th>Slet note</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           
-                        </tbody>
-                    </table> 
+                    {notes ? notes.map((note, index) => {
+                        return <div key={index}>
+                            <div>{note.note}</div>
+                            <button onClick={() => DeleteNote(note)}>X</button>
+                        </div>
+                    }) : <></>}
                 </div>
             </div>
         </div>
