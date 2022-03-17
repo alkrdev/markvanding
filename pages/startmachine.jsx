@@ -43,7 +43,7 @@ function Startmachine() {
      <React.Fragment>
         <Header />
 
-        <form className="select" id="formstartmachine" onSubmit={function(event){
+        <form className="select" id="formstartmachine" onSubmit={(event) => {
           // Prevents default behavior (Getting put at another site)
           event.preventDefault();
 

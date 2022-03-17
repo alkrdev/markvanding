@@ -34,7 +34,7 @@ const ChooseTime = ({ machineWithoutTime }) => {
             machineWithoutTime.time = selectedTime            
 
             fetch("/api/machines/" + machineWithoutTime.id, {
-              method: "PUT",
+              method: "PATCH",
               headers: {
                 "Content-Type": "application/json"
               },
