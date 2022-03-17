@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import styles from "./pumps.module.css"
 
 const Pumps = (props) => {
-    const [pumps, setPumps] = useState([]) 
+    
     
     const setInactivePump = (id) => {    
         // fetch("http://remote.kkpartner.dk:3001/setinactivepump", {
@@ -16,16 +16,19 @@ const Pumps = (props) => {
         // })
         // RELOAD?
     }
-  
-    useEffect(() => {
-      fetch("/api/pumps").then(res => res.json()).then(json => setPumps(json))
-    }, [])
 
     return (
         <React.Fragment>
-            <h1 style={{ marginTop: "50px" }}>Pumper</h1>
+            <div className={styles.pumpHeader}>
+                <h1>Pumper</h1>
+                <div className={styles.addPumpButton} onClick={() => {
+                    var temp = {...props.showingModal}
+                    temp.createpump = true
+                    props.setShowingModal(temp)
+                }}>Tilføj Pumpe</div>
+            </div>
             <div className={styles.pumpContainer}>              
-                {pumps ? pumps.map(function(pump) {
+                {props.pumps ? props.pumps.map(function(pump) {
                     return (
                         <div className={styles.pump} key={pump["id"]}>
                             <div className={styles.mainContainer}>
@@ -54,8 +57,10 @@ const Pumps = (props) => {
                                                 <div>{pump["stopcode"]}</div>
                                             </div>
                                             <div onClick={() => {
+                                                var temp = {...props.showingModal}
+                                                temp.pump = true
                                                 props.setCurrentPump(pump)
-                                                props.setShowingModal(true)
+                                                props.setShowingModal(temp)
                                             }}>
                                                 <img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" alt="" style={{width: 32}}></img>
                                             </div>

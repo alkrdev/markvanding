@@ -83,6 +83,31 @@
     transition: all 0.2s ease-in;
 }
 
+.pumpHeader {
+    display: flex; 
+    flex-direction: column;
+    margin-top: 50px;
+    align-items: center;
+    gap: 20px;
+}
+
+.addPumpButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    font-size: 32px;
+    border: 1px solid orange;
+    background: orange;
+    color: white;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+.addPumpButton:hover{
+    cursor: pointer;
+}
+
 .hoverArrow {
     width: 120px;
     height: 30px;

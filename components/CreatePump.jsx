@@ -24,6 +24,16 @@ const CreatePump = (props) => {
             valid = false;
         }
 
+        if (props.pumps.some(x => x.name == pump.name)) {
+            alert("Pumpenavn bruges allerede")
+            valid = false
+        }
+
+        if (props.pumps.some(x => x.number == pump.number)) {
+            alert("Nummeret bruges allerede")
+            valid = false
+        }
+
 
         if (!valid) return;
     
@@ -36,35 +46,43 @@ const CreatePump = (props) => {
             stopcode: pump.stopcode
         } 
         
-        // // Sends tempPump to server
-        // fetch("http://remote.kkpartner.dk:3001/createpump", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(tempPump)
-        // })
-
-        console.log(tempPump)
-        
-        // RELOAD?
+        var temp
+        var tempPumps
+        fetch('/api/pumps/', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(tempPump)
+        }).then(
+            tempPumps = [...props.pumps],
+            tempPumps.push(tempPump),
+            props.setPumps(tempPumps),
+            temp = {...props.showingModal},
+            temp.createpump = false,
+            props.setShowingModal(temp)
+        )
     }
 
     return (        
         <div className={styles.modal}>
-            <form className={styles.modalforms + " " + styles.createpumpmodal} onSubmit={function(event){
+            <form className={styles.modalforms + " " + styles.createmodal} onSubmit={(event) => {
                 event.preventDefault();
                 createPump();
             }}>
-                <h1 className={styles.createpumpmodaltext}>Opret ny pumpe</h1>
-                <div className={styles.createpumpmodallabelbox}>
-                    <input type="text" className={styles.createpumpmodalinputs} onChange={(e) => setPump({...pump, ["name"]: e.target.value})} placeholder="Navn" required></input>
-                    <input type="text" className={styles.createpumpmodalinputs} onChange={(e) => setPump({...pump, ["number"]: e.target.value})} placeholder="Nummer" required></input>
-                    <input type="text" className={styles.createpumpmodalinputs} onChange={(e) => setPump({...pump, ["startcode"]: e.target.value})} placeholder="Startkode" required></input>
-                    <input type="text" className={styles.createpumpmodalinputs} onChange={(e) => setPump({...pump, ["stopcode"]: e.target.value})} placeholder="Stopkode" required></input>
+                <h1 style={{textAlign: "center"}}>Opret ny pumpe</h1>
+                <div className={styles.createmodallabelbox}>
+                    <input type="text" className={styles.createmodalinputs} onChange={(e) => setPump({...pump, ["name"]: e.target.value})} placeholder="Navn" required></input>
+                    <input type="text" className={styles.createmodalinputs} onChange={(e) => setPump({...pump, ["number"]: e.target.value})} placeholder="Nummer" required></input>
+                    <input type="text" className={styles.createmodalinputs} onChange={(e) => setPump({...pump, ["startcode"]: e.target.value})} placeholder="Startkode" required></input>
+                    <input type="text" className={styles.createmodalinputs} onChange={(e) => setPump({...pump, ["stopcode"]: e.target.value})} placeholder="Stopkode" required></input>
                 </div>
-                <div className={styles.modalbuttonbox + " " + styles.createmodalbuttonbox}>
-                    <button className={styles.cancelmodalbutton} type="button" onClick={() => props.setShowingModal(false)}>Anuller</button>
+                <div style={{ marginTop: "20px" }} className={styles.modalbuttonbox + " " + styles.createmodalbuttonbox}>
+                    <button className={styles.cancelmodalbutton} type="button" onClick={() => {
+                        var temp = {...props.showingModal}
+                        temp.createpump = false
+                        props.setShowingModal(temp)
+                    }}>Anuller</button>
                     <button className={styles.modalbuttons + " " + styles.updatemodalbutton} type="submit">Gem</button>
                 </div>
             </form>

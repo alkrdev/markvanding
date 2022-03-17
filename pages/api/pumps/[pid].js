@@ -10,10 +10,17 @@ export default async function handle(req, res) {
             res.end(`Pump: ${pid}`)
             break;
         case "DELETE":
-            res.end(`Pump: ${pid}`)
+            await prisma.pump.delete({
+                where: { 
+                    id: Number(pid)
+                },
+            })
+
+            var pumps = await prisma.pump.findMany()
+            res.json(pumps)
             break;
         case "PUT":
-            const { pump } = req.body;
+            var pump = req.body;
 
             await prisma.pump.update({
                 where: { 
