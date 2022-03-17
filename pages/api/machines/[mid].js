@@ -17,16 +17,42 @@ export default async function handle(req, res) {
             res.end(`Machine: ${mid}`)
             break;
         case "DELETE":
-            res.end(`Machine: ${mid}`)
+            await prisma.machine.delete({
+                where: { 
+                    id: Number(mid)
+                },
+            })
+
+            var machines = await prisma.machine.findMany()
+            res.json(machines)
             break;
         case "PUT":
-            const { id, time } = req.body
+            var machine = req.body
+            
+            await prisma.machine.update({
+                where: {
+                    id: Number(mid)
+                },
+                data: machine
+                
+            })
+
+            machines = await prisma.machine.findMany()
+            res.json(machine)
+            break;
+        case "PATCH":
+            var { id, time } = req.body
             var machine = await prisma.machine.update({
                 where: {
                     id: id
                 },
                 data: {
-                    time: new Date(time)
+                    id: undefined,
+                    pumpname: undefined,
+                    time: new Date(time),
+                    active: undefined,
+                    nozzle: undefined,
+                    model: undefined
                 }
                 
             })

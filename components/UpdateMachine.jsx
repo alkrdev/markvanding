@@ -2,27 +2,32 @@ import React, { useState } from 'react';
 import styles from "./modal.module.css"
 
 const UpdateMachine = (props) => {
-    const [model, setModel] = useState("")
+    const [machine, setMachine] = useState(props.currentMachine)
 
-    const updateMachine = () =>{    
-        if (props.currentMachine.active === 1) {
+    const updateMachine = () =>{
+        if (props.currentMachine.active == 1) {
             alert("Du kan ikke rette en aktiv maskine")
             return;
         }
 
-        var tempMachine = {...props.currentMachine}
-
-        tempMachine.model = model
-
-        // fetch("http://remote.kkpartner.dk:3001/editmachine", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(tempMachine)
-        // })
-
-        // RELOAD?        
+        var tempMachines = [...props.machines]
+        var objectIndex = 0
+        var temp
+        fetch("/api/machines/" + props.currentMachine.id, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(machine)
+        }).then(
+            objectIndex = tempMachines.findIndex(x => x.id == machine.id),
+            tempMachines[objectIndex] = machine,
+            props.setMachines(tempMachines),
+            temp = {...props.showingModal},
+            temp.machine = false,
+            props.setShowingModal(temp),
+        )
+      
     }
 
     return (
@@ -32,20 +37,39 @@ const UpdateMachine = (props) => {
                 event.preventDefault();
                 updateMachine();
             }}>
-                <div className={styles.modallabelbox}>
-                    <label>
-                        Maskine nr.<input type="test" readOnly={true} className={styles.bigmodalinputs + " " + styles.editmachineid} value={props.currentMachine.id} required></input>
-                    </label>
-                    <label>
-                        Model <input type="text" className={styles.modalinputs + " " + styles.editmachinemodel} onChange={e => setModel(e.target.value)} defaultValue={props.currentMachine.model}></input>
-                    </label>
-                </div>
+                <div className={styles.modalDiv}>
+                    <div className={styles.modallabelbox}>
+                        <div className={styles.modalLabelContainer}>
+                            <label>Maskine</label>
+                            <input type="text" readOnly={true} className={styles.bigmodalinputs + " " + styles.editmachineid} value={props.currentMachine.id} required></input>
+                        </div>
+                        <div className={styles.modalLabelContainer}>
+                            <label>Model</label>
+                            <input type="text" className={styles.modalinputs} onChange={(e) => setMachine({...machine, ["model"]: e.target.value})} defaultValue={props.currentMachine.model}></input>
+                        </div>
+                        <div className={styles.modalLabelContainer}>
+                            <label>Dyse</label>
+                            <input type="text" className={styles.modalinputs} onChange={(e) => setMachine({...machine, ["nozzle"]: e.target.value})} defaultValue={props.currentMachine.nozzle} required></input>
+                        </div>
+                    </div>
 
-                <button className={styles.removemodalbutton + " " + styles.removemachinebutton} type="button">Slet Maskine</button>
+                    <div className={styles.buttonContainer}>
+                    <button className={styles.removemodalbutton + " " + styles.removemachinebutton} type="button" onClick={() => {
+                        var temp = {...props.showingModal}
+                        temp.machine = false
+                        temp.deletemachine = true
+                        props.setShowingModal(temp)
+                    }}>Slet Maskine</button>
 
-                <div className={styles.modalbuttonbox}>
-                    <button className={styles.cancelmodalbutton} type="button" onClick={() => props.setShowingModal(false)}>Anuller</button>
-                    <button className={styles.modalbuttons + " " + styles.updatemodalbutton} type="submit">Gem</button>
+                        <div className={styles.modalbuttonbox}>
+                            <button className={styles.cancelmodalbutton} type="button" onClick={() => {
+                                var temp = {...props.showingModal}
+                                temp.machine = false
+                                props.setShowingModal(temp)
+                            }}>Anuller</button>
+                            <button className={styles.modalbuttons + " " + styles.updatemodalbutton} type="submit">Gem</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

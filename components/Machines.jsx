@@ -3,17 +3,19 @@ import React, { useState, useEffect } from 'react';
 import styles from "./machines.module.css"
 
 const Machines = (props) => {  
-    const [machines, setMachines] = useState([])
-  
-    useEffect(() => {
-      fetch("/api/machines").then(res => res.json()).then(json => setMachines(json))
-    }, [])
 
     return (
-        <React.Fragment>         
-            <h1 style={{ marginTop: "50px" }}>Maskiner</h1>
-            <div className={styles.machineContainer}>              
-                {machines ? machines.map(machine => {
+        <React.Fragment>
+            <div className={styles.machineHeader}>   
+                <h1 style={{ marginTop: "50px" }}>Maskiner</h1>
+                <div className={styles.addMachineButton} onClick={() => {
+                    var temp = {...props.showingModal}
+                    temp.createmachine = true
+                    props.setShowingModal(temp)
+                }}>Tilføj Maskine</div>
+            </div>   
+            <div className={styles.machineContainer}>
+                {props.machines ? props.machines.map(machine => {
                     return (
                     <div className={styles.machine} key={machine["id"]}>
                         <div className={styles.mainContainer}>
@@ -37,8 +39,10 @@ const Machines = (props) => {
                                             <div>{machine["nozzle"] ? machine["nozzle"] : "Ingen"}</div>
                                         </div>
                                         <div onClick={(event) => {
-                                            props.setShowingModal(true)
-                                            props.setCurrentMachine(machines.find(x => x.id === machine.id))
+                                            var temp = {...props.showingModal}
+                                            temp.machine = true
+                                            props.setShowingModal(temp)
+                                            props.setCurrentMachine(props.machines.find(x => x.id === machine.id))
                                         }}>
                                             <img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" alt="" style={{width: 32}}></img>
                                         </div>
