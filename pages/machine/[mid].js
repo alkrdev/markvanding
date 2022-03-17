@@ -1,11 +1,14 @@
-import React from 'react';
+import React from 'react'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
+import EditNote from "../../components/EditNote"
 
 function Machine({ query }) {
     const [machine, setMachine] = useState({})
     const [note, setNote] = useState("")
     const [notes, setNotes] = useState([])
+    const [showModal, setShowModal] = useState(false)
+    const [passNote, setPassNote] = useState({})
 
     const router = useRouter();
 
@@ -45,6 +48,11 @@ function Machine({ query }) {
         })
     }
 
+    const ShowNote = (note) => {
+        setPassNote(note)
+        setShowModal(true)
+    }
+
     useEffect(() => {
         fetch("/api/machines/" + query.mid)
             .then(res => res.json())
@@ -62,48 +70,66 @@ function Machine({ query }) {
     }).replace("." , ":")
 
     return(
-        <div id="shownmachine">
-            <button id="backbutton" onClick={HandleClick}>Tilbage</button>
-            <div id="allmachineattributes">
-                <div className="machineattributes">
-                    <h1 className="showmachineh1">Maskine nr.</h1>
-                    <p>{machine ? machine.id : "Fejl"}</p>
+        <div>
+            <div id="shownmachine">
+                <button id="backbutton" onClick={HandleClick}>Tilbage</button>
+                <div id="allmachineattributes">
+                    <div className="machineattributes">
+                        <h1 className="showmachineh1">Maskine nr.</h1>
+                        <p>{machine ? machine.id : "Fejl"}</p>
+                    </div>
+                    <div className="machineattributes">
+                        <h1 className="showmachineh1">Pumpe navn</h1>
+                        <p>{machine ? machine.pumpname == null ? "Ingen pumpe" : machine.pumpname : "Fejl"}</p>
+                    </div>
+                    <div className="machineattributes">
+                        <h1 className="showmachineh1">Tid tilbage</h1>
+                        <p>
+                            {machine ? machine.time == null ? "Ingen tid" : datePart + " " + timePart : "Fejl"}
+                        </p>
+                    </div>
+                    <div className="machineattributes">
+                        <h1 className="showmachineh1">Aktivitet</h1>
+                        <p>{machine ? machine.active === 0 ? "Inaktiv" : "Aktiv" : "Fejl"}</p>
+                    </div>
                 </div>
-                <div className="machineattributes">
-                    <h1 className="showmachineh1">Pumpe navn</h1>
-                    <p>{machine ? machine.pumpname == null ? "Ingen pumpe" : machine.pumpname : "Fejl"}</p>
-                </div>
-                <div className="machineattributes">
-                    <h1 className="showmachineh1">Tid tilbage</h1>
-                    <p>
-                        {machine ? machine.time == null ? "Ingen tid" : datePart + " " + timePart : "Fejl"}
-                    </p>
-                </div>
-                <div className="machineattributes">
-                    <h1 className="showmachineh1">Aktivitet</h1>
-                    <p>{machine ? machine.active === 0 ? "Inaktiv" : "Aktiv" : "Fejl"}</p>
+                <div id="allaboutnotes">
+                    <form onSubmit={(event) => {
+                        event.preventDefault()
+                        event.target.reset();
+                        CreateNote()
+                    }}>
+                        <h2 id="createnotetext">Tilføj vedligeholdelses note til maskine</h2>
+                        <label>Note:</label>
+                        <input id="createnoteinput" type="text" required onChange={(e) => setNote(e.target.value)}></input>
+                        <button id="createnotebutton" type="submit">Opret note</button>
+                    </form>
+                    <div id="shownotes" style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "50px", alignItems: "center", marginTop: "20px" }}>
+                        {notes ? notes.map((note, index) => {
+                            var time = new Date(note.time).toLocaleString("da-DK" , {month: "short", day: "numeric", year: "numeric"})
+                            return (
+                            <div key={index} style={{ width: "300px", minHeight: "130px", borderRadius: "12px", background: "whitesmoke", display: "flex", overflow: "hidden" }}>
+                                <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "flex-start", width: "250px", gap: "20px" }}>
+                                    <div style={{ textAlign: "start", display: "flex", flexDirection: "column", gap: "6px", marginLeft: "10px", marginTop: "10px" }}>
+                                        <div style={{ color: "gray" }}>Dato</div>
+                                        <div>{time}</div>
+                                    </div>
+                                    <div style={{ textAlign: "start", display: "flex", flexDirection: "column", gap: "6px", marginLeft: "10px", marginBottom: "10px" }}>
+                                        <div style={{ color: "gray" }}>Note</div>
+                                        <div>{note.note}</div>
+                                    </div>
+                                </div>
+                                <div style={{ display: "flex", flexDirection: "column" }}>
+                                    <button onClick={() => {ShowNote(note)}} style={{ display: "flex", width: "60px", height: "50%", background: "orange", fontSize: "24px", alignItems: "center", justifyContent: "center" }}><img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" style={{ width: "28px" }}/></button>
+                                    <button onClick={() => {DeleteNote(note)}} style={{ width: "60px", height: "50%", background: "red", fontSize: "24px" }}>X</button>
+                                </div>
+                            </div>
+                        )}) : <></>}
+                    </div>
                 </div>
             </div>
-            <div id="allaboutnotes">
-                <form onSubmit={(event) => {
-                    event.preventDefault()
-                    event.target.reset();
-                    CreateNote()
-                }}>
-                    <h2 id="createnotetext">Tilføj vedligeholdelses note til maskine</h2>
-                    <label>Note:</label>
-                    <input id="createnoteinput" type="text" required onChange={(e) => setNote(e.target.value)}></input>
-                    <button id="createnotebutton" type="submit">Opret note</button>
-                </form>
-                <div id="shownotes">
-                    {notes ? notes.map((note, index) => {
-                        return <div key={index}>
-                            <div>{note.note}</div>
-                            <button onClick={() => DeleteNote(note)}>X</button>
-                        </div>
-                    }) : <></>}
-                </div>
-            </div>
+
+            {showModal ? <EditNote notes={notes} passNote={passNote} setShowModal={setShowModal} setNotes={setNotes} machine={machine}/> : <></>}
         </div>
     )
 }
