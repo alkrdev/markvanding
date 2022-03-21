@@ -2,12 +2,15 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import EditNote from "../../components/EditNote"
+import DeleteNote from "../../components/DeleteNote"
 
 function Machine({ query }) {
     const [machine, setMachine] = useState({})
     const [note, setNote] = useState("")
+    const [testNote, setTestNote] = useState({})
     const [notes, setNotes] = useState([])
     const [showModal, setShowModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [passNote, setPassNote] = useState({})
 
     const router = useRouter();
@@ -28,21 +31,6 @@ function Machine({ query }) {
                 text: note
             })
         }).then(res => res.json()).then(json => {
-            setNotes(json.maintenances)
-            setMachine(json)
-        })
-    }
-
-    const DeleteNote = (note) => {
-        fetch(`/api/machines/note/${machine.id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            }, 
-            body: JSON.stringify({
-                id: note.id
-            })
-        }).then(res => res.json()).then(json => {            
             setNotes(json.maintenances)
             setMachine(json)
         })
@@ -121,7 +109,10 @@ function Machine({ query }) {
                                 </div>
                                 <div style={{ display: "flex", flexDirection: "column" }}>
                                     <button onClick={() => {ShowNote(note)}} style={{ display: "flex", width: "60px", height: "50%", background: "orange", fontSize: "24px", alignItems: "center", justifyContent: "center" }}><img src="https://icons-for-free.com/iconfiles/png/512/draw+edit+pen+pencil+text+write+icon-1320162307919760358.png" style={{ width: "28px" }}/></button>
-                                    <button onClick={() => {DeleteNote(note)}} style={{ width: "60px", height: "50%", background: "red", fontSize: "24px" }}>X</button>
+                                    <button onClick={() => {
+                                        setPassNote(note)
+                                        setShowDeleteModal(true)
+                                    }} style={{ width: "60px", height: "50%", background: "red", fontSize: "24px" }}>X</button>
                                 </div>
                             </div>
                         )}) : <></>}
@@ -129,7 +120,9 @@ function Machine({ query }) {
                 </div>
             </div>
 
-            {showModal ? <EditNote notes={notes} passNote={passNote} setShowModal={setShowModal} setNotes={setNotes} machine={machine}/> : <></>}
+            
+            {showModal ? <EditNote notes={notes} passNote={passNote} setShowModal={setShowModal} setNotes={setNotes} machine={machine} setMachine={setMachine}/> : <></>}
+            {showDeleteModal ? <DeleteNote notes={notes} setNotes={setNotes} machine={machine} setShowDeleteModal={setShowDeleteModal} passNote={passNote} setMachine={setMachine}/> : <></>}
         </div>
     )
 }

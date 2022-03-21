@@ -32,7 +32,7 @@ export default async function handle(req, res) {
             res.json(machine)
             break;
         case "DELETE":
-            const { id } = req.body;
+            var { id } = req.body;
 
             await prisma.machine.update({
                 where: {
@@ -54,7 +54,32 @@ export default async function handle(req, res) {
             res.json(machine)
             break;
         case "PUT":
-            res.end(`Machine: ${mid}`)
+            var note = req.body;
+
+            await prisma.machine.update({
+                where: {
+                  id: mid,
+                },
+                data: {
+                    maintenances: {
+                        update: [{
+                            where: {
+                                id: note.id
+                            },
+                            data: {
+                                note: note.note
+                            }}],
+                    },
+                },
+            })
+
+            var machine = await prisma.machine.findUnique({
+                where: {
+                    id: Number(mid)
+                },
+                include: {maintenances: true}
+            })
+            res.json(machine)
             break;
     }    
 }

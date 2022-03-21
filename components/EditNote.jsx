@@ -3,21 +3,30 @@ import styles from "./modal.module.css"
 
 const EditNote = (props) => {
 
-    const [editedNote, setEditedNote] = useState("")
+    const [editedNote, setEditedNote] = useState({...props.passNote})
 
     const editNote = () =>{    
         
+        var tempNotes = [...props.notes]
+        var objectIndex = 0
         fetch("/api/machines/note/" + props.machine.id, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(editedNote)
-        })
+        }).then(
+            objectIndex = tempNotes.findIndex(x => x.id == editedNote.id),
+            tempNotes[objectIndex] = editedNote,
+            props.setNotes(tempNotes),
+            props.setShowModal(false),
+        )
     }
 
     const setNote = (note) => {
-        setEditedNote(note)
+        var tempNote = {...editedNote}
+        tempNote.note = note
+        setEditedNote(tempNote)
     }
 
     return (
