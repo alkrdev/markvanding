@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mysql"
+  url      = "mysql://doadmin:3UZcBBBtTZsUTUYJ@antennacluster-do-user-10593557-0.b.db.ondigitalocean.com:25060/markvandingdb"
 }
 
 model Machine {

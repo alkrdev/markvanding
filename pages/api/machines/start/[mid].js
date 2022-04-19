@@ -12,8 +12,7 @@ export default async function handle(req, res) {
         case "DELETE":
             res.end(`Machine: ${mid}`)
             break;
-        case "PUT":
-            
+        case "PUT":            
             const { pumpid } = req.body;
 
             var pump = await prisma.pump.update({
@@ -33,6 +32,7 @@ export default async function handle(req, res) {
 
             var machines = await prisma.machine.findMany()
             res.json(machines)
+
             break;
     }    
 }

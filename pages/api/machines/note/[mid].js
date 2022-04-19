@@ -68,7 +68,8 @@ export default async function handle(req, res) {
                             },
                             data: {
                                 note: note.note
-                            }}],
+                            }
+                        }],
                     },
                 },
             })
