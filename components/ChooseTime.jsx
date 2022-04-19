@@ -48,6 +48,7 @@ const ChooseTime = ({ machineWithoutTime }) => {
                 <button type="button" className="tablinks" onClick={() => setSelectedTimeType("timeremaining")}>Tid tilbage</button>
                 <button type="button" className="tablinks" onClick={() => setSelectedTimeType("date")}>Klokkeslæt</button>
               </div>
+              <h1>MANGLER TID: {machineWithoutTime.pumpname}</h1>
               {selectedTimeType == "timeremaining" ? <div id="timeremaining" className="tabcontent">
                 <h3>Tid tilbage</h3>
                 <input name="timeremaining" required onChange={(event) => TimeChanged(event)} type="time" size="50"></input>

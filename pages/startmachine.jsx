@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Header from "./../components/Header";
 import { useRouter } from 'next/router';
 
+import ChooseTime from "./../components/ChooseTime"
+
 function Startmachine() {
   const [checked, setChecked] = useState(false)
   const [currentMachine, setCurrentMachine] = useState("")
   const [currentPump, setCurrentPump] = useState("")
   const [pumps, setPumps] = useState([])
   const [machines, setMachines] = useState([])
+  const [showChoose, setShowChoose] = useState(false)
 
   const router = useRouter();
 
@@ -25,6 +28,7 @@ function Startmachine() {
   // }  
 
   function start(pump) {
+    setShowChoose(true)
     fetch("/api/machines/start/" + currentMachine.id, {
       method: "PUT",
       headers: {
@@ -40,7 +44,9 @@ function Startmachine() {
   }, [])
 
   return(
-     <React.Fragment>
+    <React.Fragment>
+      {showChoose && currentMachine ? <ChooseTime machine={currentMachine} /> : <>
+       
         <Header />
 
         <form className="select" id="formstartmachine" onSubmit={(event) => {
@@ -75,9 +81,9 @@ function Startmachine() {
             {machines ? machines.filter(machine => !machine.active).map((element) => <option key={element.id} value={element.id}>{element.id}</option>) : <></>}
           </select>
         </div>
-  
+
         <br></br>
-  
+
         <div id="choosepump">
           <label htmlFor="">Vælg en pumpe</label>
           <br></br>
@@ -96,9 +102,9 @@ function Startmachine() {
             }) : <></>}
           </select>
         </div>
-  
+
         <br></br>
-    
+
         <div id="checkboxtext">
           <h2>Tjek følgende</h2>
           </div>
@@ -107,11 +113,13 @@ function Startmachine() {
             <input onChange={() => setChecked(!checked)} type="checkbox"></input>
             <span className="checkmark"></span>
           </label>
-    
+
         <button type="submit" id="buttonstartmachine">START VANDING</button>
 
-      </form>
-     </React.Fragment>
+        </form>
+       </>}
+
+    </React.Fragment>
   );
 
 }

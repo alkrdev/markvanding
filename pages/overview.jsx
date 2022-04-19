@@ -153,17 +153,4 @@ const Overview = () => {
   )
 }
 
-export async function getServerSideProps(context) {
-  const resMachines = await fetch("http://" + process.env.NEXT_PUBLIC_BASE_URL + "/api/machines")
-  const machines = await resMachines.json();
-
-  const resPumps = await fetch("http://" + process.env.NEXT_PUBLIC_BASE_URL + "/api/pumps")
-  const pumps = await resPumps.json();
-
-
-  return {
-    props: { machines: machines, pumps: pumps }, // will be passed to the page component as props
-  }
-}
-
 export default Overview;
