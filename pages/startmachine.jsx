@@ -54,15 +54,13 @@ function Startmachine() {
               headers: {
                 "Content-Type": "application/json"
               },
-              body: JSON.stringify({ pumpid: currentPump.id })
-            }).then(res => res.json()).then(json => setMachines(json))
-            
-            // //UDFYLD RIGTIG DATA TIL SMS
-            // var pumpnumber = "45" + pump.number
-            // var pumpstartcode = pump.startcode
-            // sendStartSMS(pumpnumber, pumpstartcode)
-            
-            router.push("/choosetime/" + currentMachine.id)
+              body: JSON.stringify(currentPump)
+            }).then(res => res.json()).then(json => {
+              setMachines(json)
+              router.push("/choosetime/" + currentMachine.id)
+            })
+
+                        
           };
         }}>
         <div id="choosemachine">

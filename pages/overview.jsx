@@ -14,8 +14,8 @@ const Overview = () => {
 
   const router = useRouter();
 
-  const sendStopSMS = (pumpnumber, pumpStopcode) => {
-    // fetch("http://remote.kkpartner.dk:3001/sendsms", {
+  const sendStopSMS = () => {
+    // fetch("/api/sendsms", {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json"
@@ -127,9 +127,8 @@ const Overview = () => {
                       var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
 
                       if (!confirmed === true) return;
+                      console.log("HERE")
 
-                      var pumpnumber = "+45" + pump.number
-                      var pumpstopcode = pump.stopcode
                       // sendStopSMS(pumpnumber, pumpstopcode)
 
                       stopMachine(machine)
