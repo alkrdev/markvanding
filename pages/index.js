@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
-import ChooseTime from "./../components/ChooseTime";
 
 import Header from "./../components/Header";
 
 function Home() {
-  const [submitted, setSubmitted] = useState(false)
   const [email, setEmail] = useState("")
   const [pass, setPassword] = useState("")
-  const [error, setError] = useState("")
   const [machines, setMachines] = useState([])
-  const [loading, setLoading] = useState(true)
 
   const router = useRouter();
 
@@ -44,14 +40,11 @@ function Home() {
     if (hasstarted === "true") {
       setSubmitted(true)
     }
-    fetch("/api/machines").then(res => res.json()).then(json => { setLoading(false); setMachines(json) })
   }, [])
 
-  var machineWithoutTime = machines.find(machine => machine.pumpname && machine.time == null)
 
   return (
-    <React.Fragment>
-      {machineWithoutTime != undefined ? <ChooseTime machineWithoutTime={machineWithoutTime} /> : !loading ? <React.Fragment>
+      <React.Fragment>
         <Header />
         <main>
           <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -111,8 +104,7 @@ function Home() {
             </div>
           </div>
         </main>    
-      </React.Fragment> : <></>}
-    </React.Fragment>
+      </React.Fragment>
   );
 }
 

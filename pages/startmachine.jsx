@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from "./../components/Header";
 import { useRouter } from 'next/router';
 
-import ChooseTime from "./../components/ChooseTime"
+import ChooseTime from "."
 
 function Startmachine() {
   const [checked, setChecked] = useState(false)
@@ -27,16 +27,6 @@ function Startmachine() {
   //   })
   // }  
 
-  function start(pump) {
-    setShowChoose(true)
-    fetch("/api/machines/start/" + currentMachine.id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ pumpid: currentPump.id })
-    }).then(res => res.json()).then(json => setMachines(json))
-  }
 
   useEffect(() => {    
     fetch("/api/machines").then(res => res.json()).then(json => setMachines(json))
@@ -58,14 +48,21 @@ function Startmachine() {
 
           // Check if a machine and pump is selected
           if(currentMachine && currentPump){
-            start()
+            
+            fetch("/api/machines/start/" + currentMachine.id, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ pumpid: currentPump.id })
+            }).then(res => res.json()).then(json => setMachines(json))
             
             // //UDFYLD RIGTIG DATA TIL SMS
             // var pumpnumber = "45" + pump.number
             // var pumpstartcode = pump.startcode
             // sendStartSMS(pumpnumber, pumpstartcode)
             
-            router.push("/overview")
+            router.push("/choosetime/" + currentMachine.id)
           };
         }}>
         <div id="choosemachine">

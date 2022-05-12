@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import Header from "./../components/Header";
-import ChooseTime from "./../components/ChooseTime"
 
 import machinestyles from "./../components/machines.module.css"
 import pumpstyles from "./../components/pumps.module.css"
@@ -43,11 +42,7 @@ const Overview = () => {
     fetch("/api/pumps").then(res => res.json()).then(json => setPumps(json))
   }, [])
 
-  var machineWithoutTime = machines.find(machine => machine.pumpname && machine.time == null)
-
   return (
-    <React.Fragment>
-      {machineWithoutTime != undefined ? <ChooseTime machineWithoutTime={machineWithoutTime} /> : 
       <React.Fragment>
         <Header />      
         <h1 className={machinestyles.tableLabel}>Færdige vandinger</h1>
@@ -60,6 +55,7 @@ const Overview = () => {
                 var timePart = new Date(machine["time"]).toLocaleTimeString("da-DK", {
                   hour: "numeric", minute: "numeric"
                 }).replace("." , ":")
+
 
                 return (
                 <div className={machinestyles.machine} key={machine["id"]}>
@@ -79,18 +75,18 @@ const Overview = () => {
                       </div>
                     </div>
                   </div>
-                  <div style={{background: "#DF4848", height: "200px", width: "80px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}asddxcftt>
-                    <div style={{position: "absolute"}}>Inaktiv</div>
+                  <div style={{ background: "#DF4848", height: "200px", width: "80px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                    <div style={{ position: "absolute" }}>Inaktiv</div>
                     <div style={{ background: "darkorange" }} id="stopwateringbutton" onClick={(event) => {
+                      var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
+                      
+                      if (!confirmed === true) return;
 
-                        var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
-                        
-                        if (!confirmed === true) return;
-
-                        stopMachine(machine)
-                        router.push("/overview")
+                      stopMachine(machine)
+                      router.push("/overview")
                     }}>
-                    <h4>FJERN</h4></div>
+                      <h4>FJERN</h4>
+                    </div>
                   </div>
                 </div>
                 )
@@ -148,8 +144,7 @@ const Overview = () => {
           }) : <></>}
         </div>
           
-      </React.Fragment>} 
-    </React.Fragment>  
+      </React.Fragment>
   )
 }
 

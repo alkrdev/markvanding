@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 const Header = () => {
     const [title, setTitle] = useState()
 
-    const router = useRouter();
+    const router = useRouter(); 
 
     function slide(){
       const burger = document.querySelector(".burger");
@@ -32,9 +32,9 @@ const Header = () => {
 
     const HandleNavClick = function(event, stage, text) {
       event.preventDefault();
+      setTitle(event.target.innerHTML)
       router.push(stage)
 
-      setTitle(event.target.innerHTML)
   
       if (window.innerWidth <= 1280) slide();
     }
