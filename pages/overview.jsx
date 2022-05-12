@@ -128,8 +128,8 @@ const Overview = () => {
 
                       if (!confirmed === true) return;
 
-                      // var pumpnumber = "+45" + pump.number
-                      // var pumpstopcode = pump.stopcode
+                      var pumpnumber = "+45" + pump.number
+                      var pumpstopcode = pump.stopcode
                       // sendStopSMS(pumpnumber, pumpstopcode)
 
                       stopMachine(machine)
