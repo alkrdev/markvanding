@@ -37,8 +37,8 @@ export default async function handle(req, res) {
                 
             })
 
-            machines = await prisma.machine.findMany()
-            res.json(machine)
+            var machines = await prisma.machine.findMany()
+            res.json(machines)
             break;
         case "PATCH":
             var { id, time } = req.body
@@ -56,7 +56,9 @@ export default async function handle(req, res) {
                 }
                 
             })
-            res.json(machine)
+
+            var machines = await prisma.machine.findMany()
+            res.json(machines)
             
             break;
     }    

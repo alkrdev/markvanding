@@ -3,38 +3,43 @@ import prisma from '../../../../lib/prisma'
 export default async function handle(req, res) {
     const { mid } = req.query
     switch (req.method) {
-        case "GET": 
+        case "GET":
+            res.end() 
             break;
         case "POST":   
-            const { pumpname } = req.body
-            
-            var machine = await prisma.machines.update({
+            res.end();
+            break;
+        case "DELETE":
+            res.end()
+            break;
+        case "PUT":            
+            const { name } = req.body
+                
+            var machine = await prisma.machine.update({
                 where: {
-                    id: mid
+                    id: Number(mid)
                 },
                 data: {
-                    pumpname: pumpname,
-                    active: 1
+                    pumpname: name,
+                    active: true
                 }
             })
 
-            var pump = await prisma.pumps.findFirst({
+            var pump = await prisma.pump.findFirst({
                 where: {
                     name: machine.pumpname
                 }
             })
 
-            await prisma.pumps.update({
+            await prisma.pump.update({
                 where: {
                     id: pump.id
                 },
                 data: {
-                    active: 1
+                    active: true
                 }
             })
 
-            
-            
             // const payload = {
             //     sender: "23727415",
             //     message: pump.startcode,
@@ -64,13 +69,8 @@ export default async function handle(req, res) {
             //     console.log("oh-no! something went wrong...");
             // }
 
-            res.end();
-
-            break;
-        case "DELETE":
-            break;
-        case "PUT":            
-
+            var machines = await prisma.machine.findMany()
+            res.json(machines);
             break;
     }    
 }

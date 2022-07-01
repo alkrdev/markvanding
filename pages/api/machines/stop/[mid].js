@@ -4,38 +4,46 @@ export default async function handle(req, res) {
     const { mid } = req.query
     switch (req.method) {
         case "GET": 
+            res.end()
             break;
         case "POST":
-            var machine = await prisma.machines.update({
+            res.end()
+            break;
+        case "DELETE":
+            res.end()
+            break;
+        case "PUT":
+            const machineToUpdate = await prisma.machine.findFirst({
                 where: {
-                    id: mid
+                    id: Number(mid)
+                }
+            })
+            var machine = await prisma.machine.update({
+                where: {
+                    id: Number(mid)
                 },
                 data: {
                     pumpname: null,
                     time: null,
-                    active: 0
+                    active: false
                 }
             })
 
-            console.log(machine)
-
-
-
-            var pump = await prisma.pumps.findFirst({
+            var pump = await prisma.pump.findFirst({
                 where: {
-                    name: machine.pumpname
+                    name: machineToUpdate.pumpname
                 }
             })
 
-            await prisma.pumps.update({
+            await prisma.pump.update({
                 where: {
-                    id: pump.id
+                    id: Number(pump.id)
                 },
                 data: {
-                    active: 0
+                    active: false
                 }
             })
-            
+
             // const payload = {
             //     sender: "23727415",
             //     message: pump.stopcode,
@@ -65,12 +73,8 @@ export default async function handle(req, res) {
             //     console.log("oh-no! something went wrong...");
             // }
 
-            res.send("ENDED");
-
-            break;
-        case "DELETE":
-            break;
-        case "PUT":
+            var machines = await prisma.machine.findMany()
+            res.send(machines)
             break;
     }    
 }
