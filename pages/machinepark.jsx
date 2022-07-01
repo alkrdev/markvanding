@@ -60,10 +60,10 @@ const MachinePark = ({machineProps, pumpProps}) => {
 
 export async function getServerSideProps() {
 
-  var machineResponse = await fetch("http://10.10.60.23:3000/api/machines")
+  var machineResponse = await fetch("http://markvanding.kkpartner.dk/api/machines")
   var machines = await machineResponse.json()
 
-  var pumpResponse = await fetch("http://10.10.60.23:3000/api/pumps")
+  var pumpResponse = await fetch("http://markvanding.kkpartner.dk/api/pumps")
   var pumps = await pumpResponse.json()
 
   return {
