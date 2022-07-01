@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/router';
 import Header from "./../components/Header";
 
-function Maintenance({ history, setNotes }) {
+function Maintenance({ history, setNotes, machineProps }) {
 
   const router = useRouter();
 
-  const [machines, setMachines] = useState([])
+  const [machines, setMachines] = useState(machineProps)
   const [shownMachine, setShownMachine] = useState({})
 
   const HandleClick = (machine) => {
@@ -25,10 +25,6 @@ function Maintenance({ history, setNotes }) {
     //     console.log(error);
     //   });
   }, [setNotes])
-
-  useEffect(() => {
-    fetch("/api/machines").then(res => res.json()).then(json => setMachines(json))
-  }, [])
 
   return (
     <React.Fragment>
@@ -84,6 +80,18 @@ function Maintenance({ history, setNotes }) {
   )
 
 
+}
+
+export async function getServerSideProps() {
+
+  var machineResponse = await fetch("http://10.10.60.23:3000/api/machines")
+  var machines = await machineResponse.json()
+
+  return {
+    props: { 
+      machineProps: machines
+    },
+  }
 }
 
 export default Maintenance;

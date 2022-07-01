@@ -147,4 +147,20 @@ const Overview = () => {
   )
 }
 
+export async function getServerSideProps() {
+
+  var machineResponse = await fetch("http://10.10.60.23:3000/api/machines")
+  var machines = await machineResponse.json()
+
+  var pumpResponse = await fetch("http://10.10.60.23:3000/api/pumps")
+  var pumps = await pumpResponse.json()
+
+  return {
+    props: { 
+      machineProps: machines,
+      pumpProps: pumps
+    },
+  }
+}
+
 export default Overview;

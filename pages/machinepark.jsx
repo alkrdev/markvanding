@@ -14,7 +14,7 @@ import UpdatePump from "../components/UpdatePump"
 import DeletePump from "../components/DeletePump"
 
 
-const MachinePark = () => {
+const MachinePark = ({machineProps, pumpProps}) => {
   const [currentMachine, setCurrentMachine] = useState({})
   const [showingModal, setShowingModal] = useState({pump: false, createpump: false, deletepump: false, machine: false, createmachine: false, deletemachine: false})
   const [currentPump, setCurrentPump] = useState({
@@ -23,13 +23,8 @@ const MachinePark = () => {
     startcode: "",
     stopcode: ""
   })
-  const [pumps, setPumps] = useState([]) 
-  const [machines, setMachines] = useState([])
-
-  useEffect(() => {
-    fetch("/api/pumps").then(res => res.json()).then(json => setPumps(json))
-    fetch("/api/machines").then(res => res.json()).then(json => setMachines(json))
-  }, [])
+  const [pumps, setPumps] = useState(pumpProps) 
+  const [machines, setMachines] = useState(machineProps)
 
   return (
     <div>
@@ -48,6 +43,22 @@ const MachinePark = () => {
       </React.Fragment>
     </div>
   )
+} 
+
+export async function getServerSideProps() {
+
+  var machineResponse = await fetch("http://10.10.60.23:3000/api/machines")
+  var machines = await machineResponse.json()
+
+  var pumpResponse = await fetch("http://10.10.60.23:3000/api/pumps")
+  var pumps = await pumpResponse.json()
+
+  return {
+    props: { 
+      machineProps: machines,
+      pumpProps: pumps
+    },
+  }
 }
 
 export default MachinePark;
