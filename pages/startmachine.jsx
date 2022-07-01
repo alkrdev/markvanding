@@ -6,6 +6,7 @@ import ChooseTime from "."
 
 function Startmachine() {
   const [checked, setChecked] = useState(false)
+  const [waterCheck, setWaterCheck] = useState(false)
   const [currentMachine, setCurrentMachine] = useState("")
   const [currentPump, setCurrentPump] = useState("")
   const [pumps, setPumps] = useState([])
@@ -48,17 +49,30 @@ function Startmachine() {
 
           // Check if a machine and pump is selected
           if(currentMachine && currentPump){
-            
-            fetch("/api/machines/start/" + currentMachine.id, {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify(currentPump)
-            }).then(res => res.json()).then(json => {
-              setMachines(json)
-              router.push("/choosetime/" + currentMachine.id)
-            })
+
+            if(!waterCheck) {
+              fetch("/api/machines/start/" + currentMachine.id, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(currentPump)
+              }).then(res => res).then(() => {
+                router.push("/overview")
+              })
+            } 
+            else {
+              fetch("/api/machines/start/" + currentMachine.id, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(currentPump)
+              }).then(res => res.json()).then(json => {
+                setMachines(json)
+                router.push("/choosetime/" + currentMachine.id)
+              })
+            }
 
                         
           };
@@ -103,11 +117,16 @@ function Startmachine() {
         <div id="checkboxtext">
           <h2>Tjek følgende</h2>
           </div>
-          <p id="checks">1. Hydrant åben <br></br>2. Maskine er sat i gear <br></br>3. Slange korrekt placeret <br></br>4. Aflæs tiden <br></br>5. Dyse valg korrekt</p>
+          <h5 id="checks">1. Hydrant åben <br></br>2. Maskine er sat i gear <br></br>3. Slange korrekt placeret <br></br>4. Aflæs tiden <br></br>5. Dyse valg korrekt</h5>
           <label className="container">Jeg har tjekket overstående
             <input onChange={() => setChecked(!checked)} type="checkbox"></input>
             <span className="checkmark"></span>
           </label>
+          <label className="container">Vælg tid med det samme
+            <input onChange={() => setWaterCheck(!waterCheck)} type="checkbox"></input>
+            <span className="checkmark"></span>
+          </label>
+          
 
         <button type="submit" id="buttonstartmachine">START VANDING</button>
 
