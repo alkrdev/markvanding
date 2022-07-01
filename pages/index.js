@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from 'next/router'
+import { UseAppContext } from "../context/AppContext";
+import cookie from "cookie-cutter"
 
 import Header from "./../components/Header";
 
 function Home() {
-  const [email, setEmail] = useState("")
+  const myContext = UseAppContext()
+  // const [email, setEmail] = useState("")
   const [pass, setPassword] = useState("")
   const [machines, setMachines] = useState([])
 
@@ -12,6 +15,15 @@ function Home() {
 
   const HandleLogin = (e) => {
       e.preventDefault();
+      if (pass == "Svend1234") {
+        // myContext.setLoggedIn(true)
+        cookie.set("loggedin", true)
+        router.push("/overview")
+      } else {
+        alert("Forkert kode")
+        return
+      }
+
 
       // fetch("http://remote.kkpartner.dk:3001/auth", {
       //     method: "POST",
@@ -28,7 +40,7 @@ function Home() {
       // .then(res => {
       // })
       
-      router.push("/overview")
+      
   }
 
 
@@ -36,10 +48,10 @@ function Home() {
 
   useEffect(function() 
   {    
-    var hasstarted = localStorage.getItem("hasstarted")
-    if (hasstarted === "true") {
-      setSubmitted(true)
-    }
+    // var hasstarted = localStorage.getItem("hasstarted")
+    // if (hasstarted === "true") {
+    //   setSubmitted(true)
+    // }
   }, [])
 
 
@@ -60,7 +72,7 @@ function Home() {
               <form className="mt-8 space-y-6" onSubmit={HandleLogin}>
                 <input type="hidden" name="remember" defaultValue="true" />
                 <div className="rounded-md shadow-sm -space-y-px">
-                  <div>
+                  {/* <div>
                     <label htmlFor="email-address" className="sr-only">
                       Email
                     </label>
@@ -74,7 +86,7 @@ function Home() {
                       className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                       placeholder="Email"
                     />
-                  </div>
+                  </div> */}
                   <div>
                     <label htmlFor="password" className="sr-only">
                       Kode

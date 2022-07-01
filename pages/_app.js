@@ -1,9 +1,14 @@
 import '../styles/globals.css'
 import '../styles/Home.css'
+import { AppWrapper } from '../context/AppContext'
+import { useState } from 'react'
 
 function MyApp({ Component, pageProps }) {
+
   return (
-    <Component {...pageProps} />
+    <AppWrapper>
+      <Component {...pageProps} />
+    </AppWrapper>
   )
 }
 

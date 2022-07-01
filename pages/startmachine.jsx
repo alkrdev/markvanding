@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from "./../components/Header";
 import { useRouter } from 'next/router';
+import cookie from "cookie-cutter"
 
 import ChooseTime from "."
 
@@ -30,6 +31,12 @@ function Startmachine() {
 
 
   useEffect(() => {    
+    var bool = cookie.get("loggedin")
+    if (bool && bool == "true") {
+      return
+    } else {
+      router.push("/")
+    }
     fetch("/api/machines").then(res => res.json()).then(json => setMachines(json))
     fetch("/api/pumps").then(res => res.json()).then(json => setPumps(json))
   }, [])

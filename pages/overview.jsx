@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+// import { UseAppContext } from '../context/AppContext';
+import cookie from "cookie-cutter"
 
 import Header from "./../components/Header";
 
@@ -8,6 +10,7 @@ import pumpstyles from "./../components/pumps.module.css"
 import Head from "next/head";
 
 const Overview = ({machineProps, pumpProps}) => {
+  // const {loggedIn, setLoggedIn} = UseAppContext()
   const [machines, setMachines] = useState(machineProps)
   const [pumps, setPumps] = useState(pumpProps)
   const [displayMode, setDisplayMode] = useState(false)
@@ -56,6 +59,16 @@ const Overview = ({machineProps, pumpProps}) => {
       return () => clearInterval(interval)
     }
   }, [displayMode])
+
+  useEffect(() => {
+    // if (!loggedIn) router.push("/")
+    var bool = cookie.get("loggedin")
+    if (bool && bool == "true") {
+      return
+    } else {
+      router.push("/")
+    }
+  }, [])
 
   var color = displayMode ? {
     background: "red"

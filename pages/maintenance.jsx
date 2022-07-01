@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/router';
 import Header from "./../components/Header";
+import cookie from "cookie-cutter"
 
 function Maintenance({ history, setNotes, machineProps }) {
 
@@ -25,6 +26,15 @@ function Maintenance({ history, setNotes, machineProps }) {
     //     console.log(error);
     //   });
   }, [setNotes])
+
+  useEffect(() => {
+    var bool = cookie.get("loggedin")
+    if (bool && bool == "true") {
+      return
+    } else {
+      router.push("/")
+    }
+  }, [])
 
   return (
     <React.Fragment>

@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useRouter } from 'next/router'
+import cookie from "cookie-cutter"
 
 const Header = () => {
     const [title, setTitle] = useState()
@@ -53,6 +54,10 @@ const Header = () => {
                 <li onClick={(e) => HandleNavClick(e, "../startmachine")}>START VANDING</li>
                 <li onClick={(e) => HandleNavClick(e, "../maintenance")}>VEDLIGEHOLDELSE</li>
                 <li onClick={(e) => HandleNavClick(e, "../machinepark")}>MASKINPARK</li>
+                <li style={{color: "red"}} onClick={() => {
+                  cookie.set("loggedin", false)
+                  router.push("/")
+                }}>LOG UD</li>
             </ul>
             <div className="burger" onClick={slide}>
               <div className="line1"></div>

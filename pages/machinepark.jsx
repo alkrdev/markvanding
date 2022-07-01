@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import cookie from "cookie-cutter"
 
 import Header from "../components/Header"
 
@@ -12,6 +13,7 @@ import DeleteMachine from "../components/DeleteMachine"
 import CreatePump from "../components/CreatePump"
 import UpdatePump from "../components/UpdatePump"
 import DeletePump from "../components/DeletePump"
+import { useRouter } from 'next/router';
 
 
 const MachinePark = ({machineProps, pumpProps}) => {
@@ -25,6 +27,17 @@ const MachinePark = ({machineProps, pumpProps}) => {
   })
   const [pumps, setPumps] = useState(pumpProps) 
   const [machines, setMachines] = useState(machineProps)
+
+  const router = useRouter()
+
+  useEffect(() => {
+    var bool = cookie.get("loggedin")
+    if (bool && bool == "true") {
+      return
+    } else {
+      router.push("/")
+    }
+  }, [])
 
   return (
     <div>
