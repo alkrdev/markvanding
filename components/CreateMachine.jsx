@@ -32,7 +32,6 @@ const CreateMachine = (props) => {
         model: machine.model
       } 
     
-      var temp
       fetch("/api/machines", {
         method: "POST",
         headers: {
@@ -40,9 +39,10 @@ const CreateMachine = (props) => {
         },
         body: JSON.stringify(tempMachine)
       }).then(res => res.json()).then(json => {
-        props.setMachines(json),
-        temp = {...props.showingModal},
-        temp.createmachine = false,
+        props.setMachines(json)
+        
+        var temp = {...props.showingModal}
+        temp.createmachine = false
         props.setShowingModal(temp)
       })
     }

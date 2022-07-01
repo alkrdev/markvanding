@@ -46,7 +46,6 @@ const CreatePump = (props) => {
             stopcode: pump.stopcode
         } 
         
-        var temp
         fetch('/api/pumps/', {
             method: "POST",
             headers: {
@@ -54,9 +53,10 @@ const CreatePump = (props) => {
             },
             body: JSON.stringify(tempPump)
         }).then(res => res.json()).then(json => {
-            props.setPumps(json),
-            temp = {...props.showingModal},
-            temp.createpump = false,
+            props.setPumps(json)
+
+            var temp = {...props.showingModal}
+            temp.createpump = false
             props.setShowingModal(temp)
         })
     }

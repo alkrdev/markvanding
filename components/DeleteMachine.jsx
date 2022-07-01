@@ -9,16 +9,16 @@ const DeleteMachine = (props) => {
             return
           }
     
-          var temp
           fetch("/api/machines/" + props.currentMachine.id, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json"
             },
           }).then(res => res.json()).then(json => {
-            props.setMachines(json),
-            temp = {...props.showingModal},
-            temp.deletemachine = false,
+            props.setMachines(json)
+            
+            var temp = {...props.showingModal}
+            temp.deletemachine = false
             props.setShowingModal(temp)
           })
 

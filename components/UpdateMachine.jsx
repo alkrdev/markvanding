@@ -10,7 +10,6 @@ const UpdateMachine = (props) => {
             return;
         }
 
-        var temp
         fetch("/api/machines/" + props.currentMachine.id, {
             method: "PUT",
             headers: {
@@ -18,9 +17,10 @@ const UpdateMachine = (props) => {
             },
             body: JSON.stringify(machine)
         }).then(res => res.json()).then(json => {
-            props.setMachines(json),
-            temp = {...props.showingModal},
-            temp.machine = false,
+            props.setMachines(json)
+            
+            var temp = {...props.showingModal}
+            temp.machine = false
             props.setShowingModal(temp)
         })
       

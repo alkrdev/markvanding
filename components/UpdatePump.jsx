@@ -37,7 +37,6 @@ const UpdatePump = (props) => {
 
         if (!valid) return;
 
-        var temp
         fetch("/api/pumps/" + props.currentPump.id, {
             method: "PUT",
             headers: {
@@ -45,9 +44,10 @@ const UpdatePump = (props) => {
             },
             body: JSON.stringify(pump)
         }).then(res => res.json()).then(json => {
-            props.setPumps(json),
-            temp = {...props.showingModal},
-            temp.pump = false,
+            props.setPumps(json)
+            
+            var temp = {...props.showingModal}
+            temp.pump = false
             props.setShowingModal(temp)
         })
         

@@ -11,16 +11,16 @@ const DeletePump = (props) => {
           return
         }
   
-        var temp
         fetch("/api/pumps/" + props.currentPump.id, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json"
           },
         }).then(res => res.json()).then(json => {
-          props.setPumps(json),
-          temp = {...props.showingModal},
-          temp.deletepump = false,
+          props.setPumps(json)
+          
+          var temp = {...props.showingModal}
+          temp.deletepump = false
           props.setShowingModal(temp)
         })
       }
