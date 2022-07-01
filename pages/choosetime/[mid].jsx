@@ -28,7 +28,6 @@ const ChooseTime = () => {
   }
 
     useEffect(() => {
-      console.log(selectedTime)
     }, [selectedTime])
 
     useEffect(() => {
@@ -45,7 +44,6 @@ const ChooseTime = () => {
         
         machineWithoutTime.time = selectedTime  
         
-        console.log(selectedTime)
 
         fetch("/api/machines/" + machineWithoutTime.id, {
           method: "PATCH",
@@ -53,9 +51,11 @@ const ChooseTime = () => {
             "Content-Type": "application/json"
           },
           body: JSON.stringify(machineWithoutTime)
-        })
+        }).then(res => res).then(() => {
+              router.push("/overview")
+            })
 
-        router.push("/overview")
+        
       }}>
         <div id="choosetime">
           <div className="tab">
