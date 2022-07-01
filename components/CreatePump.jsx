@@ -47,21 +47,18 @@ const CreatePump = (props) => {
         } 
         
         var temp
-        var tempPumps
         fetch('/api/pumps/', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(tempPump)
-        }).then(
-            tempPumps = [...props.pumps],
-            tempPumps.push(tempPump),
-            props.setPumps(tempPumps),
+        }).then(res => res.json()).then(json => {
+            props.setPumps(json),
             temp = {...props.showingModal},
             temp.createpump = false,
             props.setShowingModal(temp)
-        )
+        })
     }
 
     return (        

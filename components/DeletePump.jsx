@@ -5,7 +5,6 @@ const DeletePump = (props) => {
     
     const RemovePump = () => {
 
-      console.log(props.currentPump.id)
       if(props.currentPump) {
         if(props.currentPump.active == 1) {
           alert("Du kan ikke slette en aktiv pumpe")
@@ -13,19 +12,17 @@ const DeletePump = (props) => {
         }
   
         var temp
-        var tempPumps
         fetch("/api/pumps/" + props.currentPump.id, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json"
           },
-        }).then(
-          tempPumps = [...props.pumps.filter(x => x.id != props.currentPump.id)],
-          props.setPumps(tempPumps),
+        }).then(res => res.json()).then(json => {
+          props.setPumps(json),
           temp = {...props.showingModal},
           temp.deletepump = false,
-          props.setShowingModal(temp),
-          )
+          props.setShowingModal(temp)
+        })
       }
       else {
         alert("Ingen pumpe valgt")

@@ -10,8 +10,6 @@ const UpdateMachine = (props) => {
             return;
         }
 
-        var tempMachines = [...props.machines]
-        var objectIndex = 0
         var temp
         fetch("/api/machines/" + props.currentMachine.id, {
             method: "PUT",
@@ -19,14 +17,12 @@ const UpdateMachine = (props) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(machine)
-        }).then(
-            objectIndex = tempMachines.findIndex(x => x.id == machine.id),
-            tempMachines[objectIndex] = machine,
-            props.setMachines(tempMachines),
+        }).then(res => res.json()).then(json => {
+            props.setMachines(json),
             temp = {...props.showingModal},
             temp.machine = false,
-            props.setShowingModal(temp),
-        )
+            props.setShowingModal(temp)
+        })
       
     }
 

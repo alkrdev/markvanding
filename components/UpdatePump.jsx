@@ -37,8 +37,6 @@ const UpdatePump = (props) => {
 
         if (!valid) return;
 
-        var tempPumps = [...props.pumps]
-        var objectIndex = 0
         var temp
         fetch("/api/pumps/" + props.currentPump.id, {
             method: "PUT",
@@ -46,14 +44,12 @@ const UpdatePump = (props) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(pump)
-        }).then(
-            objectIndex = tempPumps.findIndex(x => x.id == pump.id),
-            tempPumps[objectIndex] = pump,
-            props.setPumps(tempPumps),
+        }).then(res => res.json()).then(json => {
+            props.setPumps(json),
             temp = {...props.showingModal},
             temp.pump = false,
-            props.setShowingModal(temp),
-        )
+            props.setShowingModal(temp)
+        })
         
 
         // RELOAD ?

@@ -7,20 +7,16 @@ const EditNote = (props) => {
 
     const editNote = () =>{    
         
-        var tempNotes = [...props.notes]
-        var objectIndex = 0
         fetch("/api/machines/note/" + props.machine.id, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(editedNote)
-        }).then(
-            objectIndex = tempNotes.findIndex(x => x.id == editedNote.id),
-            tempNotes[objectIndex] = editedNote,
-            props.setNotes(tempNotes),
-            props.setShowModal(false),
-        )
+        }).then(res => res.json()).then(json => {
+            props.setNotes(json.maintenances),
+            props.setShowModal(false)
+        })
     }
 
     const setNote = (note) => {

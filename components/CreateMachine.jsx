@@ -24,6 +24,7 @@ const CreateMachine = (props) => {
       // }
   
       var tempMachine = {
+        id: machine.id,
         pumpname: undefined,
         time: undefined,
         active: 0,
@@ -32,20 +33,18 @@ const CreateMachine = (props) => {
       } 
     
       var temp
-      var tempMachines = [...props.machines]
-      fetch("/api/machines" + props.currentMachine.id, {
+      fetch("/api/machines", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(tempMachine)
-      }).then(
-        tempMachines.push(tempMachine),
-        props.setMachines(tempMachines),
+      }).then(res => res.json()).then(json => {
+        props.setMachines(json),
         temp = {...props.showingModal},
         temp.createmachine = false,
         props.setShowingModal(temp)
-      )
+      })
     }
 
     return (        
