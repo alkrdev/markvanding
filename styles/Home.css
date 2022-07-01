@@ -92,6 +92,9 @@ input[type="datetime-local"] {
 #createnoteinput {
   margin-left: 8px;
   font-size: 18px;
+  background: rgb(240, 240, 240);
+  border: 1px solid black;
+  border-radius: 4px;
 }
 
 #createnotetext {
@@ -196,11 +199,11 @@ button {
 }
 
 #maintenanceboxes:hover #hid-box{
-  top: 0%;
+  top: -4%;
 }
 
 #maintenanceboxes:hover #machineid {
-  margin-top: 0px;
+  margin-top: 4%;
   transition: all .3s ease-in-out;
 }
 
@@ -248,10 +251,8 @@ button {
   color: white;
   font-size: 20px;
   position: relative;
-  top: 78px;
   height: 40px;
   width: 80px;
-  border-radius: 0 0 15px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -422,8 +423,8 @@ label{
 .container .checkmark:after {
   left: 6px;
   top: 2px;
-  width: 5px;
-  height: 10px;
+  width: 8px;
+  height: 14px;
   border: solid white;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
@@ -442,7 +443,7 @@ label{
   text-align: center;
   border: solid #1a1a4e;
   margin: auto;
-  width: 30% ;
+  width: 30%;
 }
 
 #checkboxtext{
@@ -570,7 +571,7 @@ form.select div {
   .nav-links{
     width: 75%;
   }
-  p{
+  h5{
     width: 30% !important;
   }
   .forms {
@@ -609,7 +610,7 @@ form.select div {
   .nav-links a{
     font-size: 20px;
   }
-  p{
+  h5{
     width: 40% !important;
   }
   .nav-active-li{
@@ -633,7 +634,7 @@ form.select div {
 }
 
 @media screen and (max-width:912px){
-  p{
+  h5{
     width: 50% !important;
   }
   .forms {
@@ -651,7 +652,7 @@ form.select div {
 }
 
 @media screen and (max-width:740px){
-  p{
+  h5{
     width: 60% !important;
   }
   .forms {
@@ -669,7 +670,7 @@ form.select div {
 }
 
 @media screen and (max-width:608px){
-  p{
+  h5{
     width: 70% !important;
   }
   .forms {
@@ -688,7 +689,7 @@ form.select div {
 }
 
 @media screen and (max-width:528px){
-  p{
+  h5{
     width: 90% !important;
   }
   .forms {
@@ -756,7 +757,7 @@ form.select div {
 }
 
 @media screen and (max-width:420px){
-  p{
+  h5{
     width: 100% !important;
   }
   #choosepump {

@@ -49,10 +49,10 @@ const Header = () => {
               <h1>Markvanding</h1>
             </div>
             <ul className="nav-links">
-                <li onClick={(e) => HandleNavClick(e, "overview")}>OVERSIGT</li>
-                <li onClick={(e) => HandleNavClick(e, "startmachine")}>START VANDING</li>
-                <li onClick={(e) => HandleNavClick(e, "maintenance")}>VEDLIGEHOLDELSE</li>
-                <li onClick={(e) => HandleNavClick(e, "machinepark")}>MASKINPARK</li>
+                <li onClick={(e) => HandleNavClick(e, "../overview")}>OVERSIGT</li>
+                <li onClick={(e) => HandleNavClick(e, "../startmachine")}>START VANDING</li>
+                <li onClick={(e) => HandleNavClick(e, "../maintenance")}>VEDLIGEHOLDELSE</li>
+                <li onClick={(e) => HandleNavClick(e, "../machinepark")}>MASKINPARK</li>
             </ul>
             <div className="burger" onClick={slide}>
               <div className="line1"></div>
