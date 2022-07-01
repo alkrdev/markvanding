@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import EditNote from "../../components/EditNote"
 import DeleteNote from "../../components/DeleteNote"
+import Header from "../../components/Header"
 
 function Machine({ query }) {
     const [machine, setMachine] = useState({})
@@ -12,6 +13,7 @@ function Machine({ query }) {
     const [showModal, setShowModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [passNote, setPassNote] = useState({})
+    const maxCharacters = 190
 
     const router = useRouter();
 
@@ -33,6 +35,7 @@ function Machine({ query }) {
         }).then(res => res.json()).then(json => {
             setNotes(json.maintenances)
             setMachine(json)
+            setNote("")
         })
     }
 
@@ -59,6 +62,7 @@ function Machine({ query }) {
 
     return(
         <div>
+            <Header />
             <div id="shownmachine">
                 <button id="backbutton" onClick={HandleClick}>Tilbage</button>
                 <div id="allmachineattributes">
@@ -84,12 +88,18 @@ function Machine({ query }) {
                 <div id="allaboutnotes">
                     <form onSubmit={(event) => {
                         event.preventDefault()
-                        event.target.reset();
                         CreateNote()
                     }}>
                         <h2 id="createnotetext">Tilføj vedligeholdelses note til maskine</h2>
                         <label>Note:</label>
-                        <input id="createnoteinput" type="text" required onChange={(e) => setNote(e.target.value)}></input>
+                        <input id="createnoteinput" type="text" required onChange={(e) => {
+                            if (e.target.value.length < maxCharacters) {
+                                setNote(e.target.value)
+                                
+                            } else {
+                                alert("Du må ikke skrive mere end " + maxCharacters +  " karakterer")
+                            }
+                        }} value={note}></input>
                         <button id="createnotebutton" type="submit">Opret note</button>
                     </form>
                     <div id="shownotes" style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "50px", alignItems: "center", marginTop: "20px" }}>
