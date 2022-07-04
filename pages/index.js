@@ -13,14 +13,25 @@ function Home() {
 
   const HandleLogin = (e) => {
       e.preventDefault();
-      if (pass == process.env.NEXT_PUBLIC_PWD) {
-        // myContext.setLoggedIn(true)
-        cookie.set("loggedin", true)
-        router.push("/overview")
-      } else {
-        alert("Forkert kode")
-        return
-      }
+
+      fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/auth", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          "Accept" : "application/json"
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          pwd: pass
+        })
+      }).then(res => {
+        if (res.status == 401) {
+          alert("Forkert kode")
+        } else if (res.status == 200) {            
+          // myContext.setLoggedIn(true)
+          cookie.set("loggedin", true)
+          router.push("/overview")
+        }
       })    
   }
 
