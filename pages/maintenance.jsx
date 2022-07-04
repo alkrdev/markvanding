@@ -93,13 +93,12 @@ function Maintenance({ history, setNotes, machineProps }) {
 }
 
 export async function getServerSideProps() {
-
-  var machineResponse = await fetch("http://markvanding.kkpartner.dk/api/machines")
+  var machineResponse = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/machines")
   var machines = await machineResponse.json()
 
   return {
     props: { 
-      machineProps: machines
+      machineProps: machines,
     },
   }
 }
