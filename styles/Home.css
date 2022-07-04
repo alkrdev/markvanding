@@ -1,5 +1,4 @@
-
-*{
+* {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
@@ -124,7 +123,7 @@ select {
 }
 
 button {
-  color: rgb(233,233,233);
+  color: rgb(233, 233, 233);
   background: none;
   text-decoration: none;
   border: none;
@@ -198,7 +197,7 @@ button {
   width: 250px;
 }
 
-#maintenanceboxes:hover #hid-box{
+#maintenanceboxes:hover #hid-box {
   top: -4%;
 }
 
@@ -221,7 +220,7 @@ button {
   justify-content: center;
 }
 
-.showmachineh1{
+.showmachineh1 {
   border-bottom: 1px solid black;
 }
 
@@ -235,7 +234,7 @@ button {
   margin: 10px;
 }
 
-.machineattributes p{
+.machineattributes p {
   font-size: 22px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -258,8 +257,8 @@ button {
   justify-content: center;
 }
 
-nav{
-  display :flex;
+nav {
+  display: flex;
   justify-content: space-around;
   align-items: center;
   min-height: 8vh;
@@ -267,20 +266,20 @@ nav{
   text-transform: uppercase;
 }
 
-.logo{
+.logo {
   color: rgb(233, 233, 233);
   text-transform: uppercase;
   font-size: 20px;
 }
 
-.nav-links{
+.nav-links {
   display: flex;
   justify-content: space-around;
   width: 60%;
   z-index: 10000;
 }
 
-.nav-links li{
+.nav-links li {
   color: rgb(233, 233, 233);
   display: flex;
   list-style: none;
@@ -292,15 +291,15 @@ nav{
   cursor: pointer;
 }
 
-.nav-links li:hover{
+.nav-links li:hover {
   background-color: #3d3d5a;
 }
 
-.burger{
+.burger {
   display: none;
 }
 
-.burger div{
+.burger div {
   width: 25px;
   height: 3px;
   background-color: rgb(233, 233, 233);
@@ -310,14 +309,16 @@ nav{
 
 
 
-.toggle .line1{
-  transform: rotate(-45deg) translate(-5px,6px);
+.toggle .line1 {
+  transform: rotate(-45deg) translate(-5px, 6px);
 }
-.toggle .line2{
+
+.toggle .line2 {
   opacity: 0;
 }
-.toggle .line3{
-  transform: rotate(45deg) translate(-5px,-6px);
+
+.toggle .line3 {
+  transform: rotate(45deg) translate(-5px, -6px);
 }
 
 #phonenumbers {
@@ -369,7 +370,7 @@ nav{
   overflow: hidden;
 }
 
-label{
+label {
   font-size: 30px;
 }
 
@@ -398,12 +399,12 @@ label{
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+.container:hover input~.checkmark {
   background-color: #777;
 }
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
+.container input:checked~.checkmark {
   background-color: #1a1a4e;
 }
 
@@ -415,7 +416,7 @@ label{
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+.container input:checked~.checkmark:after {
   display: block;
 }
 
@@ -432,27 +433,27 @@ label{
   transform: rotate(45deg);
 }
 
-#choosemachine{
+#choosemachine {
   text-align: center;
   border: solid #1a1a4e;
   margin: auto;
   width: 30%;
 }
 
-#choosepump{
+#choosepump {
   text-align: center;
   border: solid #1a1a4e;
   margin: auto;
   width: 30%;
 }
 
-#checkboxtext{
+#checkboxtext {
   text-align: center;
   margin-bottom: 1%;
   font-size: 18px;
 }
 
-#checks{
+#checks {
   border: solid black;
   margin: auto;
   font-size: 24px;
@@ -460,7 +461,7 @@ label{
   padding: 5px;
 }
 
-.container{
+.container {
   font-size: 24px;
   width: fit-content;
   margin: auto;
@@ -483,12 +484,12 @@ form.select div {
   border: none;
   margin: auto;
   margin-top: 30px
- }
- 
- #buttonstartmachine:hover {
+}
+
+#buttonstartmachine:hover {
   border: none;
   background: #777;
- }
+}
 
 .createandupdatebuttons {
   display: block;
@@ -505,7 +506,7 @@ form.select div {
   margin-top: 10px
 }
 
- /* Style the tab */
+/* Style the tab */
 .tab {
   overflow: hidden;
   border: none;
@@ -551,218 +552,251 @@ form.select div {
   margin: auto;
 }
 
-.choosetimesubmit{
-    background-color: #1a1a4e;
-    padding: .5em;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 6px;
-    color: #fff;
-    font-size: 32px;
-    text-decoration: none;
-    border: none;
-    margin: auto;
-    margin-top: 30px
+.choosetimesubmit {
+  background-color: #1a1a4e;
+  padding: .5em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 32px;
+  text-decoration: none;
+  border: none;
+  margin: auto;
+  margin-top: 30px
 }
 
 
 
- @media screen and (max-width:1624px){
-  .nav-links{
+@media screen and (max-width:1624px) {
+  .nav-links {
     width: 75%;
   }
-  h5{
+
+  h5 {
     width: 30% !important;
   }
+
   .forms {
     width: 40% !important;
   }
+
   #choosepump {
     width: 30% !important;
   }
+
   #choosemachine {
     width: 30% !important;
   }
 }
 
-@media screen and (max-width:1280px){
-  body{
+@media screen and (max-width:1280px) {
+  body {
     overflow-x: hidden;
   }
-  .nav-links{
+
+  .nav-links {
     position: absolute;
-    height: 0;
     top: 8vh;
     background-color: #1a1a4e;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 80%;
-    transition: 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    font-size: 8vw;
   }
-  .nav-links li{
-    display: none;
-  }
-  .burger{
+
+  .burger {
     display: block;
     cursor: pointer;
   }
-  .nav-links a{
+
+  .nav-links a {
     font-size: 20px;
   }
-  h5{
+
+  h5 {
     width: 40% !important;
   }
-  .nav-active-li{
-    display: flex !important;
-  }
+
   #choosepump {
     width: 40% !important;
   }
+
   #choosemachine {
     width: 40% !important;
   }
-  .nav-active{
-    height: 24rem;
-  }
+
   .forms {
     width: 50% !important;
   }
+
   .modalforms {
     width: 43%;
   }
 }
 
-@media screen and (max-width:912px){
-  h5{
+@media screen and (max-width:912px) {
+  h5 {
     width: 50% !important;
   }
+
   .forms {
     width: 65% !important;
   }
+
   .modalforms {
     width: 55%;
   }
+
   #choosepump {
     width: 50% !important;
   }
+
   #choosemachine {
     width: 50% !important;
   }
 }
 
-@media screen and (max-width:740px){
-  h5{
+@media screen and (max-width:740px) {
+  h5 {
     width: 60% !important;
   }
+
   .forms {
     width: 75% !important;
   }
+
   .modalforms {
     width: 65%;
   }
+
   #choosepump {
     width: 60% !important;
   }
+
   #choosemachine {
     width: 60% !important;
   }
 }
 
-@media screen and (max-width:608px){
-  h5{
+@media screen and (max-width:608px) {
+  h5 {
     width: 70% !important;
   }
+
   .forms {
     width: 90% !important;
     padding: 0px 25%;
   }
+
   .modalforms {
     width: 75%;
   }
+
   #choosepump {
     width: 70% !important;
   }
+
   #choosemachine {
     width: 70% !important;
   }
 }
 
-@media screen and (max-width:528px){
-  h5{
+@media screen and (max-width:528px) {
+  h5 {
     width: 90% !important;
   }
+
   .forms {
     width: 100% !important;
     padding: 0px 17%;
   }
+
   .modalforms {
     width: 80%;
     height: 430px;
     top: 10%;
   }
+
   #choosepump {
     width: 90% !important;
   }
+
   #choosemachine {
     width: 90% !important;
   }
+
   .modalforms label {
     margin-left: 6%;
   }
-  .modalforms label > span{
+
+  .modalforms label>span {
     display: block;
     font-size: 20px;
   }
+
   #removepumpbuttonspan {
     display: inline-block;
     margin-left: 4%;
     width: 30%;
   }
+
   #removepumpbutton {
     margin-top: -6px;
     margin-left: 15%;
     width: 70%;
   }
+
   .modalbuttons {
     margin-top: 8px;
     width: 120px;
     height: 36px;
     border-radius: 10px;
   }
+
   #cancelmodalbutton {
     margin-right: 2px;
   }
+
   #updatemodalbutton {
-   margin-left: 2px;
+    margin-left: 2px;
   }
+
   .modalinputs {
     font-size: 22px;
     width: 90%;
   }
+
   .bigmodalinputs {
     height: 36px;
     font-size: 22px;
     width: 90%;
   }
+
   .cancelmodalbutton {
     width: 120px;
   }
+
   .removemodalbutton {
     width: 120px;
   }
+
   #machinemodal {
     height: 356px;
   }
 }
 
-@media screen and (max-width:420px){
-  h5{
+@media screen and (max-width:420px) {
+  h5 {
     width: 100% !important;
   }
+
   #choosepump {
     width: 100% !important;
   }
+
   #choosemachine {
     width: 100% !important;
   }
@@ -782,4 +816,3 @@ form.select div {
 }
 
 */
-

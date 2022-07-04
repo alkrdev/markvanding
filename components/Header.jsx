@@ -49,15 +49,16 @@ const Header = () => {
             <div className="logo">
               <h1>Markvanding</h1>
             </div>
+            
             <ul className="nav-links">
-                <li onClick={(e) => HandleNavClick(e, "../overview")}>OVERSIGT</li>
-                <li onClick={(e) => HandleNavClick(e, "../startmachine")}>START VANDING</li>
-                <li onClick={(e) => HandleNavClick(e, "../maintenance")}>VEDLIGEHOLDELSE</li>
-                <li onClick={(e) => HandleNavClick(e, "../machinepark")}>MASKINPARK</li>
-                <li style={{color: "red"}} onClick={() => {
-                  cookie.set("loggedin", false)
-                  router.push("/")
-                }}>LOG UD</li>
+              <li onClick={(e) => HandleNavClick(e, "../overview")}>OVERSIGT</li>
+              <li onClick={(e) => HandleNavClick(e, "../startmachine")}>START VANDING</li>
+              <li onClick={(e) => HandleNavClick(e, "../maintenance")}>VEDLIGEHOLDELSE</li>
+              <li onClick={(e) => HandleNavClick(e, "../machinepark")}>MASKINPARK</li>
+              <li style={{color: "red"}} onClick={() => {
+                cookie.set("loggedin", false)
+                router.push("/")
+              }}>LOG UD</li>
             </ul>
             <div className="burger" onClick={slide}>
               <div className="line1"></div>
