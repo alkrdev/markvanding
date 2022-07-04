@@ -5,13 +5,13 @@ import cookie from "cookie-cutter"
 
 import ChooseTime from "."
 
-function Startmachine() {
+function Startmachine({machineProps, pumpProps}) {
   const [checked, setChecked] = useState(false)
   const [waterCheck, setWaterCheck] = useState(false)
   const [currentMachine, setCurrentMachine] = useState("")
   const [currentPump, setCurrentPump] = useState("")
-  const [pumps, setPumps] = useState([])
-  const [machines, setMachines] = useState([])
+  const [pumps, setPumps] = useState(pumpProps)
+  const [machines, setMachines] = useState(machineProps)
   const [showChoose, setShowChoose] = useState(false)
 
   const router = useRouter();
@@ -37,8 +37,6 @@ function Startmachine() {
     } else {
       router.push("/")
     }
-    fetch("/api/machines").then(res => res.json()).then(json => setMachines(json))
-    fetch("/api/pumps").then(res => res.json()).then(json => setPumps(json))
   }, [])
 
   return(
@@ -143,6 +141,22 @@ function Startmachine() {
     </React.Fragment>
   );
 
+}
+
+export async function getServerSideProps() {
+
+  var machineResponse = await fetch("http://markvanding.kkpartner.dk/api/machines")
+  var machines = await machineResponse.json()
+
+  var pumpResponse = await fetch("http://markvanding.kkpartner.dk/api/pumps")
+  var pumps = await pumpResponse.json()
+
+  return {
+    props: { 
+      machineProps: machines,
+      pumpProps: pumps
+    },
+  }
 }
 
 export default Startmachine;
