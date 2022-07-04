@@ -13,7 +13,7 @@ function Home() {
 
   const HandleLogin = (e) => {
       e.preventDefault();
-      if (pass == "Svend1234") {
+      if (pass == process.env.NEXT_PUBLIC_PWD) {
         // myContext.setLoggedIn(true)
         cookie.set("loggedin", true)
         router.push("/overview")
@@ -61,7 +61,7 @@ function Home() {
               <div>
                 <img
                   className="mx-auto h-12 w-auto"
-                  src="https://markvanding.kkpartner.dk/images/Logo_Positiv.jpg"
+                  src={process.env.NEXT_PUBLIC_BASE_URL + "/Logo_Positiv.jpg"}
                   alt="Workflow"
                 />
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Log ind i Markvanding</h2>

@@ -4,7 +4,6 @@ import cookie from "cookie-cutter"
 const AppContext = createContext()
 
 export function AppWrapper({children}) {
-
     const [loggedIn, setLoggedIn] = useState(false)
 
     useEffect(() => {
