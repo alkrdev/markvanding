@@ -13,45 +13,27 @@ function Home() {
 
   const HandleLogin = (e) => {
       e.preventDefault();
-      if (pass == process.env.NEXT_PUBLIC_PWD) {
-        // myContext.setLoggedIn(true)
-        cookie.set("loggedin", true)
-        router.push("/overview")
-      } else {
-        alert("Forkert kode")
-        return
-      }
 
-
-      // fetch("http://remote.kkpartner.dk:3001/auth", {
-      //     method: "POST",
-      //     headers: {
-      //         "Content-type": "application/json",
-      //         "Accept" : "application/json"
-      //     },
-      //     credentials: 'include',
-      //     body: JSON.stringify({
-      //         email: email,
-      //         password: pass
-      //     })
-      // })
-      // .then(res => {
-      // })
-      
-      
+      fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/auth", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          "Accept" : "application/json"
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          pwd: pass
+        })
+      }).then(res => {
+        if (res.status == 401) {
+          alert("Forkert kode")
+        } else if (res.status == 200) {            
+          // myContext.setLoggedIn(true)
+          cookie.set("loggedin", true)
+          router.push("/overview")
+        }
+      })    
   }
-
-
-
-
-  useEffect(function() 
-  {    
-    // var hasstarted = localStorage.getItem("hasstarted")
-    // if (hasstarted === "true") {
-    //   setSubmitted(true)
-    // }
-  }, [])
-
 
   return (
       <React.Fragment>
@@ -61,7 +43,7 @@ function Home() {
               <div>
                 <img
                   className="mx-auto h-12 w-auto"
-                  src={process.env.NEXT_PUBLIC_BASE_URL + "/Logo_Positiv.jpg"}
+                  src={process.env.NEXT_PUBLIC_BASE_URL + "/images/Logo_Positiv.jpg"}
                   alt="Workflow"
                 />
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Log ind i Markvanding</h2>
