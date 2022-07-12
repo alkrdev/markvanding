@@ -8,7 +8,6 @@ import Header from "../../components/Header"
 function Machine({ query }) {
     const [machine, setMachine] = useState({})
     const [note, setNote] = useState("")
-    const [testNote, setTestNote] = useState({})
     const [notes, setNotes] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -85,7 +84,6 @@ function Machine({ query }) {
                         <p>{machine ? machine.active === 0 ? "Inaktiv" : "Aktiv" : "Fejl"}</p>
                     </div>
                 </div>
-                <div id="allaboutnotes">
                     <form onSubmit={(event) => {
                         event.preventDefault()
                         CreateNote()
@@ -127,7 +125,6 @@ function Machine({ query }) {
                                 </div>
                             )
                         }) : <></>}
-                    </div>
                 </div>
             </div>
 

@@ -75,22 +75,33 @@ const Overview = ({machineProps, pumpProps}) => {
   } : {
     background: "green"
   }
+
+  const machineHasNoTime = machine => machine.time == null && machine.active == 1
+  const machineIsDone = machine => new Date() > new Date(machine.time) && machine.active == 1 && machine.time != null
+  const machineIsActive = machine => new Date() < new Date(machine.time) && machine.active == 1
   
+  const getTimeAndDate = (mach) => {
+    var datePart = new Date(mach["time"]).toLocaleString("da-DK", {
+      month: "short", day: "numeric"
+    });
+    var timePart = new Date(mach["time"]).toLocaleTimeString("da-DK", {
+      hour: "numeric", minute: "numeric"
+    }).replace("." , ":")
+
+    return { datePart, timePart }
+  }
+
   return (
       <React.Fragment>
         <Header />
         <button style={{color: "white", background: color.background, borderRadius: "24px", padding: "10px", marginTop: "10px", position: "absolute", right: "5vw"}} onClick={() => {setDisplayMode(!displayMode)}}>{displayMode ? "Slå auto opdatering fra" : "Slå auto opdatering til"}</button>
         <div style={{marginTop: "50px"}}>
           {machines.filter(machine => machine.active == 1).length < 1 ? <h1 style={{fontSize: "48px", marginTop: "200px"}}>Ingen aktive vandinger</h1> : <></>}
-          {machines.filter(machine => new Date() > new Date(machine.time) && machine.active == 1 && machine.time == null).length > 0 ? <h1 className={machinestyles.tableLabel}>Vandinger uden tider</h1> : <></>}
+          
+          {machines.filter(machineHasNoTime).length > 0 ? <h1 className={machinestyles.tableLabel}>Vandinger uden tider</h1> : <></>}
           <div className={machinestyles.machineContainer}>
-            {machines ? machines.filter(machine => new Date() > new Date(machine.time) && machine.active == 1 && machine.time == null).map(function(machine) {
-                  var datePart = new Date(machine["time"]).toLocaleString("da-DK", {
-                    month: "short", day: "numeric"
-                  });
-                  var timePart = new Date(machine["time"]).toLocaleTimeString("da-DK", {
-                    hour: "numeric", minute: "numeric"
-                  }).replace("." , ":")
+            {machines ? machines.filter(machineHasNoTime).map(function(machine) {
+                  const { datePart, timePart } = getTimeAndDate(machine)
 
                   return (
                   <div className={machinestyles.machine} key={machine["id"]}>
@@ -136,15 +147,11 @@ const Overview = ({machineProps, pumpProps}) => {
                   )
               }) : <></>}
           </div>
-          {machines.filter(machine => new Date() > new Date(machine.time) && machine.active == 1 && machine.time != null).length > 0 ? <h1 className={machinestyles.tableLabel}>Færdige vandinger</h1> : <></>}
+
+          {machines.filter(machineIsDone).length > 0 ? <h1 className={machinestyles.tableLabel}>Færdige vandinger</h1> : <></>}
           <div className={machinestyles.machineContainer}>
-            {machines ? machines.filter(machine => new Date() > new Date(machine.time) && machine.active == 1 && machine.time != null).map(function(machine) {
-                  var datePart = new Date(machine["time"]).toLocaleString("da-DK", {
-                    month: "short", day: "numeric"
-                  });
-                  var timePart = new Date(machine["time"]).toLocaleTimeString("da-DK", {
-                    hour: "numeric", minute: "numeric"
-                  }).replace("." , ":")
+            {machines ? machines.filter(machineIsDone).map(function(machine) {
+                  const { datePart, timePart } = getTimeAndDate(machine)
 
                   return (
                   <div className={machinestyles.machine} key={machine["id"]}>
@@ -191,15 +198,10 @@ const Overview = ({machineProps, pumpProps}) => {
               }) : <></>}
           </div>
 
-          {machines.filter(machine => new Date() < new Date(machine.time) && machine.active == 1).length > 0 ? <h1 className={machinestyles.tableLabel}>Aktive vandinger</h1> : <></>}
+          {machines.filter(machineIsActive).length > 0 ? <h1 className={machinestyles.tableLabel}>Aktive vandinger</h1> : <></>}
           <div className={machinestyles.machineContainer}>
-            {machines ? machines.filter(machine => new Date() < new Date(machine.time) && machine.active == 1).map(function(machine) {
-              var datePart = new Date(machine["time"]).toLocaleString("da-DK", {
-                month: "short", day: "numeric"
-              });
-              var timePart = new Date(machine["time"]).toLocaleTimeString("da-DK", {
-                hour: "numeric", minute: "numeric"
-              }).replace("." , ":")
+            {machines ? machines.filter(machineIsActive).map(function(machine) {
+              const { datePart, timePart } = getTimeAndDate(machine)
               
               return (
                   <div className={machinestyles.machine} key={machine["id"]}>

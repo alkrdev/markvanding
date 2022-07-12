@@ -1,22 +1,8 @@
-import { getRouteMatcher } from 'next/dist/shared/lib/router/utils';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import styles from "./pumps.module.css"
 
 const Pumps = (props) => {
-    
-    
-    const setInactivePump = (id) => {    
-        // fetch("http://remote.kkpartner.dk:3001/setinactivepump", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({ id })
-        // })
-        // RELOAD?
-    }
-
     return (
         <React.Fragment>
             <div className={styles.pumpHeader}>

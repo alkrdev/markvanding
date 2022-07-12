@@ -3,29 +3,13 @@ import { useRouter } from 'next/router';
 import Header from "./../components/Header";
 import cookie from "cookie-cutter"
 
-function Maintenance({ history, setNotes, machineProps }) {
-
+function Maintenance({ machineProps }) {
   const router = useRouter();
-
   const [machines, setMachines] = useState(machineProps)
-  const [shownMachine, setShownMachine] = useState({})
 
   const HandleClick = (machine) => {
-
-    setShownMachine(machine)
     router.push("/machine/" + machine.id)
   }
-
-  useEffect(function () {
-    // fetch("http://remote.kkpartner.dk:3001/getnotes")
-    //   .then(function (data) {
-    //     return data.json();
-    //   }).then(function (json) {
-    //     setNotes(json)
-    //   }).catch((error) => {
-    //     console.log(error);
-    //   });
-  }, [setNotes])
 
   useEffect(() => {
     var bool = cookie.get("loggedin")
