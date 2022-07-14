@@ -23,8 +23,8 @@ function Maintenance({ machineProps }) {
   return (
     <React.Fragment>
       <Header />
-      <div id="maintenance">
-        <h1 id="maintenancetext">Tryk på en boks for at tilgå maskinen</h1>
+      <div className="mt-12 flex flex-row justify-center flex-wrap">
+        <h1 className="-m-4 absolute text-2xl">Tryk på en boks for at tilgå maskinen</h1>
         {machines ? machines.map((machine) => {
           var data = machine.active == 1 ? {
             color: "#42CB6B",
@@ -41,31 +41,29 @@ function Maintenance({ machineProps }) {
             time: "Ingen tid",
           }
           return (
-              <button key={machine.id} id="maintenanceboxes" onClick={() => { HandleClick(machine) }}>
-                <div>
-                  <h1 id="machineid">
+              <button key={machine.id} className="group flex flex-col justify-center items-center w-64 h-64 m-12 text-white text-6xl bg-[#1a1a4e] overflow-hidden rounded-3xl" onClick={() => { HandleClick(machine) }}>
+                  <h1 className="text-[64px] mt-[65%] group-hover:-mt-[30%] ease-out duration-300">
                     {machine.id}
                   </h1>
-                  <div id="hid-box" style={{ background: data.color }}>
-                    <p id="active">
+                  <div className="relative bg-red-600 h-full w-64 top-[25%]" style={{ background: data.color }}>
+                    <p className="p-2 text-[24px]">
                       {data.active}
                     </p>
-                    <div id="maintenanceboxhover">
-                      <p className="maintenanceboxheading">
+                    <div id="text-left">
+                      <p className="text-base text-gray-600 w-full">
                         Pumpenavn
                       </p>
-                      <h3 className="maintenanceboxtext">
+                      <h3 className="text-xl mb-5">
                         {data.pumpname}
                       </h3>
-                      <p className="maintenanceboxheading">
+                      <p className="text-base text-gray-600 w-full">
                         Stop tidspunkt
                       </p>
-                      <h3 className="maintenanceboxtext">
+                      <h3 className="text-xl mb-5">
                         {data.time}
                       </h3>
                     </div>
                   </div>
-                </div>
               </button>
           )
         }) : <></>}

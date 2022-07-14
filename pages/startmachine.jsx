@@ -45,7 +45,7 @@ function Startmachine({machineProps, pumpProps}) {
        
         <Header />
 
-        <form className="select" id="formstartmachine" onSubmit={(event) => {
+        <form className="select mt-8" id="formstartmachine" onSubmit={(event) => {
           // Prevents default behavior (Getting put at another site)
           event.preventDefault();
 
@@ -82,10 +82,10 @@ function Startmachine({machineProps, pumpProps}) {
                         
           };
         }}>
-        <div id="choosemachine">
+        <div className="text-center border-[#1a1a4e] sm:w-3/4 md:w-1/2 lg:w-1/3 border-solid border-2 m-auto">
           <label htmlFor="chosenmachine">Vælg en maskine</label>
           <br></br>
-          <select name="chosenmachine" id="chosenmachine" defaultValue="blank" onChange={function(event){
+          <select name="chosenmachine" id="chosenmachine" className="bg-[#1a1a4e] text-white p-2 w-full text-2xl uppercase" defaultValue="blank" onChange={function(event){
             var correctMachine = machines.find((machine) => {
               return machine.id == event.target.value
             })
@@ -98,10 +98,10 @@ function Startmachine({machineProps, pumpProps}) {
 
         <br></br>
 
-        <div id="choosepump">
+        <div className="text-center border-[#1a1a4e] sm:w-3/4 md:w-1/2 lg:w-1/3 border-solid border-2 m-auto">
           <label htmlFor="">Vælg en pumpe</label>
           <br></br>
-          <select name="chosenpump" id="chosenpump" defaultValue="blank" onChange={function(event){
+          <select name="chosenpump" id="chosenpump" className="bg-[#1a1a4e] text-white p-2 w-full text-2xl uppercase" defaultValue="blank" onChange={function(event){
             var options = event.target.children;
             var option = options[event.target.selectedIndex];
 
@@ -119,21 +119,27 @@ function Startmachine({machineProps, pumpProps}) {
 
         <br></br>
 
-        <div id="checkboxtext">
+        <div className="text-center text-lg mb-4">
           <h2>Tjek følgende</h2>
-          </div>
-          <h5 id="checks">1. Hydrant åben <br></br>2. Maskine er sat i gear <br></br>3. Slange korrekt placeret <br></br>4. Aflæs tiden <br></br>5. Dyse valg korrekt</h5>
-          <label className="container">Jeg har tjekket overstående
-            <input onChange={() => setChecked(!checked)} type="checkbox"></input>
-            <span className="checkmark"></span>
-          </label>
-          <label className="container">Vælg tid med det samme
-            <input onChange={() => setWaterCheck(!waterCheck)} type="checkbox"></input>
-            <span className="checkmark"></span>
-          </label>
+        </div>
+        <ol className="m-auto text-2xl p-1 border-2 border-[#1a1a4e] mb-4 sm:w-3/4 md:w-1/2 lg:w-1/3">
+          <li>1. Hydrant åben</li>
+          <li>2. Maskine er sat i gear</li>
+          <li>3. Slange korrekt placeret</li>
+          <li>4. Aflæs tiden</li>
+          <li>5. Dyse valg korrekt</li>
+        </ol>
+        <label className="checkBoxContainer group flex items-center justify-center cursor-pointer text-2xl m-auto gap-1">Jeg har tjekket overstående
+          <input className="hidden" onChange={() => setChecked(!checked)} type="checkbox"></input>
+          <span className="checkmark group-hover:bg-[#777]"></span>
+        </label>
+        <label className="checkBoxContainer group flex items-center justify-center cursor-pointer text-2xl m-auto gap-1 mt-5">Vælg tid med det samme
+          <input className="hidden" onChange={() => setWaterCheck(!waterCheck)} type="checkbox"></input>
+          <span className="checkmark group-hover:bg-[#777]"></span>
+        </label>
           
 
-        <button type="submit" id="buttonstartmachine">START VANDING</button>
+        <button type="submit" className="bg-[#1a1a4e] p-4 rounded-md text-white text-3xl mt-8 hover:border-none hover:bg-slate-500">START VANDING</button>
 
         </form>
        </>}
