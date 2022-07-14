@@ -58,23 +58,22 @@ const ChooseTime = () => {
         
       }}>
         <div id="choosetime">
-          <div className="tab">
-            <button type="button" className="tablinks" onClick={() => setSelectedTimeType("timeremaining")}>Tid tilbage</button>
-            <button type="button" className="tablinks" onClick={() => setSelectedTimeType("date")}>Klokkeslæt</button>
+          <div className="tab overflow-hidden m-auto flex border-none b-white">
+            <button type="button" className="bg-[#1a1a4e] cursor-pointer p-5 text-2xl flex-grow transition duration-300 m-1 hover:bg-[#1a1a4eb9] focus:bg-white focus:text-black" onClick={() => setSelectedTimeType("timeremaining")}>Tid tilbage</button>
+            <button type="button" className="bg-[#1a1a4e] cursor-pointer p-5 text-2xl flex-grow transition duration-300 m-1 hover:bg-[#1a1a4eb9] focus:bg-white focus:text-black" onClick={() => setSelectedTimeType("date")}>Klokkeslæt</button>
           </div>
-          <h1>MANGLER TID: {machineWithoutTime.pumpname}</h1>
-          {selectedTimeType == "timeremaining" ? <div id="timeremaining" className="tabcontent">
-            <h3>Tid tilbage</h3>
-            <input name="timeremaining" defaultValue="00:00" required onChange={(event) => TimeChanged(event)} type="time" size="50"></input>
-            <br></br>
-            <button type="submit" className="choosetimesubmit">START</button>
+          <h1 className="text-2xl m-5">MANGLER TID: {machineWithoutTime.pumpname}</h1>
+          {selectedTimeType == "timeremaining" ? 
+          <div id="timeremaining" className="flex flex-col items-center m-auto bg-slate-300 h-fit w-9/12">
+            <h3 className="text-4xl m-5">Tid tilbage</h3>
+            <input className="text-2xl m-5" name="timeremaining" defaultValue="00:00" required onChange={(event) => TimeChanged(event)} type="time" size="50"></input>
+            <button type="submit" className="bg-[#1a1a4e] rounded-md text-3xl p-5 m-5">START</button>
           </div> 
           : selectedTimeType == "date" ?
-          <div id="date" className="tabcontent">
-            <h3>Klokkeslæt</h3>
-            <input name="date" required onChange={(event) => TimeChanged(event)} type="datetime-local" min={new Date().toISOString().slice(0, 16)} size="50"></input>
-            <br></br>
-            <button type="submit" className="choosetimesubmit">START</button>
+          <div id="date" className="flex flex-col items-center m-auto bg-slate-300 h-fit w-9/12">
+            <h3 className="text-4xl m-5">Klokkeslæt</h3>
+            <input className="text-2xl m-5" name="date" required onChange={(event) => TimeChanged(event)} type="datetime-local" min={new Date().toISOString().slice(0, 16)} size="50"></input>
+            <button type="submit" className="bg-[#1a1a4e] rounded-md text-3xl p-5 m-5">START</button>
           </div> : <></>}
         </div>
     </form>

@@ -122,7 +122,7 @@ const Overview = ({machineProps, pumpProps}) => {
                       </div>
                     </div>
                     <div style={{ background: "#F3AB23", height: "200px", width: "80px", display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center"}}>
-                      <div id="stopwateringbutton" style={{background: "dodgerblue", fontSize: "12px"}} onClick={() => {
+                      <div className="cursor-pointer bg-red-600 text-white text-xl relative h-10 w-20 flex items-center justify-center" style={{background: "dodgerblue", fontSize: "12px"}} onClick={() => {
                         var verify = window.confirm("Er du sikker på at du vil ændre tid på maskinen?")
 
                         if (!verify === true) return;
@@ -132,7 +132,7 @@ const Overview = ({machineProps, pumpProps}) => {
                         <h4>INDSTIL TID</h4>
                       </div>
                       <div>Venter</div>
-                      <div style={{ background: "#DF4848" }} id="stopwateringbutton" onClick={(event) => {
+                      <div style={{ background: "#DF4848" }} className="cursor-pointer bg-red-600 text-white text-xl relative h-10 w-20 flex items-center justify-center" onClick={(event) => {
                         var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
                         
                         if (!confirmed === true) return;
@@ -172,7 +172,7 @@ const Overview = ({machineProps, pumpProps}) => {
                       </div>
                     </div>
                     <div style={{ background: "#DF4848", height: "200px", width: "80px", display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center"}}>
-                      <div id="stopwateringbutton" style={{background: "dodgerblue", fontSize: "12px"}} onClick={() => {
+                      <div className="cursor-pointer bg-red-600 text-white text-xl relative h-10 w-20 flex items-center justify-center" style={{background: "dodgerblue", fontSize: "12px"}} onClick={() => {
                         var verify = window.confirm("Er du sikker på at du vil ændre tid på maskinen?")
 
                         if (!verify === true) return;
@@ -182,7 +182,7 @@ const Overview = ({machineProps, pumpProps}) => {
                         <h4>INDSTIL TID</h4>
                       </div>
                       <div>Færdig</div>
-                      <div style={{ background: "darkorange" }} id="stopwateringbutton" onClick={(event) => {
+                      <div style={{ background: "darkorange" }} className="cursor-pointer bg-red-600 text-white text-xl relative h-10 w-20 flex items-center justify-center" onClick={(event) => {
                         var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
                         
                         if (!confirmed === true) return;
@@ -222,7 +222,7 @@ const Overview = ({machineProps, pumpProps}) => {
                       </div>
                     </div>
                     <div style={{background: "#42CB6B", height: "200px", width: "80px", display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center"}}>
-                      <div id="stopwateringbutton" style={{background: "dodgerblue", fontSize: "12px"}} onClick={() => {
+                      <div className="cursor-pointer bg-red-600 text-white text-xl relative h-10 w-20 flex items-center justify-center" style={{background: "dodgerblue", fontSize: "12px"}} onClick={() => {
                         var verify = window.confirm("Er du sikker på at du vil ændre tid på maskinen?")
 
                         if (!verify === true) return;
@@ -232,7 +232,7 @@ const Overview = ({machineProps, pumpProps}) => {
                         <h4>INDSTIL TID</h4>
                       </div>
                       <div>Aktiv</div>
-                      <div id="stopwateringbutton" onClick={(event) => {
+                      <div className="cursor-pointer bg-red-600 text-white text-xl relative h-10 w-20 flex items-center justify-center" onClick={(event) => {
                         var confirmed = window.confirm("Er du sikker på at du vil stoppe vanding?")
 
                         if (!confirmed === true) return;

@@ -62,43 +62,41 @@ function Machine({ query }) {
     return(
         <div>
             <Header />
-            <div id="shownmachine">
-                <button id="backbutton" onClick={HandleClick}>Tilbage</button>
-                <div id="allmachineattributes">
-                    <div className="machineattributes">
-                        <h1 className="showmachineh1">Maskine nr.</h1>
-                        <p>{machine ? machine.id : "Fejl"}</p>
+            <div className="flex m-auto flex-col">
+                <button className="w-24 bg-gray-900 rounded-md text-white text-lg no-underline p-2 border-none m-6" onClick={HandleClick}>Tilbage</button>
+                <div className="flex flex-row flex-wrap justify-center m-auto">
+                    <div className="flex flex-wrap flex-col w-64 justify-center m-2 border-black border-0 border-solid">
+                        <h1 className="border-black border-0 border-solid">Maskine nr.</h1>
+                        <p className="text-xl pt-2 pb-2">{machine ? machine.id : "Fejl"}</p>
                     </div>
-                    <div className="machineattributes">
-                        <h1 className="showmachineh1">Pumpe navn</h1>
-                        <p>{machine ? machine.pumpname == null ? "Ingen pumpe" : machine.pumpname : "Fejl"}</p>
+                    <div className="flex flex-wrap flex-col w-64 justify-center m-2 border-black border-0 border-solid">
+                        <h1 className="border-black border-0 border-solid">Pumpe navn</h1>
+                        <p className="text-xl pt-2 pb-2">{machine ? machine.pumpname == null ? "Ingen pumpe" : machine.pumpname : "Fejl"}</p>
                     </div>
-                    <div className="machineattributes">
-                        <h1 className="showmachineh1">Tid tilbage</h1>
-                        <p>
-                            {machine ? machine.time == null ? "Ingen tid" : datePart + " " + timePart : "Fejl"}
-                        </p>
+                    <div className="flex flex-wrap flex-col w-64 justify-center m-2 border-black border-0 border-solid">
+                        <h1 className="border-black border-0 border-solid">Tid tilbage</h1>
+                        <p className="text-xl pt-2 pb-2">{machine ? machine.time == null ? "Ingen tid" : datePart + " " + timePart : "Fejl"}</p>
                     </div>
-                    <div className="machineattributes">
-                        <h1 className="showmachineh1">Aktivitet</h1>
-                        <p>{machine ? machine.active === 0 ? "Inaktiv" : "Aktiv" : "Fejl"}</p>
+                    <div className="flex flex-wrap flex-col w-64 justify-center m-2 border-black border-0 border-solid">
+                        <h1 className="border-black border-0 border-solid">Aktivitet</h1>
+                        <p className="text-xl pt-2 pb-2">{machine ? machine.active == 0 ? "Inaktiv" : "Aktiv" : "Fejl"}</p>
                     </div>
                 </div>
                     <form onSubmit={(event) => {
                         event.preventDefault()
                         CreateNote()
                     }}>
-                        <h2 id="createnotetext">Tilføj vedligeholdelses note til maskine</h2>
-                        <label>Note:</label>
-                        <input id="createnoteinput" type="text" required onChange={(e) => {
-                            if (e.target.value.length < maxCharacters) {
-                                setNote(e.target.value)
+                        <h2 className="border-b-2 border-black mt-6">Tilføj vedligeholdelses note til maskine</h2>
+                        <div className="flex justify-center items-stretch gap-x-5 mt-4">
+                            <input className="text-lg bg-gray-200 rounded border border-solid border-black" type="text" required onChange={(e) => {
+                                if (!(e.target.value.length < maxCharacters)) alert("Du må ikke skrive mere end " + maxCharacters +  " karakterer")
                                 
-                            } else {
-                                alert("Du må ikke skrive mere end " + maxCharacters +  " karakterer")
-                            }
-                        }} value={note}></input>
-                        <button id="createnotebutton" type="submit">Opret note</button>
+                                setNote(e.target.value)                                
+                            
+                            }} value={note}></input>
+                            <button className="bg-gray-900 rounded-md text-white text-lg no-underline p-2 border-none" type="submit">Opret note</button>
+                        </div>
+                        
                     </form>
                     <div id="shownotes" style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "50px", alignItems: "center", marginTop: "20px" }}>
                         {notes ? notes.map((note, index) => {
