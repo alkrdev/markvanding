@@ -48,7 +48,7 @@ export default async function handle(req, res) {
                 sender: "23727415",
                 message: pump.stopcode,
                 recipients: [
-                    { msisdn: pump.number },
+                    { msisdn: Number(pump.number) },
                 ],
             };
 
